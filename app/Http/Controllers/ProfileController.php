@@ -15,17 +15,32 @@ class ProfileController extends Controller
 {
     /**
      * Display the user's profile form.
+     *
+     * @param \Illuminate\Http\Request $request The incoming HTTP request
+     *
+     * @return \Inertia\Response Returns Inertia response with profile edit component
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException If user is not authenticated
      */
     public function edit(Request $request): Response
     {
-        return Inertia::render('Profile/Edit', [
+        return Inertia::render(
+            'Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
-        ]);
+            ]
+        );
     }
 
     /**
      * Update the user's profile information.
+     *
+     * @param \App\Http\Requests\ProfileUpdateRequest $request The validated profile update request
+     *
+     * @return \Illuminate\Http\RedirectResponse Returns the redirect to profile edit page
+     *
+     * @throws \Illuminate\Validation\ValidationException If validation fails
+     * @throws \Illuminate\Auth\Access\AuthorizationException If user is not authenticated
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
@@ -42,12 +57,21 @@ class ProfileController extends Controller
 
     /**
      * Delete the user's account.
+     *
+     * @param \Illuminate\Http\Request $request The incoming HTTP request with password confirmation
+     *
+     * @return \Illuminate\Http\RedirectResponse Returns redirect to homepage
+     *
+     * @throws \Illuminate\Auth\Validation\ValidationException If password validation fails
+     * @throws \Illuminate\Auth\Access\AuthorizationException If user is not authenticated
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $request->validate([
+        $request->validate(
+            [
             'password' => ['required', 'current_password'],
-        ]);
+            ]
+        );
 
         $user = $request->user();
 
