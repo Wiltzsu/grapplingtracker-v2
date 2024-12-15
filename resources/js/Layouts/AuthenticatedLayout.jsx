@@ -24,11 +24,33 @@ export default function AuthenticatedLayout({ header, children }) {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                { /* Dashboard nav link */ }
                                 <NavLink
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
                                 >
                                     Dashboard
+                                </NavLink>
+                                { /* Add new entry nav link */ }
+                                <NavLink
+                                    href={route('add')}
+                                    active={route().current('add')}
+                                >
+                                    Add
+                                </NavLink>
+                                { /* View entries nav link */ }
+                                <NavLink
+                                    href={route('view')}
+                                    active={route().current('view')}
+                                >
+                                    View
+                                </NavLink>
+                                { /* View stats nav link */ }
+                                <NavLink
+                                    href={route('stats')}
+                                    active={route().current('stats')}
+                                >
+                                    Stats
                                 </NavLink>
                             </div>
                         </div>
