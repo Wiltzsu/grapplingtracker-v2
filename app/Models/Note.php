@@ -67,6 +67,11 @@ class Note extends Model
 
     /**
      * Get the user that owns the note.
+     *
+     * This relationship indicates that each note belongs to a single user,
+     * establishing the inverse of the one-to-many relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
     {
