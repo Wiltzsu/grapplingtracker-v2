@@ -52,6 +52,10 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Stats
                                 </NavLink>
+                                { /* View chirps */ }
+                                <NavLink href={route('chirps.index')} active={route().current('chirps.index')}>
+                                    Notes
+                                </NavLink>
                             </div>
                         </div>
 
@@ -155,6 +159,10 @@ export default function AuthenticatedLayout({ header, children }) {
                             active={route().current('dashboard')}
                         >
                             Dashboard
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink href={route('chirps.index')} active={route().current('chirps.index')}>
+                            Chirps
                         </ResponsiveNavLink>
                     </div>
 
