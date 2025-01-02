@@ -21,6 +21,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\AddController;
+use App\Http\Controllers\ViewController;
+use App\Http\Controllers\StatsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -54,27 +56,27 @@ Route::middleware('auth')->group(
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
         /**
-         * Add new item route.
+         * Route for adding new items. Refers to the AddController class and calls 'index' method,
+         * and generates a name for the route. Use route('view') in the code to generate routes.
          *
          * Uses AddController to render the page.
          */
         Route::get('/add', [AddController::class, 'index'])->name('add');
 
-        Route::get(
-            '/view', function () {
-                return Inertia::render('View');
-            }
-        )->name('view');
-        Route::get(
-            '/stats', function () {
-                return Inertia::render('Stats');
-            }
-        )->name('stats');
-        Route::get(
-            '/categories/create', function () {
-                return Inertia::render('Categories/Create');
-            }
-        )->name('categories.create');
+        /**
+         * Route for viewing items. Uses ViewController to render the page.
+         */
+        Route::get('/view', [ViewController::class, 'index'])->name('view');
+
+        /**
+         * Route for viewing stats. Uses StatsController to render the page.
+         */
+        Route::get('/stats', [StatsController::class, 'index'])->name('stats');
+
+        /**
+         * Route for rendering create category page.
+         */
+        Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
     }
 );
 

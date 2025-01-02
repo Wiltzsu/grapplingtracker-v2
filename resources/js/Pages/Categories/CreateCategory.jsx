@@ -1,5 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
+import CancelIcon from '@/../../resources/svg/cancel.svg';
 
 export default function Create() {
     return (
@@ -24,11 +25,16 @@ export default function Create() {
                                     >
                                         Add
                                     </Link>
-                                    <span className="text-gray-600">|</span>
+                                    <span className="text-red-900">|</span>
                                     <span>Category</span>
+                                    <img
+                                        src={CancelIcon}
+                                        alt="Cancel"
+                                        className="h-5 w-5 cursor-pointer"
+                                        onClick={() => window.history.back()}
+                                    />
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

@@ -9,10 +9,13 @@ use Inertia\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\RedirectResponse;
 
+/**
+ * Handles chirp-related operations.
+ */
 class ChirpController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of chirps.
      */
     public function index(): Response
     {
@@ -25,7 +28,7 @@ class ChirpController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new chirp.
      */
     public function create()
     {
@@ -33,7 +36,7 @@ class ChirpController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created chirp.
      */
     public function store(Request $request): RedirectResponse
     {
@@ -47,7 +50,7 @@ class ChirpController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified chirp.
      */
     public function show(Chirp $chirp)
     {
@@ -55,7 +58,7 @@ class ChirpController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified chirp.
      */
     public function edit(Chirp $chirp)
     {
@@ -63,7 +66,7 @@ class ChirpController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified chirp.
      */
     public function update(Request $request, Chirp $chirp): RedirectResponse
     {
@@ -79,9 +82,9 @@ class ChirpController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified chirp.
      */
-    public function destroy(Chirp $chirp)
+    public function destroy(Chirp $chirp): RedirectResponse
     {
         Gate::authorize('delete', $chirp);
 

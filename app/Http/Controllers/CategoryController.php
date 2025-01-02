@@ -7,29 +7,31 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
+/**
+ * Handles all category-related operations.
+ */
 class CategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of categories.
      */
     public function index(): Response
     {
         return Inertia::render('Chirps/Index', [
             //
         ]);
-
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new category.
      */
-    public function create()
+    public function create(): Response
     {
-        //
+        return Inertia::render('Categories/CreateCategory');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created category.
      */
     public function store(Request $request)
     {
@@ -37,7 +39,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified category.
      */
     public function show(Category $category)
     {
@@ -45,7 +47,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified category.
      */
     public function edit(Category $category)
     {
@@ -53,7 +55,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified category.
      */
     public function update(Request $request, Category $category)
     {
@@ -61,7 +63,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified category.
      */
     public function destroy(Category $category)
     {

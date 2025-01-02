@@ -1,20 +1,41 @@
 <?xml version="1.0"?>
 <ruleset name="CustomStandard">
-    <description>Custom coding standard based on PEAR with some exclusions.</description>
+    <description>Custom coding standard based on PSR-12 with some exclusions.</description>
 
-    <!-- Inherit the PEAR standard -->
-    <rule ref="PEAR"/>
+    <!-- Use PSR-12 as the base -->
+    <rule ref="PSR12"/>
 
-    <!-- Exclude specific rules from the PEAR standard -->
-    <rule ref="PEAR.NamingConventions.ValidVariableName.PrivateNoUnderscore">
-        <severity>0</severity>
-    </rule>
-
-    <rule ref="PEAR.NamingConventions.ValidFunctionName.PrivateNoUnderscore">
-        <severity>0</severity>
-    </rule>
-
+    <!-- Exclude specific rules -->
     <rule ref="Generic.Files.LineLength">
-      <severity>0</severity>
+        <severity>0</severity>
     </rule>
+
+    <!-- Disable all file comment requirements -->
+    <rule ref="Squiz.Commenting.FileComment">
+        <severity>0</severity>
+    </rule>
+
+    <rule ref="PEAR.Commenting.FileComment">
+        <severity>0</severity>
+    </rule>
+
+    <!-- Configure method comment rules -->
+    <rule ref="Squiz.Commenting.FunctionComment">
+        <severity>0</severity>
+    </rule>
+
+    <!-- Disable specific docblock requirements -->
+    <rule ref="Generic.Commenting.DocComment">
+        <exclude name="Generic.Commenting.DocComment.TagValueIndent"/>
+        <exclude name="Generic.Commenting.DocComment.NonParamGroup"/>
+        <exclude name="Generic.Commenting.DocComment.ParamNotFirst"/>
+    </rule>
+
+    <!-- Path to check -->
+    <file>app</file>
+
+    <!-- Exclude some directories -->
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/storage/*</exclude-pattern>
+    <exclude-pattern>*/cache/*</exclude-pattern>
 </ruleset>
