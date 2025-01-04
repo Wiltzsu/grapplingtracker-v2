@@ -1,7 +1,7 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 # Grappling Tracker (Laravel Version)
 
-**Grappling Tracker** is a web-based application tailored for martial arts enthusiasts to track and analyze their training sessions, techniques, and progress over time. This version is a complete refactor of the original project, now built with **Laravel** for improved scalability, maintainability, and modern features.
+**Grappling Tracker** is a web-based application tailored for martial arts enthusiasts to track and analyze their training sessions, techniques, and progress over time. This version is a complete refactor of the [original project](https://github.com/Wiltzsu/grapplingtracker), now built with **Laravel** for improved scalability, maintainability, and modern features.
 
 ---
 
