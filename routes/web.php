@@ -20,6 +20,7 @@ use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TechniqueController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\AddController;
 use App\Http\Controllers\ViewController;
@@ -83,6 +84,11 @@ Route::middleware('auth')->group(
          * Route for rendering create position page.
          */
         Route::get('/positions/create', [PositionController::class, 'create'])->name('positions.create');
+
+        /**
+         * Route for rendering create technique page.
+         */
+        Route::get('techniques/create', [TechniqueController::class, 'create'])->name('techniques.create');
     }
 );
 
