@@ -9,8 +9,8 @@ export default function Add() {
     const options = [
         { name: 'Category', route: 'categories.create' },
         { name: 'Class', route: 'trainingclasses.create' },
-        { name: 'Position', route: 'positions.create' },
         { name: 'Technique', route: 'techniques.create' },
+        { name: 'Position', route: 'positions.create' },
     ];
 
     return (

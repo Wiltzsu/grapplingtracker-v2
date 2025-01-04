@@ -33,7 +33,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate and save the category
+        $validated = $request->validate([
+            'category_name' => 'required|string|max:255',
+            'category_description' => 'nullable|string|max:255',
+        ]);
+
+        $category = new Category();
+        $category->category_name = $validated['category_name'];
+        $category->category_description = $validated['category_description'];
+        $category->save();
+
+        // Return to the same page with a success flash message
+        return back()->with('success', true);
     }
 
     /**
