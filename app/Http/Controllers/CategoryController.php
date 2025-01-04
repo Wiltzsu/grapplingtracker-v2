@@ -15,11 +15,9 @@ class CategoryController extends Controller
     /**
      * Display a listing of categories.
      */
-    public function index(): Response
+    public function index()
     {
-        return Inertia::render('Chirps/Index', [
-            //
-        ]);
+        //
     }
 
     /**

@@ -12,7 +12,9 @@
 
         <!-- Scripts -->
         @routes
+        <!-- Enables React's hot module replacement -->
         @viteReactRefresh
+        <!-- Tells Vite which entry points to load -->
         @vite(['resources/js/app.jsx', "resources/js/Pages/{$page['component']}.jsx"])
         @inertiaHead
     </head>
