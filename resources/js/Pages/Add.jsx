@@ -8,6 +8,7 @@ export default function Add() {
 
     const options = [
         { name: 'Category', route: 'categories.create' },
+        { name: 'Position', route: 'positions.create' },
     ];
 
     return (

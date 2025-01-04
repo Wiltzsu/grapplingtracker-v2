@@ -7,11 +7,11 @@ export default function Create() {
         <AuthenticatedLayout
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Add New Category
+                    Add new category
                 </h2>
             }
         >
-            <Head title="Add Category" />
+            <Head title="Add category" />
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
