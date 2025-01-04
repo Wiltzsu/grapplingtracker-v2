@@ -21,6 +21,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TechniqueController;
+use App\Http\Controllers\TrainingClassController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\AddController;
 use App\Http\Controllers\ViewController;
@@ -89,6 +90,11 @@ Route::middleware('auth')->group(
          * Route for rendering create technique page.
          */
         Route::get('techniques/create', [TechniqueController::class, 'create'])->name('techniques.create');
+
+        /**
+         * Route for rendering create training class page.
+         */
+        Route::get('trainingclasses/create', [TrainingClassController::class, 'create'])->name('trainingclasses.create');
     }
 );
 
