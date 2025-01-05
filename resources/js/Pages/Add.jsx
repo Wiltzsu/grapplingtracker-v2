@@ -6,6 +6,7 @@ import { Link } from '@inertiajs/react';
 export default function Add() {
     const [isOpen, setIsOpen] = useState(false);
 
+    // These routes lead to their respective controller's create-method
     const options = [
         { name: 'Category', route: 'categories.create' },
         { name: 'Class', route: 'trainingclasses.create' },
@@ -15,10 +16,16 @@ export default function Add() {
 
     return (
         <AuthenticatedLayout
+            // Navigation breadcrumb
             header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Add new entry
-                </h2>
+                <div className="flex items-center gap-4">
+                <Link
+                    href={route('add')}
+                    className="text-gray-600 hover:text-gray-900"
+                >
+                    Add
+                </Link>
+                </div>
             }
         >
             <Head title="Add New Entry" />
@@ -28,14 +35,9 @@ export default function Add() {
                     <div className="bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             <div className="mb-8 mt-5">
-                                <div className="flex items-center gap-4">
-                                    <Link
-                                        href={route('add')}
-                                        className="text-gray-600 hover:text-gray-900"
-                                    >
-                                        Add
-                                    </Link>
-                                </div>
+                            <h2 className="text-xl font-semibold leading-tight text-gray-800">
+                    Add new entry
+                </h2>
                             </div>
 
                             <div className="relative">

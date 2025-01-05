@@ -30,21 +30,42 @@ class CategoryController extends Controller
 
     /**
      * Store a newly created category.
+     *
+     * - Occurs when a user submits the form for creating a category
+     * - Validates the data
+     * - Creates a new Category model instance
      */
     public function store(Request $request)
     {
-        // Validate and save the category
+        // Validate the incoming request data
         $validated = $request->validate([
-            'category_name' => 'required|string|max:255',
-            'category_description' => 'nullable|string|max:255',
+            'category_name' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[\p{L}\p{N}\s\-_]+$/u'  // Letters, numbers, spaces, hyphens, underscores
+            ],
+            'category_description' => [
+                'nullable',
+                'string',
+                'max:255',
+                'regex:/^[\p{L}\p{N}\s\-_.,!?]+$/u'  // More permissive for descriptions
+            ],
         ]);
 
-        $category = new Category();
-        $category->category_name = $validated['category_name'];
-        $category->category_description = $validated['category_description'];
-        $category->save();
+        /* Creates a new Category instance and saves it to the database using mass assignment
+         *
+         * - Uses Category model's $fillable array to protect against mass assignment vulnerabilities
+         * - $validated array contains 'category_name' and 'category_description' from the form
+         *
+         * - Equivalent to:
+         *   $category = new Category();
+         *   $category->category_name = $validated['category_name'];
+         *   $category->category_description = $validated['category_description'];
+         *   $category->save();
+         */
+        Category::create($validated);
 
-        // Return to the same page with a success flash message
         return back()->with('success', true);
     }
 

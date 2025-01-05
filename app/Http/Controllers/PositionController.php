@@ -26,11 +26,44 @@ class PositionController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created position.
+     *
+     * - Occurs when a user submits the form for creating a position
+     * - Validates the data
+     * - Creates a new Position model instance
      */
     public function store(Request $request)
     {
-        //
+        // Validate the incoming request data
+        $validated = $request->validate([
+            'position_name' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[\p{L}\p{N}\s\-_]+$/u'  // Letters, numbers, spaces, hyphens, underscores
+            ],
+            'position_description' => [
+                'nullable',
+                'string',
+                'max:255',
+                'regex:/^[\p{L}\p{N}\s\-_.,!?]+$/u'  // More permissive for descriptions
+            ],
+        ]);
+
+        /* Creates a new Position instance and saves it to the database using mass assignment
+         *
+         * - Uses Position model's $fillable array to protect against mass assignment vulnerabilities
+         * - $validated array contains 'position_name' and 'position_description' from the form
+         *
+         * - Equivalent to:
+         *   $position = new Position();
+         *   $position->position_name = $validated['position_name'];
+         *   $position->position_description = $validated['position_description'];
+         *   $position->save();
+         */
+        Position::create($validated);
+
+        return back()->with('success', true);
     }
 
     /**

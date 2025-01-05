@@ -12,7 +12,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import SuccessPopup from '@/Components/SuccessPopup';
 
 export default function Create() {
-    // State to control the visibility of success popup. Default state is false
+    // State to manage success popup visibility (true = shown, false = hidden)
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
     /**
@@ -31,7 +31,7 @@ export default function Create() {
 
     /**
      * Form submission handler
-     * 1. Prevents default form submission
+     * 1. Prevents default form submission (full page reload)
      * 2. Posts data to the categories.store route
      * 3. On success:
      *      - Clears form fields
@@ -60,9 +60,23 @@ export default function Create() {
     return (
         <AuthenticatedLayout
             header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Add new category
-                </h2>
+                // Navigation breadcrumb
+                <div className="flex items-center gap-4">
+                <Link
+                    href={route('add')}
+                    className="text-gray-600 hover:text-gray-900"
+                >
+                    Add
+                </Link>
+                <span className="text-red-900">|</span>
+                <span>Category</span>
+                <img
+                    src={CancelIcon}
+                    alt="Cancel"
+                    className="h-5 w-5 cursor-pointer"
+                    onClick={() => window.history.back()}
+                />
+            </div>
             }
         >
             <Head title="Add category" />
@@ -71,29 +85,17 @@ export default function Create() {
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            {/* Navigation breadcrumb */}
                             <div className="mb-8 mt-5">
-                                <div className="flex items-center gap-4">
-                                    <Link
-                                        href={route('add')}
-                                        className="text-gray-600 hover:text-gray-900"
-                                    >
-                                        Add
-                                    </Link>
-                                    <span className="text-red-900">|</span>
-                                    <span>Category</span>
-                                    <img
-                                        src={CancelIcon}
-                                        alt="Cancel"
-                                        className="h-5 w-5 cursor-pointer"
-                                        onClick={() => window.history.back()}
-                                    />
-                                </div>
+                                <h2 className="text-xl font-semibold leading-tight text-gray-800">
+                                    Category
+                                </h2>
                             </div>
 
-                            {/* Category creation form */}
+                            {/* Category creation form
+                                - Sends the data to the CategoryController
+                            */}
                             <form onSubmit={submit} className="mt-6 space-y-6 max-w-xl">
-                                {/* Category name field*/}
+                                {/* Category name field */}
                                 <div>
                                     <InputLabel htmlFor="category_name" value="Category name" />
                                     <TextInput
@@ -136,7 +138,7 @@ export default function Create() {
             {/*
                 SuccessPopup component with props:
                 - isVisible: boolean - Controls whether the popup is shown or hidden
-                - onClose: function - Handler that hides popup and redirects to add page
+                - onClose: function - Handler that hides the popup and redirects to add-page
                 - message: string - Success message to display to the user
             */}
             <SuccessPopup
