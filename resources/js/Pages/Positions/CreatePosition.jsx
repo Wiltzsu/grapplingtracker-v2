@@ -12,11 +12,12 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import SuccessPopup from '@/Components/SuccessPopup';
 
 export default function Create() {
-    // State to manage success popup visibility (true = shown, false = hidden)
+    // State to manage form submit success popup visibility (true = shown, false = hidden)
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
     /**
      * useForm is an Inertia hook that manages form state
+     *
      * - data:          contains form field values
      * - setData:       function to update form fields
      * - post:          function to submit the form
@@ -31,6 +32,7 @@ export default function Create() {
 
     /**
      * Form submission handler
+     *
      * 1. Prevents default form submission (full page reload)
      * 2. Posts data to the categories.store route
      * 3. On success:
@@ -85,48 +87,50 @@ export default function Create() {
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            <div className="mb-8 mt-5">
-                                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                                    Position
-                                </h2>
+                            <div className="mb-8 mt-5 flex justify-center">
+                                <div className="w-[600px]">
+                                    <h2 className="text-xl font-semibold leading-tight text-gray-800">
+                                        Position
+                                    </h2>
 
-                                {/* Position creation form */}
-                                <form onSubmit={submit} className="mt-6 space-y-6 max-w-xl">
-                                    {/* Position name field */}
-                                    <div>
-                                        <InputLabel htmlFor="position_name" value="Position name" />
-                                        <TextInput
-                                            id="position_name"
-                                            type="text"
-                                            name="position_category"
-                                            value={data.position_name}
-                                            className="mt-1 block w-full"
-                                            isFocused={true}
-                                            onChange={(e) => setData('position_name', e.target.value)}
-                                            required
-                                        />
-                                        <InputError message={errors.position_name} className="mt-2" />
-                                    </div>
+                                    {/* Position creation form */}
+                                    <form onSubmit={submit} className="mt-6 space-y-6">
+                                        {/* Position name field */}
+                                        <div>
+                                            <InputLabel htmlFor="position_name" value="Position name" />
+                                            <TextInput
+                                                id="position_name"
+                                                type="text"
+                                                name="position_category"
+                                                value={data.position_name}
+                                                className="mt-1 block w-full"
+                                                isFocused={true}
+                                                onChange={(e) => setData('position_name', e.target.value)}
+                                                required
+                                            />
+                                            <InputError message={errors.position_name} className="mt-2" />
+                                        </div>
 
-                                    {/* Position description field */}
-                                    <div>
-                                        <InputLabel htmlFor="position_description" value="Description (optional)" />
-                                        <TextInput
-                                            id="position_description"
-                                            type="text"
-                                            name="position_description"
-                                            value={data.position_description}
-                                            className="mt-1 block w-full"
-                                            onChange={(e) => setData('position_description', e.target.value)}
-                                        />
-                                        <InputError message={errors.position_description} className="mt-2" />
-                                    </div>
+                                        {/* Position description field */}
+                                        <div>
+                                            <InputLabel htmlFor="position_description" value="Description (optional)" />
+                                            <TextInput
+                                                id="position_description"
+                                                type="text"
+                                                name="position_description"
+                                                value={data.position_description}
+                                                className="mt-1 block w-full"
+                                                onChange={(e) => setData('position_description', e.target.value)}
+                                            />
+                                            <InputError message={errors.position_description} className="mt-2" />
+                                        </div>
 
-                                    {/* Submit button */}
-                                    <div className="flex items-center gap-4">
-                                        <PrimaryButton disabled={processing}>Save Position</PrimaryButton>
-                                    </div>
-                                </form>
+                                        {/* Submit button */}
+                                        <div className="flex items-center gap-4">
+                                            <PrimaryButton disabled={processing}>Save Position</PrimaryButton>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
