@@ -97,7 +97,7 @@ export default function Create() {
                                     <form onSubmit={submit} className="mt-6 space-y-6">
                                         {/* Category name field */}
                                         <div>
-                                            <InputLabel htmlFor="category_name" value="Category name" />
+                                            <InputLabel htmlFor="category_name" value={<>Category name <span className="text-red-500">*</span></>} />
                                             <TextInput
                                                 id="category_name"
                                                 type="text"
@@ -113,7 +113,7 @@ export default function Create() {
 
                                         {/* Category description field */}
                                         <div>
-                                            <InputLabel htmlFor="category_description" value="Description (optional)" />
+                                            <InputLabel htmlFor="category_description" value="Description" />
                                             <TextInput
                                                 id="category_description"
                                                 type="text"

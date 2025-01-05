@@ -1,5 +1,9 @@
+// Core Inertia and Layout imports
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
+import { useState } from 'react';
+
+// UI components
 import CancelIcon from '@/../../resources/svg/cancel.svg';
 
 export default function Create() {

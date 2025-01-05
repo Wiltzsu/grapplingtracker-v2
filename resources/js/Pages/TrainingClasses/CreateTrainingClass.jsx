@@ -113,6 +113,7 @@ export default function Create() {
                                                 isFocused={true}
                                                 onChange={(e) => setData('instructor', e.target.value)}
                                             />
+                                            <InputError message={errors.instructor} className="mt-2" />
                                         </div>
 
                                         {/* Training class location */}
@@ -128,6 +129,7 @@ export default function Create() {
                                                 onChange={(e) => setData('location', e.target.value)}
                                                 required
                                             />
+                                            <InputError message={errors.location} className="mt-2" />
                                         </div>
 
                                         {/* Training class date */}
@@ -143,6 +145,7 @@ export default function Create() {
                                                 onChange={(e) => setData('class_date', e.target.value)}
                                                 required
                                             />
+                                            <InputError message={errors.class_date} className="mt-2" />
                                         </div>
 
                                         {/* Training class description */}
@@ -157,6 +160,7 @@ export default function Create() {
                                                 isFocused={true}
                                                 onChange={(e) => setData('class_description', e.target.value)}
                                             />
+                                            <InputError message={errors.class_description} className="mt-2" />
                                         </div>
 
                                         {/* Training class duration */}
@@ -172,6 +176,7 @@ export default function Create() {
                                                 onChange={(e) => setData('class_duration', e.target.value)}
                                                 required
                                             />
+                                            <InputError message={errors.class_duration} className="mt-2" />
                                         </div>
 
                                         {/* Training class round amount */}
@@ -186,6 +191,7 @@ export default function Create() {
                                                 isFocused={true}
                                                 onChange={(e) => setData('rounds', e.target.value)}
                                             />
+                                            <InputError message={errors.rounds} className="mt-2" />
                                         </div>
 
                                         {/* Training class round duration */}
@@ -200,6 +206,7 @@ export default function Create() {
                                                 isFocused={true}
                                                 onChange={(e) => setData('round_duration', e.target.value)}
                                             />
+                                            <InputError message={errors.round_duration} className="mt-2" />
                                         </div>
 
                                         {/* Submit button */}
