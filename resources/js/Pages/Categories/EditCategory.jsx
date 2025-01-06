@@ -55,7 +55,7 @@ export default function EditCategory({ category }) {
                         Categories
                     </Link>
                     <span className="text-purple-900">|</span>
-                    <span>Edit Category</span>
+                    <span>Edit {data.category_name}</span>
                     <img
                         src={CancelIcon}
                         alt="Cancel"
