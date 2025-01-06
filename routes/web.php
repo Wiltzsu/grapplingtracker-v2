@@ -57,7 +57,7 @@ Route::middleware('auth')->group(function () {
         'techniques' => TechniqueController::class,
         'trainingclasses' => TrainingClassController::class,
         'chirps' => ChirpController::class,
-    ], ['only' => ['index', 'create', 'store', 'update', 'destroy']]);
+    ], ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
 });
 
 require __DIR__ . '/auth.php';

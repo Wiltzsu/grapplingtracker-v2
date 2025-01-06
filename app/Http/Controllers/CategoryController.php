@@ -14,10 +14,16 @@ class CategoryController extends Controller
 {
     /**
      * Display a listing of categories.
+     *
+     * - 'categories' is a prop that is passed to the Index component
+     * - latest() orders the results by creation date
+     * - get() executes the query and retrieves all records
      */
     public function index()
     {
-        //
+        return Inertia::render('Categories/Index', [
+            'categories' => Category::latest()->get()
+        ]);
     }
 
     /**
@@ -74,15 +80,22 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return Inertia::render('Categories/Show', [
+            'category' => $category->where('category_id', $category->category_id)
+                ->first()
+        ]);
     }
 
     /**
      * Show the form for editing the specified category.
+     *
+     * 'category' is the prop passed to EditCategory.jsx.
      */
     public function edit(Category $category)
     {
-        //
+        return Inertia::render('Categories/EditCategory', [
+            'category' => $category
+        ]);
     }
 
     /**
@@ -90,7 +103,14 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $validated = $request->validate([
+            'category_name' => 'required|string|max:255',
+            'category_description' => 'nullable|string|max:255',
+        ]);
+
+        $category->update($validated);
+
+        return back()->with('success', true);
     }
 
     /**
@@ -98,6 +118,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+
+        return redirect(route('categories.index'));
     }
 }
