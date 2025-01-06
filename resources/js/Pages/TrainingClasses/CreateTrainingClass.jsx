@@ -69,22 +69,21 @@ export default function Create() {
         <AuthenticatedLayout
             header={
                 <div className="flex items-center gap-4">
-                <Link
-                    href={route('add')}
-                    className="text-gray-600 hover:text-gray-900"
-                >
-                    Add
-                </Link>
-                <span className="text-red-900">|</span>
-                <span>Class</span>
-                <img
-                    src={CancelIcon}
-                    alt="Cancel"
-                    className="h-5 w-5 cursor-pointer"
-                    onClick={() => window.history.back()}
-                />
-            </div>
-
+                    <Link
+                        href={route('add')}
+                        className="text-gray-600 hover:text-gray-900"
+                    >
+                        Add
+                    </Link>
+                    <span className="text-red-900">|</span>
+                    <span>Class</span>
+                    <img
+                        src={CancelIcon}
+                        alt="Cancel"
+                        className="h-5 w-5 cursor-pointer"
+                        onClick={() => window.history.back()}
+                    />
+                </div>
             }
         >
             <Head title="Add training class" />
@@ -230,7 +229,7 @@ export default function Create() {
             <SuccessPopup
                 isVisible={showSuccessPopup}
                 onClose={closePopup}
-                message="Position added succesfully!"
+                message="Training class added succesfully!"
             />
         </AuthenticatedLayout>
     );

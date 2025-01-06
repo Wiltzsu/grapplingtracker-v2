@@ -30,7 +30,49 @@ class TrainingClassController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the incoming request data
+        $validated = $request->validate([
+            'instructor' => [
+                'nullable',
+                'string',
+                'max:255',
+                'regex:/^[\p{L}\p{N}\s\-_]+$/u'  // Letters, numbers, spaces, hyphens, underscores
+            ],
+            'location' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[\p{L}\p{N}\s\-_]+$/u'
+            ],
+            'class_date' => [
+                'required',
+                'date'
+            ],
+            'class_description' => [
+                'nullable',
+                'string',
+                'max:255',
+                'regex:/^[\p{L}\p{N}\s\-_]+$/u'
+            ],
+            'class_duration' => [
+                'required',
+                'integer',
+                'min:1'
+            ],
+            'rounds' => [
+                'nullable',
+                'integer',
+                'min:1'
+            ],
+        ]);
+
+        // Add user_id to the validated data
+        $validated['user_id'] = auth()->id();
+
+        // Create the training class
+        TrainingClass::create($validated);
+
+        return back()->with('success', true);
     }
 
     /**
