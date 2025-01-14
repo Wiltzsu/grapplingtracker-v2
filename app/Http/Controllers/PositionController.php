@@ -6,15 +6,26 @@ use App\Models\Position;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Log;
 
+/**
+ * Handles all position-related operations.
+ */
 class PositionController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of positions.
+     *
+     * - 'categories' is a prop that is passed to the Index component
+     * - latest() orders the results by creation date
+     * - get() executes the query and retrieves all records
      */
     public function index()
     {
-        //
+        return Inertia::render('Positions/Index', [
+            'positions' => Position::latest()->get()
+        ]);
     }
 
     /**
@@ -68,6 +79,9 @@ class PositionController extends Controller
 
     /**
      * Display the specified resource.
+     *
+     * - Laravel's Route Model fetches the whole Position model instance
+     * - The $position parameter contains the full model
      */
     public function show(Position $position)
     {
@@ -76,25 +90,52 @@ class PositionController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
+     * 'position' is the prop passed to EditPosition.jsx
      */
     public function edit(Position $position)
     {
-        //
+        return Inertia::render('Positions/EditPosition', [
+            'position' => $position
+        ]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified position.
      */
     public function update(Request $request, Position $position)
     {
-        //
+        // Validate the request
+        $validated = $request->validate([
+            'position_name' => 'required|string|max:255',
+            'position_description' => 'nullable|string|max:255'
+        ]);
+
+        // Update database record
+        $position->update($validated);
+
+        return back()->with('success', true);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified position.
      */
     public function destroy(Position $position)
     {
-        //
+        try {
+            if ($position->techniques()->exists()) {
+                return back()->withErrors([
+                    'error' => 'Cannot delete position because it is being used by one or more techniques.'
+                ]);
+            }
+
+            $position->delete();
+            return redirect(route('positions.index'));
+
+        } catch (QueryException $e) {
+            return back()->withErrors([
+                'error' => 'An unexpected error occurred while deleting the position.'
+            ]);
+        }
     }
 }
