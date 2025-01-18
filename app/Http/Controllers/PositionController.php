@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Position;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Inertia\Response;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Handles all position-related operations.
@@ -131,7 +129,6 @@ class PositionController extends Controller
 
             $position->delete();
             return redirect(route('positions.index'));
-
         } catch (QueryException $e) {
             return back()->withErrors([
                 'error' => 'An unexpected error occurred while deleting the position.'

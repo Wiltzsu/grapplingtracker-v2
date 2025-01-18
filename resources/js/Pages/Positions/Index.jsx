@@ -58,7 +58,7 @@ export default function Index({ positions }) {
     // Cancels the delete operation
     const cancelDelete = () => {
         setShowConfirmation(false);                 // Hides the confirmation popup
-        setCategoryToDelete(null);                  // Clears the position that was going to be deleted
+        setPositionToDelete(null);                  // Clears the position that was going to be deleted
     };
 
     // Called after successful deletion and when the user closes the success popup
@@ -98,83 +98,77 @@ export default function Index({ positions }) {
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="bg-white shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                                <div className="mb-8 mt-5 flex justify-between items-center">
-                                    <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                                        Positions
-                                    </h2>
-                                    <Link
-                                        href={route('positions.create')}
-                                        className="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900"
-                                    >
-                                        Add New Position
-                                    </Link>
-                                </div>
+                    <div className="mb-8 mt-5 flex justify-between items-center">
+                        <h2 className="text-xl font-semibold leading-tight text-gray-800">
+                            Positions
+                        </h2>
+                        <Link
+                            href={route('positions.create')}
+                            className="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900"
+                        >
+                            Add New Position
+                        </Link>
+                    </div>
 
-                            {positions && positions.length > 0 ? (
-                                <div className="mt-6 divide-y">
-                                    <div className="grid grid-cols-6 w-full gap-4 mb-4">
-                                        <h2 className="text-lg font-semibold col-span-2">
-                                            Name
-                                        </h2>
-                                        <h2 className="text-lg font-semibold col-span-4">
-                                            Description
-                                        </h2>
-                                    </div>
-
-                                    {positions.map((position) => (
-                                        <div
-                                            key={position.position_id}
-                                            className="flex justify-between items-center py-4"
-                                        >
-                                            <div className="grid grid-cols-6 w-full gap-4 relative">
-                                                <h3 className="text-lg font-semibold col-span-2">
-                                                    {position.position_name}
-                                                </h3>
-                                                <p className="text-gray-600 col-span-3">
-                                                    {position.position_description}
-                                                </p>
-                                                <div className="flex justify-end">
-                                                    <Dropdown className="z-[9999]">
-                                                        <Dropdown.Trigger>
-                                                            <button>
-                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                                                    <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                                                </svg>
-                                                            </button>
-                                                        </Dropdown.Trigger>
-                                                        <Dropdown.Content>
-                                                            <Link
-                                                                href={route('positions.edit', position.position_id)}
-                                                                className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
-                                                            >
-                                                                Edit
-                                                            </Link>
-                                                            <Dropdown.Link
-                                                                as="button"
-                                                                onClick={(e) => {
-                                                                    e.preventDefault();
-                                                                    e.stopPropagation();
-                                                                    confirmDelete(position);
-                                                                }}
-                                                            >
-                                                                Delete
-                                                            </Dropdown.Link>
-                                                        </Dropdown.Content>
-                                                    </Dropdown>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <p className="text-gray-500 text-center mt-6">
-                                    No positions found. Create one to get started.
-                                </p>
-                            )}
+                    <div className="bg-white rounded-lg shadow">
+                        {/* Header */}
+                        <div className="px-6 py-4 border-b">
+                            <div className="grid grid-cols-12 gap-4">
+                                <div className="col-span-3 font-medium">Name</div>
+                                <div className="col-span-8 font-medium">Description</div>
+                                <div className="col-span-1"></div>
+                            </div>
                         </div>
+
+                        {/* List */}
+                        {positions && positions.length > 0 ? (
+                            <div className="space-y-2 py-2">
+                                {positions.map((position) => (
+                                    <div
+                                        key={position.position_id}
+                                        className="px-6 py-4 hover:bg-gray-50"
+                                    >
+                                        <div className="grid grid-cols-12 gap-4 items-center">
+                                            <div className="col-span-3">{position.position_name}</div>
+                                            <div className="col-span-8">{position.position_description}</div>
+                                            <div className="col-span-1">
+                                                <Dropdown>
+                                                    <Dropdown.Trigger>
+                                                        <button>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                                                <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                            </svg>
+                                                        </button>
+                                                    </Dropdown.Trigger>
+                                                    <Dropdown.Content>
+                                                        <Link
+                                                            href={route('positions.edit', position.position_id)}
+                                                            className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100"
+                                                        >
+                                                            Edit
+                                                        </Link>
+                                                        <Dropdown.Link
+                                                            as="button"
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                e.stopPropagation();
+                                                                confirmDelete(position);
+                                                            }}
+                                                        >
+                                                            Delete
+                                                        </Dropdown.Link>
+                                                    </Dropdown.Content>
+                                                </Dropdown>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="px-6 py-4 text-gray-500 text-center">
+                                No positions found. Create one to get started.
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TrainingClass extends Model
 {
@@ -18,4 +19,11 @@ class TrainingClass extends Model
     ];
 
     protected $primaryKey = 'class_id';
+
+
+    // Relationship that tells a Position can have many Techniques.
+    public function techniques(): HasMany
+    {
+        return $this->hasMany(Technique::class, 'class_id');
+    }
 }

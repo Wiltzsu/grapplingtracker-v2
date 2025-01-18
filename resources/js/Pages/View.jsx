@@ -32,14 +32,16 @@ export default function View() {
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                    <div className="mb-8 mt-5">
+                        <h2 className="text-xl font-semibold leading-tight text-gray-800">
+                            View items
+                        </h2>
+                    </div>
+
                     <div className="bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             <div className="mb-8 mt-5 flex justify-center">
                                 <div className="w-[600px]">
-                                    <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                                        View items
-                                    </h2>
-
                                     <div className="relative mt-6">
                                         <button
                                             onClick={() => setIsOpen(!isOpen)}

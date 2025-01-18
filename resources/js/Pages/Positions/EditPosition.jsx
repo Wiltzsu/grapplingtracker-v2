@@ -16,6 +16,8 @@ import SuccessPopup from '@/Components/SuccessPopup';
  * {{ position }} is a prop from CategoryController's edit method.
  */
 export default function EditPosition({ position }) {
+    console.log('Position Class Data:', position);
+
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
     const { data, setData, put, processing, errors } = useForm({
