@@ -100,53 +100,43 @@ export default function Index({ training_classes }) {
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="mb-8 mt-5 flex justify-between items-center">
                         <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                            Classes
+                            Training Classes
                         </h2>
                         <Link
                             href={route('trainingclasses.create')}
-                            className="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900"
+                            className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         >
-                            Add New Training Class
+                            Add New Class
                         </Link>
                     </div>
 
-                    {training_classes && training_classes.length > 0 ? (
-                        <div className="mt-6 space-y-4">
-                            {training_classes.map((training_class) => (
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                        {training_classes && training_classes.length > 0 ? (
+                            training_classes.map((training_class) => (
                                 <div
                                     key={training_class.class_id}
-                                    className="rounded-lg border border-gray-200 p-4 shadow-sm bg-gray-50"
+                                    className="bg-white rounded-lg shadow-sm p-6 hover:bg-gray-50 transition-colors duration-200"
                                 >
-                                    <div className="flex justify-between items-start mb-4 ">
-                                        <div className="space-y-2">
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-gray-500">Instructor</span>
-                                                <span className="text-gray-900">{training_class.instructor}</span>
+                                    <div className="flex justify-between items-start">
+                                        <div className="flex items-center gap-4 mb-4">
+                                            <div className="p-2 bg-indigo-100 rounded-lg">
+                                                <svg
+                                                    className="w-6 h-6 text-indigo-600"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    stroke="currentColor"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth={1.5}
+                                                        d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+                                                    />
+                                                </svg>
                                             </div>
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-gray-500">Description</span>
-                                                <span className="text-gray-900">{training_class.class_description}</span>
-                                            </div>
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-gray-500">Location</span>
-                                                <span className="text-gray-900">{training_class.location}</span>
-                                            </div>
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-gray-500">Date</span>
-                                                <span className="text-gray-900">{training_class.class_date}</span>
-                                            </div>
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-gray-500">Duration</span>
-                                                <span className="text-gray-900">{training_class.class_duration}</span>
-                                            </div>
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-gray-500">Rounds</span>
-                                                <span className="text-gray-900">{training_class.rounds}</span>
-                                            </div>
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-gray-500">Round duration</span>
-                                                <span className="text-gray-900">{training_class.round_duration}</span>
-                                            </div>
+                                            <h3 className="text-lg font-medium text-gray-900">
+                                                {training_class.location}
+                                            </h3>
                                         </div>
                                         <Dropdown className="z-[9999]">
                                             <Dropdown.Trigger>
@@ -176,14 +166,40 @@ export default function Index({ training_classes }) {
                                             </Dropdown.Content>
                                         </Dropdown>
                                     </div>
+
+                                    <div className="grid grid-cols-2 gap-3 mt-4">
+                                        <div className="flex flex-col">
+                                            <span className="text-sm text-gray-500">Instructor</span>
+                                            <span className="text-sm font-medium text-gray-900">{training_class.instructor}</span>
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <span className="text-sm text-gray-500">Date</span>
+                                            <span className="text-sm font-medium text-gray-900">{training_class.class_date}</span>
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <span className="text-sm text-gray-500">Duration</span>
+                                            <span className="text-sm font-medium text-gray-900">{training_class.class_duration}</span>
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <span className="text-sm text-gray-500">Rounds</span>
+                                            <span className="text-sm font-medium text-gray-900">{training_class.rounds} × {training_class.round_duration}</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-4">
+                                        <span className="text-sm text-gray-500">Description</span>
+                                        <p className="text-sm text-gray-900 mt-1">
+                                            {training_class.class_description || 'No description provided'}
+                                        </p>
+                                    </div>
                                 </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <p className="text-gray-500 text-center mt-6">
-                            No training classes found. Create one to get started.
-                        </p>
-                    )}
+                            ))
+                        ) : (
+                            <div className="col-span-full text-center py-12 bg-white rounded-lg">
+                                <p className="text-gray-500">No training classes found. Create one to get started.</p>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 
