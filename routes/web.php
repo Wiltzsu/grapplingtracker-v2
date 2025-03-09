@@ -28,6 +28,7 @@ use App\Http\Controllers\{
     WelcomeController
 };
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Public routes.
@@ -58,6 +59,24 @@ Route::middleware('auth')->group(function () {
         'trainingclasses' => TrainingClassController::class,
         'chirps' => ChirpController::class,
     ], ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
+
+    // Instead of using Route::resource, let's explicitly define the destroy route
+    Route::delete('/trainingclasses/{trainingclass}', [TrainingClassController::class, 'destroy'])
+        ->name('trainingclasses.destroy');
+
+    // Keep other resource routes
+    Route::resource('trainingclasses', TrainingClassController::class)
+        ->except(['destroy']);
+
+    // Add this temporary debug route to verify the route definition
+    Route::get('/debug/training-class-route', function() {
+        $route = Route::getRoutes()->getByName('trainingclasses.destroy');
+        Log::info('Training class destroy route:', [
+            'uri' => $route->uri,
+            'parameters' => $route->parameterNames,
+            'methods' => $route->methods
+        ]);
+    });
 });
 
 require __DIR__ . '/auth.php';

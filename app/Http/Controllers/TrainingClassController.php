@@ -6,6 +6,7 @@ use App\Models\TrainingClass;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Log;
 
 class TrainingClassController extends Controller
 {
@@ -70,6 +71,11 @@ class TrainingClassController extends Controller
                 'min:1'
             ],
             'rounds' => [
+                'nullable',
+                'integer',
+                'min:1'
+            ],
+            'round_duration' => [
                 'nullable',
                 'integer',
                 'min:1'
@@ -155,15 +161,50 @@ class TrainingClassController extends Controller
     /**
      * Remove the specified training class.
      */
-    public function destroy(TrainingClass $trainingClass)
+    public function destroy(TrainingClass $trainingclass)
     {
+        Log::info('Destroy method called', [
+            'route_params' => request()->route()->parameters(),
+            'training_class' => $trainingclass->toArray(),
+            'class_id' => $trainingclass->class_id
+        ]);
+
         try {
-            $trainingClass->delete();
-            return redirect(route('trainingclasses.index'));
-        } catch (QueryException $e) {
-            return back()->withErrors([
-                'error' => 'An unexpected error occurred while deleting the class.'
+            // Verify we have the correct instance
+            if (!$trainingclass->exists) {
+                Log::error('Training class not found', ['id' => $trainingclass->class_id]);
+                return back()->with('error', 'Training class not found');
+            }
+
+            // Check for related techniques
+            if ($trainingclass->techniques()->exists()) {
+                Log::info('Class has techniques', [
+                    'class_id' => $trainingclass->class_id,
+                    'technique_count' => $trainingclass->techniques()->count()
+                ]);
+                return back()->with('error', 'Cannot delete class with associated techniques');
+            }
+
+            // Perform deletion
+            $deleted = $trainingclass->delete();
+            
+            Log::info('Delete operation result', [
+                'class_id' => $trainingclass->class_id,
+                'deleted' => $deleted
             ]);
+
+            if ($deleted) {
+                return back()->with('success', true);
+            }
+
+            return back()->with('error', 'Failed to delete the class');
+
+        } catch (QueryException $e) {
+            Log::error('Delete operation failed', [
+                'error' => $e->getMessage(),
+                'code' => $e->getCode()
+            ]);
+            return back()->with('error', 'Database error occurred');
         }
     }
 }

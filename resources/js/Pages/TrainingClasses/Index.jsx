@@ -21,35 +21,51 @@ export default function Index({ training_classes }) {
     // State management for delete confirmation and success popup
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-    const [showErrorPopup, setShowErrorPopup]     = useState(false);
+    const [showErrorPopup, setShowErrorPopup] = useState(false);
     const [trainingClassToDelete, setTrainingClassToDelete] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
 
-    const { errors } = usePage().props;
+    const { flash } = usePage().props;
 
     // Handler function for training class deletion
     const confirmDelete = (training_class) => {
-        setTrainingClassToDelete(training_class);    // Sets the training class to delete based on id
-        setShowConfirmation(true);              // Shows the confirmation popup
+        console.log('Confirming delete for class:', training_class);
+        setTrainingClassToDelete(training_class);
+        setShowConfirmation(true);
     };
 
-    // Executes the delete operation via the Inertia router
+    /**
+     * Handler function for when user confirms deletion
+     */
     const handleDelete = () => {
+        // Send DELETE request to the server using Inertia router
+        // route('trainingclasses.destroy', id) generates the URL like /trainingclasses/1
         router.delete(route('trainingclasses.destroy', trainingClassToDelete.class_id), {
+            preserveScroll: true, // Maintain scroll position after request
             onSuccess: (page) => {
-                // Check if there are errors in the response
-                if (page.props.errors && page.props.errors.error) {
-                    setShowConfirmation(false);
-                    setTrainingClassToDelete(null);
+                // Hide the confirmation popup
+                setShowConfirmation(false);
+                // Clear the class that was being deleted from state
+                setTrainingClassToDelete(null);
+                
+                // Check if there's an error message in the response
+                if (page.props.flash && page.props.flash.error) {
+                    // If there's an error, store it and show error popup
+                    setErrorMessage(page.props.flash.error);
                     setShowErrorPopup(true);
                 } else {
-                    setShowConfirmation(false);
-                    setTrainingClassToDelete(null);
+                    // If successful, show success popup
                     setShowSuccessPopup(true);
                 }
             },
-            onError: () => {
+            // If the request fails (network error, etc)
+            onError: (errors) => {
+                console.error('Delete failed:', errors);
+                // Hide the confirmation popup
                 setShowConfirmation(false);
+                // Clear the class that was being deleted
                 setTrainingClassToDelete(null);
+                // Show error popup
                 setShowErrorPopup(true);
             }
         });
@@ -69,9 +85,8 @@ export default function Index({ training_classes }) {
 
     // Called after showing user the error popup
     const closeErrorPopup = () => {
-        setShowErrorPopup(false);                           // Hides the error popup
-        router.visit(route('trainingclasses.index'));       // Redirects user back to the edit view
-    }
+        setShowErrorPopup(false);
+    };
 
     return (
         <AuthenticatedLayout
@@ -219,7 +234,7 @@ export default function Index({ training_classes }) {
             <ErrorPopup
                 isVisible={showErrorPopup}
                 onClose={() => setShowErrorPopup(false)}
-                message={errors?.error || "An error occurred while deleting the class"}
+                message={errorMessage || "An error occurred while deleting the class"}
             />
 
         </AuthenticatedLayout>

@@ -10,4 +10,7 @@ export default defineConfig({
         }),
         react(),
     ],
+    build: {
+        outDir: 'public/build', // Ensure this is pointing to the correct directory
+    },
 });
