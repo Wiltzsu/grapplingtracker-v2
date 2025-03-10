@@ -104,17 +104,21 @@ class TrainingClassController extends Controller
      *
      * 'training_class' is the prop passed to EditTrainingClass.jsx
      */
-    public function edit(TrainingClass $trainingClass)
+    public function edit(TrainingClass $trainingclass)
     {
+        \Log::info('Edit method called', [
+            'training_class' => $trainingclass->toArray()
+        ]);
+
         return Inertia::render('TrainingClasses/EditTrainingClass', [
-            'training_class' => $trainingClass
+            'training_class' => $trainingclass
         ]);
     }
 
     /**
      * Update the specified training class.
      */
-    public function update(Request $request, TrainingClass $trainingClass)
+    public function update(Request $request, TrainingClass $trainingclass)
     {
         // Validate the request
         $validated = $request->validate([
@@ -150,10 +154,15 @@ class TrainingClassController extends Controller
                 'integer',
                 'min:1'
             ],
+            'round_duration' => [
+                'nullable',
+                'integer',
+                'min:1'
+            ],
         ]);
 
         // Update the database record
-        $trainingClass->update($validated);
+        $trainingclass->update($validated);
 
         return back()->with('success', true);
     }
@@ -187,7 +196,7 @@ class TrainingClassController extends Controller
 
             // Perform deletion
             $deleted = $trainingclass->delete();
-            
+
             Log::info('Delete operation result', [
                 'class_id' => $trainingclass->class_id,
                 'deleted' => $deleted
