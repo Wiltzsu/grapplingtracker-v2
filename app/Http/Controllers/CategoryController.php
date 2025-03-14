@@ -22,7 +22,9 @@ class CategoryController extends Controller
     public function index()
     {
         return Inertia::render('Categories/Index', [
-            'categories' => Category::latest()->get()
+            'categories' => Category::where('user_id', auth()->id())
+                ->latest()
+                ->get()
         ]);
     }
 
@@ -58,6 +60,8 @@ class CategoryController extends Controller
                 'regex:/^[\p{L}\p{N}\s\-_.,!?]+$/u'  // More permissive for descriptions
             ],
         ]);
+
+        $validated['user_id'] = auth()->id();
 
         /* Creates a new Category instance and saves it to the database using mass assignment
          *

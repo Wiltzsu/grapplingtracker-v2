@@ -10,6 +10,7 @@ class Category extends Model
     protected $fillable = [
         'category_name',
         'category_description',
+        'user_id',
     ];
 
     // Specify that 'category_id' is the primary key instead of default 'id'

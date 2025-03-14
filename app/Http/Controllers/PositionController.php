@@ -22,7 +22,9 @@ class PositionController extends Controller
     public function index()
     {
         return Inertia::render('Positions/Index', [
-            'positions' => Position::latest()->get()
+            'positions' => Position::where('user_id', auth()->id())
+                ->latest()
+                ->get()
         ]);
     }
 
@@ -58,6 +60,9 @@ class PositionController extends Controller
                 'regex:/^[\p{L}\p{N}\s\-_.,!?]+$/u'  // More permissive for descriptions
             ],
         ]);
+
+        // Add the current user's ID to the validated data
+        $validated['user_id'] = auth()->id();
 
         /* Creates a new Position instance and saves it to the database using mass assignment
          *
