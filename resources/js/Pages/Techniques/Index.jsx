@@ -1,6 +1,13 @@
 // Core Inertia and Layout imports
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+/**
+ * Head: a component used to manage the document head (similar to HTML's <head> section)
+ * Link: A component that provides client-side navigation between pages
+ * router: A utility object that provides programmatic navigation methods
+ * usePage: A React hook that gives access to the current user's props and other Inertia-specific data
+ */
 import { Head, Link, router, usePage } from '@inertiajs/react';
+// useState: Fundamental React hook that allows you to add state management to functional components
 import { useState } from 'react';
 
 // UI Components
@@ -11,83 +18,84 @@ import SuccessPopup from '@/Components/SuccessPopup';
 import ErrorPopup from '@/Components/ErrorPopup';
 
 /**
- * Index Component - Displays and manages the training classes list
+ * Index Component - Displays and manages the techniques list
  *
- * @param {Array} training_classes - Array of training class object
+ * @param {Array} techniques - Array of technique objects
  *
- * {{ training_classes }} is a prop from TrainingClassController's index method
+ * {{ techniques }} is a prop from TechniqueController's index method
  */
-export default function Index({ training_classes }) {
-    // State management for delete confirmation and success popup
-    const [showConfirmation, setShowConfirmation] = useState(false);
-    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-    const [showErrorPopup, setShowErrorPopup] = useState(false);
-    const [trainingClassToDelete, setTrainingClassToDelete] = useState(null);
-    const [errorMessage, setErrorMessage] = useState('');
+export default function Index({ techniques }) {
+    /**
+     * State management for delete confirmation and success popup
+     * https://react.dev/reference/react/useState
+     */
+    const [showConfirmation, setShowConfirmation]   = useState(false);
+    const [showSuccessPopup, setShowSuccessPopup]   = useState(false);
+    const [showErrorPopup, setShowErrorPopup]       = useState(false);
+    const [techniqueToDelete, setTechniqueToDelete] = useState(null);
+    const [errorMessage, setErrorMessage]           = useState('');
 
+    /**
+     * Collects the errors and makes them accessible
+     * https://inertiajs.com/validation#error-handling
+     */
     const { flash } = usePage().props;
 
-    // Handler function for training class deletion
-    const confirmDelete = (training_class) => {
-        console.log('Confirming delete for class:', training_class);
-        setTrainingClassToDelete(training_class);
-        setShowConfirmation(true);
-    };
+    // Handler function for technique deletion
+    const confirmDelete = (technique) => {
+        setTechniqueToDelete(technique); // Sets the technique to delete based on id
+        setShowConfirmation(true);       // Shows the confirmation popup
+    }
 
     /**
      * Handler function for when user confirms deletion
      */
     const handleDelete = () => {
-        // Send DELETE request to the server using Inertia router
-        // route('trainingclasses.destroy', id) generates the URL like /trainingclasses/1
-        router.delete(route('trainingclasses.destroy', trainingClassToDelete.class_id), {
-            preserveScroll: true, // Maintain scroll position after request
+        /**
+         * Sends a DELETE request to the server using the Inertia router
+         * Generates the route URL like /techniques/1
+         */
+        router.delete(route('techniques.destroy', techniqueToDelete.techniques.id), {
+            preserveScroll: true, // Maintains scroll technique after request
             onSuccess: (page) => {
-                // Hide the confirmation popup
-                setShowConfirmation(false);
-                // Clear the class that was being deleted from state
-                setTrainingClassToDelete(null);
+                // Clear states
+                setShowConfirmation(false); // Hides the confirmation dialog
+                setTechniqueToDelete(null); // Clears the technique that was being deleted from the state
 
-                // Check if there's an error message in the response
-                if (page.props.flash && page.props.flash.error) {
-                    // If there's an error, store it and show error popup
-                    setErrorMessage(page.props.flash.error);
+                // Check if there are errors in the response
+                if (flash?.error) {
+                    setErrorMessage(flash.error);
                     setShowErrorPopup(true);
                 } else {
-                    // If successful, show success popup
-                    setShowSuccessPopup(true);
+                    setShowSuccessPopup(true); // Show success popup instead of just hiding confirmation
                 }
             },
-            // If the request fails (network error, etc)
-            onError: (errors) => {
-                console.error('Delete failed:', errors);
-                // Hide the confirmation popup
+            onError: () => {
                 setShowConfirmation(false);
-                // Clear the class that was being deleted
-                setTrainingClassToDelete(null);
-                // Show error popup
+                setTechniqueToDelete(null);
                 setShowErrorPopup(true);
             }
         });
     };
 
-    // Cancels the delete operation
+    /**
+     * Cancels the delete operation by resetting the confirmation dialog state
+     * and clearing the selected technique from memory.
+     */
     const cancelDelete = () => {
-        setShowConfirmation(false);                 // Hides the confirmation popup
-        setTrainingClassToDelete(null);             // Clears the training class that was going to be deleted
+        setShowConfirmation(false);
+        setTechniqueToDelete(null);
     };
 
-    // Called after successful deletion and when the user closes the success popup
+    /**
+     * Called after successful deletion and when the user closes the popup.
+     * Hides the success message and performs a full page refresh to
+     * ensure the techniques list is up-to-date.
+     */
     const closeSuccessPopup = () => {
-        setShowSuccessPopup(false);                         // Hides the success popup
-        router.visit(route('trainingclasses.index'));       // Refreshes the page to show updated training class list
-    };
-
-    // Called after showing user the error popup
-    const closeErrorPopup = () => {
-        setShowErrorPopup(false);
-    };
-
+        setShowSuccessPopup(false);
+        router.visit(route('techniques.index'));
+    }
     return (
         <AuthenticatedLayout
             header={
@@ -99,7 +107,7 @@ export default function Index({ training_classes }) {
                         View
                     </Link>
                     <span className="text-red-900">|</span>
-                    <span>Training Class</span>
+                    <span>Technique</span>
                     <img
                         src={CancelIcon}
                         alt="Cancel"
@@ -109,27 +117,27 @@ export default function Index({ training_classes }) {
                 </div>
             }
         >
-            <Head title="Training Classes" />
+            <Head title="Techniques" />
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="mb-8 mt-5 flex justify-between items-center">
                         <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                            Training Classes
+                            Techniques
                         </h2>
                         <Link
-                            href={route('trainingclasses.create')}
+                            href={route('techniques.create')}
                             className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         >
-                            Add New Class
+                            Add New Technique
                         </Link>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-                        {training_classes && training_classes.length > 0 ? (
-                            training_classes.map((training_class) => (
+                        {techniques && techniques.length > 0 ? (
+                            techniques.map((techniques) => (
                                 <div
-                                    key={training_class.class_id}
+                                    key={techniques.technique_id}
                                     className="bg-white rounded-lg shadow-sm p-6 hover:bg-gray-50 transition-colors duration-200"
                                 >
                                     <div className="flex justify-between items-start">
@@ -150,7 +158,7 @@ export default function Index({ training_classes }) {
                                                 </svg>
                                             </div>
                                             <h3 className="text-lg font-medium text-gray-900">
-                                                {training_class.location}
+                                                {techniques.location}
                                             </h3>
                                         </div>
                                         <Dropdown className="z-[9999]">
@@ -163,7 +171,7 @@ export default function Index({ training_classes }) {
                                             </Dropdown.Trigger>
                                             <Dropdown.Content>
                                                 <Link
-                                                    href={route('trainingclasses.edit', training_class.class_id)}
+                                                    href={route('techniques.edit', techniques.technique_id)}
                                                     className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
                                                 >
                                                     Edit
@@ -173,7 +181,7 @@ export default function Index({ training_classes }) {
                                                     onClick={(e) => {
                                                         e.preventDefault();
                                                         e.stopPropagation();
-                                                        confirmDelete(training_class);
+                                                        confirmDelete(techniques);
                                                     }}
                                                 >
                                                     Delete
@@ -184,34 +192,31 @@ export default function Index({ training_classes }) {
 
                                     <div className="grid grid-cols-2 gap-3 mt-4">
                                         <div className="flex flex-col">
-                                            <span className="text-sm text-gray-500">Instructor</span>
-                                            <span className="text-sm font-medium text-gray-900">{training_class.instructor}</span>
+                                            <span className="text-sm text-gray-500">Name</span>
+                                            <span className="text-sm font-medium text-gray-900">{techniques.technique_name}</span>
                                         </div>
                                         <div className="flex flex-col">
-                                            <span className="text-sm text-gray-500">Date</span>
-                                            <span className="text-sm font-medium text-gray-900">{training_class.class_date}</span>
+                                            <span className="text-sm text-gray-500">Description</span>
+                                            <span className="text-sm font-medium text-gray-900">{techniques.technique_description}</span>
                                         </div>
                                         <div className="flex flex-col">
-                                            <span className="text-sm text-gray-500">Duration</span>
-                                            <span className="text-sm font-medium text-gray-900">{training_class.class_duration}</span>
+                                            <span className="text-sm text-gray-500">Category</span>
+                                            <span className="text-sm font-medium text-gray-900">{techniques.category_name}</span>
                                         </div>
                                         <div className="flex flex-col">
-                                            <span className="text-sm text-gray-500">Rounds</span>
-                                            <span className="text-sm font-medium text-gray-900">{training_class.rounds} × {training_class.round_duration}</span>
+                                            <span className="text-sm text-gray-500">Class</span>
+                                            <span className="text-sm font-medium text-gray-900">{techniques.location}</span>
                                         </div>
-                                    </div>
-
-                                    <div className="mt-4">
-                                        <span className="text-sm text-gray-500">Description</span>
-                                        <p className="text-sm text-gray-900 mt-1">
-                                            {training_class.class_description || 'No description provided'}
-                                        </p>
+                                        <div className="flex flex-col">
+                                            <span className="text-sm text-gray-500">Position</span>
+                                            <span className="text-sm font-medium text-gray-900">{techniques.position_name}</span>
+                                        </div>
                                     </div>
                                 </div>
                             ))
                         ) : (
                             <div className="col-span-full text-center py-12 bg-white rounded-lg">
-                                <p className="text-gray-500">No training classes found. Create one to get started.</p>
+                                <p className="text-gray-500">No techniques found. Create one to get started.</p>
                             </div>
                         )}
                     </div>
@@ -222,19 +227,19 @@ export default function Index({ training_classes }) {
                 isVisible={showConfirmation}
                 onConfirm={handleDelete}
                 onCancel={cancelDelete}
-                message="Are you sure you want to delete this class? This action cannot be undone."
+                message="Are you sure you want to delete this technique? This action cannot be undone."
             />
 
             <SuccessPopup
                 isVisible={showSuccessPopup}
                 onClose={closeSuccessPopup}
-                message="Class deleted successfully!"
+                message="Technique deleted successfully!"
             />
 
             <ErrorPopup
                 isVisible={showErrorPopup}
                 onClose={() => setShowErrorPopup(false)}
-                message={errorMessage || "An error occurred while deleting the class"}
+                message={errorMessage || "An error occurred while deleting the technique"}
             />
 
         </AuthenticatedLayout>

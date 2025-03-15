@@ -13,11 +13,33 @@ use Inertia\Response;
 class TechniqueController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the techniques.
      */
     public function index()
     {
-        //
+        /**
+         * Display a listin of techniques
+         *
+         * 'techniques' is a prop that is passed to the Techniques Index component
+         * 'where' gets only the techniques belonging to the currently logged in user id
+         * latest() orders the results by creation date
+         * get() executes the query and retrieves all records
+         */
+        return Inertia::render('Techniques/Index', [
+            'techniques' => Technique::where('techniques.user_id', auth()->id())
+                ->join('categories', 'techniques.category_id', '=', 'categories.category_id')
+                ->join('positions', 'techniques.position_id', '=', 'positions.position_id')
+                ->join('training_classes', 'techniques.class_id', '=', 'training_classes.class_id')
+                ->select(
+                    'techniques.*',
+                    'categories.category_name',
+                    'positions.position_name',
+                    'training_classes.instructor',
+                    'training_classes.location',
+                )
+                ->latest('techniques.created_at')
+                ->get()
+        ]);
     }
 
     /**

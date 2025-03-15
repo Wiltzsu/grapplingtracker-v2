@@ -125,7 +125,6 @@ export default function Create({ categories, training_classes, positions }) {
                                                 name="technique_description"
                                                 value={data.technique_description}
                                                 className="mt-1 block w-full"
-                                                isFocused={true}
                                                 onChange={(e) => setData('technique_description', e.target.value)}
                                                 required
                                             />
