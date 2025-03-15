@@ -14,13 +14,16 @@ class TrainingClassController extends Controller
      * Display a listing of training classes.
      *
      * - 'training_classes' is a prop that is passed to the TrainingClass Index component
+     * - 'where' gets only the classes belonging to the currently logged in user id
      * - latest() orders the results by creation date
      * - get() executes the query and retrieves all records
      */
     public function index()
     {
         return Inertia::render('TrainingClasses/Index', [
-            'training_classes' => TrainingClass::latest()->get()
+            'training_classes' => TrainingClass::where('user_id', auth()->id())
+                ->latest()
+                ->get()
         ]);
     }
 

@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -12,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('positions', function (Blueprint $table) {
+        Schema::table('training_classes', function (Blueprint $table) {
             // Add user_id column
             $table->foreignId('user_id')
-                ->after('position_id')
+                ->after('training_classes_id')
                 ->nullable();
 
             // Add foreign key constraint
@@ -24,10 +23,6 @@ return new class extends Migration
                 ->on('users')
                 ->onDelete('cascade');
         });
-
-        // Note: We're not automatically assigning positions to any user.
-        // Existing positions without a user_id will remain nullable,
-        // and we can handle them in the application logic as needed.
     }
 
     /**
@@ -35,9 +30,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('positions', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
+        Schema::table('training_classes', function (Blueprint $table) {
+            //
         });
     }
 };
