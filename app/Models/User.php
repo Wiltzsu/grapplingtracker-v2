@@ -79,17 +79,25 @@ class User extends Authenticatable
     {
         // Default positions
         $defaultPositions = [
-            ['position_name' => 'Mount', 'position_description' => 'Top position sitting on opponent', 'user_id' => $this->id],
-            ['position_name' => 'Side Control', 'position_description' => 'Top position perpendicular to opponent', 'user_id' => $this->id],
-            ['position_name' => 'Back', 'position_description' => 'Controlling opponent from behind', 'user_id' => $this->id],
-            ['position_name' => 'Guard', 'position_description' => 'Bottom position controlling with legs', 'user_id' => $this->id],
+            ['position_name' => 'Full Mount', 'position_description' => "The top grappler sits on the opponent's chest, controlling them with their weight.", 'user_id' => $this->id],
+            ['position_name' => 'Side Control', 'position_description' => "The top grappler pins the opponent to the ground from the side of their torso.", 'user_id' => $this->id],
+            ['position_name' => 'Closed Guard', 'position_description' => "The bottom grappler has their legs wrapped around the opponent's waist with ankles locked.", 'user_id' => $this->id],
+            ['position_name' => 'Back Control', 'position_description' => "The grappler controls their opponent from behind, with hooks inserted using their feet or legs.", 'user_id' => $this->id],
+            ['position_name' => 'Open Guard', 'position_description' => "The bottom grappler uses their legs to control the opponent without locking the ankles.", 'user_id' => $this->id],
+            ['position_name' => 'Half Guard', 'position_description' => "The bottom grappler controls one of the opponent's legs between their own legs.", 'user_id' => $this->id],
+            ['position_name' => 'Butterfly Guard', 'position_description' => "Both of the bottom grappler's feet are placed between the opponent's legs.", 'user_id' => $this->id],
+            ['position_name' => 'North-South', 'position_description' => "The top grappler controls the opponent with their body aligned perpendicular to the opponent's, over their chest area.", 'user_id' => $this->id],
+            ['position_name' => 'Standing', 'position_description' => "Techniques applied from a standing position, often involving throws or takedowns.", 'user_id' => $this->id],
+            ['position_name' => '50-50', 'position_description' => "Grapplers are seated facing each other with their legs entangled, creating a neutral position. Each practitioner has one leg inside and one leg outside of the opponent's legs, offering mutual control over each other's movement", 'user_id' => $this->id],
         ];
 
         // Default categories
         $defaultCategories = [
-            ['category_name' => 'Submissions', 'category_description' => 'Techniques to finish the fight', 'user_id' => $this->id],
-            ['category_name' => 'Sweeps', 'category_description' => 'Techniques to reverse position', 'user_id' => $this->id],
-            ['category_name' => 'Escapes', 'category_description' => 'Techniques to escape bad positions', 'user_id' => $this->id],
+            ['category_name' => 'Submissions', 'category_description' => 'Techniques that force the opponent to submit due to a choke or joint lock, including arm bars, chokes, leg locks, etc.', 'user_id' => $this->id],
+            ['category_name' => 'Sweeps', 'category_description' => 'Movements that reverse positions, often moving from a bottom position to a top position.', 'user_id' => $this->id],
+            ['category_name' => 'Escapes', 'category_description' => 'Techniques used to escape from a disadvantaged position, such as escaping from mount or guard.', 'user_id' => $this->id],
+            ['category_name' => 'Control', 'category_description' => 'Techniques focused on maintaining and controlling a position to set up submissions or strikes.', 'user_id' => $this->id],
+            ['category_name' => 'Takedowns', 'category_description' => 'Techniques used to bring an opponent from standing to the ground, such as single leg, double leg takedowns, or judo throws.', 'user_id' => $this->id],
         ];
 
         // Create the default positions

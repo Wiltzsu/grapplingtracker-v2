@@ -17,6 +17,9 @@ class WelcomeController extends Controller
     {
         // Tells Inertia to render the component at resources/js/Pages/Welcome.jsx
         return Inertia::render('Welcome', [
+            'auth' => [
+                'user' => auth()->user(),
+            ],
             'canLogin' => Route::has('login'),          // Checks if login route exists
             'canRegister' => Route::has('register'),    // Checks if register route exists
             'laravelVersion' => Application::VERSION,   // Gets Laravel version
