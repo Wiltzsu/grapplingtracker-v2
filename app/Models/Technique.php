@@ -18,4 +18,19 @@ class Technique extends Model
 
     // Specify that 'technique_id' is the primary key instead of default 'id'
     protected $primaryKey = 'technique_id';
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'category_id');
+    }
+
+    public function position()
+    {
+        return $this->belongsTo(Position::class, 'position_id', 'position_id');
+    }
+
+    public function trainingClass()
+    {
+        return $this->belongsTo(TrainingClass::class, 'class_id', 'class_id');
+    }
 }

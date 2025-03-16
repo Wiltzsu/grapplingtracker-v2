@@ -55,7 +55,7 @@ export default function Index({ techniques }) {
          * Sends a DELETE request to the server using the Inertia router
          * Generates the route URL like /techniques/1
          */
-        router.delete(route('techniques.destroy', techniqueToDelete.techniques.id), {
+        router.delete(route('techniques.destroy', techniqueToDelete.technique_id), {
             preserveScroll: true, // Maintains scroll technique after request
             onSuccess: (page) => {
                 // Clear states

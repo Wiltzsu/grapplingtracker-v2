@@ -105,26 +105,65 @@ class TechniqueController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing a technique.
      */
     public function edit(Technique $technique)
     {
-        //
+        return Inertia::render('Techniques/EditTechnique', [
+            'technique' => $technique->load(['category', 'position', 'trainingClass']),
+            'categories' => Category::all(),
+            'positions' => Position::all(),
+            'training_classes' => TrainingClass::all()
+        ]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified technique.
      */
     public function update(Request $request, Technique $technique)
     {
-        //
+        // Validate the request
+        $validated = $request->validate([
+            'technique_name' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[\p{L}\p{N}\s\-_]+$/u'
+            ],
+            'technique_description' => [
+                'required',
+                'string',
+                'regex:/^[\p{L}\p{N}\s\-_]+$/u'
+            ],
+            'category_id' => [
+                'required',
+                'integer',
+                'exists:categories,category_id'
+            ],
+            'position_id' => [
+                'required',
+                'integer',
+                'exists:positions,position_id'
+            ],
+            'class_id' => [
+                'required',
+                'integer',
+                'exists:training_classes,class_id'
+            ],
+        ]);
+
+        $technique->update($validated);
+
+        return back()->with('success', true);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified technique from storage.
      */
     public function destroy(Technique $technique)
     {
-        //
+        $technique->delete();
+
+        return redirect(route('techniques.index'));
     }
 }
