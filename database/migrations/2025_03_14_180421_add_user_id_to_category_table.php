@@ -19,14 +19,14 @@ return new class extends Migration
                 ->nullable();
 
             // Add foreign key constraint
-            $table->foreign('category_id')
+            $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
         });
 
-        // Note: We're not automatically assigning positions to any user.
-        // Existing positions without a user_id will remain nullable,
+        // Note: We're not automatically assigning categories to any user.
+        // Existing categories without a user_id will remain nullable,
         // and you can handle them in your application logic as needed.
     }
 
@@ -35,7 +35,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('positions', function (Blueprint $table) {
+        Schema::table('categories', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
             $table->dropColumn('user_id');
         });
