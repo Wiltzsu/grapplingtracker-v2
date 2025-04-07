@@ -25,22 +25,22 @@ return new class extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
 
             $table->foreign('category_id')
                 ->references('category_id')
                 ->on('categories')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
 
             $table->foreign('position_id')
                 ->references('position_id')
                 ->on('positions')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
 
             $table->foreign('class_id')
                 ->references('class_id')
                 ->on('training_classes')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
         });
     }
 
