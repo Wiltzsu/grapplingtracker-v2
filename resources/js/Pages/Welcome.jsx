@@ -1,92 +1,138 @@
 import { Link } from '@inertiajs/react';
 import { Head } from '@inertiajs/react';
+import Footer from '@/Components/Footer';
+import GuestHeader from '@/Components/GuestHeader';
+import { motion, useReducedMotion } from 'framer-motion';
 
 export default function Welcome({ auth, canLogin, canRegister }) {
+    const prefersReducedMotion = useReducedMotion();
+
+    // If user prefers reduced motion or is on mobile, disable animations
+    const shouldAnimate = !prefersReducedMotion;
+
+    const fadeIn = {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.5 }
+    };
+
+    const staggerChildren = {
+        animate: {
+            transition: {
+                staggerChildren: 0.2
+            }
+        }
+    };
+
     return (
         <>
             <Head title="Welcome" />
-            <div className="min-h-screen bg-gray-900">
-                {/* Navigation */}
-                <nav className="fixed top-0 w-full bg-gray-800/50 backdrop-blur-sm z-10">
-                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                        <div className="flex h-16 items-center justify-between">
-                            <div className="flex-shrink-0">
-                                <Link href="/" className="text-xl font-bold text-white">
-                                    Grappling Tracker
-                                </Link>
-                            </div>
-                            <div className="flex items-center space-x-4">
-                                {auth?.user ? (
-                                    <Link
-                                        href={route('dashboard')}
-                                        className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500"
-                                    >
-                                        Dashboard
-                                    </Link>
-                                ) : (
-                                    <>
-                                        <Link
-                                            href={route('login')}
-                                            className="text-gray-300 hover:text-white"
-                                        >
-                                            Log in
-                                        </Link>
-                                        <Link
-                                            href={route('register')}
-                                            className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500"
-                                        >
-                                            Register
-                                        </Link>
-                                    </>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </nav>
+            <div className="min-h-screen bg-white flex flex-col">
+                <GuestHeader auth={auth} showExtraNav={true} />
 
                 {/* Hero Section */}
-                <div className="relative isolate px-6 pt-14 lg:px-8">
-                    <div className="mx-auto max-w-3xl py-32 sm:py-48 lg:py-56">
-                        <div className="text-center">
-                            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
+                <div className="relative px-6 pt-20 lg:px-8 bg-gradient-to-b from-indigo-50 to-white overflow-hidden">
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1 }}
+                        className="absolute inset-0"
+                    >
+                        <div className="absolute inset-0 bg-[linear-gradient(30deg,#f0f7ff_0%,#ffffff_100%)] opacity-50" />
+                        <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,transparent)] dark:bg-grid-slate-700/25" />
+                    </motion.div>
+                    <div className="mx-auto max-w-3xl py-16 sm:py-20 lg:py-24 relative">
+                        <motion.div
+                            className="text-center"
+                            initial="initial"
+                            animate="animate"
+                            variants={staggerChildren}
+                        >
+                            <motion.h1
+                                variants={fadeIn}
+                                className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl sm:leading-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-blue-500"
+                            >
                                 Track Your Grappling Journey
-                            </h1>
-                            <p className="mt-6 text-lg leading-8 text-gray-300">
+                            </motion.h1>
+                            <motion.p
+                                variants={fadeIn}
+                                className="mt-6 text-lg leading-8 text-gray-600"
+                            >
                                 Record techniques, track progress, and analyze your training. The ultimate companion for Brazilian Jiu-Jitsu and grappling practitioners.
-                            </p>
-                            <div className="mt-10 flex items-center justify-center gap-x-6">
-                                {!auth.user && (
-                                    <Link
-                                        href={route('register')}
-                                        className="rounded-md bg-indigo-600 px-6 py-3 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            </motion.p>
+                            {!auth.user && (
+                                <motion.div
+                                    variants={fadeIn}
+                                    className="mt-10 flex items-center justify-center gap-x-6"
+                                >
+                                    <motion.div
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
                                     >
-                                        Get Started
-                                    </Link>
-                                )}
-                            </div>
-                        </div>
+                                        <Link
+                                            href={route('register')}
+                                            className="rounded-md bg-indigo-600 px-6 py-3 text-lg font-semibold text-white shadow-lg hover:shadow-xl hover:bg-indigo-500 transition-all duration-300 relative overflow-hidden group"
+                                        >
+                                            <span className="relative z-10">Get Started</span>
+                                            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                        </Link>
+                                    </motion.div>
+                                </motion.div>
+                            )}
+                        </motion.div>
                     </div>
                 </div>
 
                 {/* Features Section */}
-                <div className="bg-gray-800 py-24 sm:py-32">
-                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                        <div className="grid grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:grid-cols-3">
-                            <div className="px-6 lg:px-8">
-                                <h3 className="text-xl font-semibold text-white">Track Techniques</h3>
-                                <p className="mt-4 text-gray-300">Record and organize your techniques by position and category.</p>
-                            </div>
-                            <div className="px-6 lg:px-8">
-                                <h3 className="text-xl font-semibold text-white">Log Classes</h3>
-                                <p className="mt-4 text-gray-300">Keep a detailed log of your training sessions and progress.</p>
-                            </div>
-                            <div className="px-6 lg:px-8">
-                                <h3 className="text-xl font-semibold text-white">Analyze Progress</h3>
-                                <p className="mt-4 text-gray-300">Visualize your development and identify areas for improvement.</p>
-                            </div>
+                <motion.div
+                    className="py-12 sm:py-16 bg-white relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                >
+                    <div className="mx-auto max-w-7xl p lg:px-8">
+                        <div className="grid grid-cols-1 gap-x-8 gap-y-8 sm:gap-y-12 lg:grid-cols-3">
+                            {[
+                                {
+                                    title: "Track Techniques",
+                                    description: "Record and organize your techniques by position and category.",
+                                    icon: "🥋"
+                                },
+                                {
+                                    title: "Log Classes",
+                                    description: "Keep a detailed log of your training sessions and progress.",
+                                    icon: "📝"
+                                },
+                                {
+                                    title: "Analyze Progress",
+                                    description: "Visualize your development and identify areas for improvement.",
+                                    icon: "📈"
+                                }
+                            ].map((feature, index) => (
+                                <motion.div
+                                    key={feature.title}
+                                    className="px-6 lg:px-8"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: index * 0.2 }}
+                                >
+                                    <motion.div
+                                        whileHover={{ scale: 1.05 }}
+                                        className="p-6 bg-gradient-to-br from-indigo-50 to-blue-50 rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
+                                    >
+                                        <span className="text-4xl mb-4 block">{feature.icon}</span>
+                                        <h3 className="text-xl font-semibold text-gray-900">{feature.title}</h3>
+                                        <p className="mt-4 text-gray-600">{feature.description}</p>
+                                    </motion.div>
+                                </motion.div>
+                            ))}
                         </div>
                     </div>
-                </div>
+                </motion.div>
+
+                <Footer />
             </div>
         </>
     );
