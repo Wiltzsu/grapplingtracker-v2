@@ -160,14 +160,34 @@ export default function AuthenticatedLayout({ header, children }) {
                         >
                             Dashboard
                         </ResponsiveNavLink>
-
-                        <ResponsiveNavLink href={route('chirps.index')} active={route().current('chirps.index')}>
-                            Chirps
+                        <ResponsiveNavLink
+                            href={route('add')}
+                            active={route().current('add')}
+                        >
+                            Add
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('view')}
+                            active={route().current('view')}
+                        >
+                            View
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('stats')}
+                            active={route().current('stats')}
+                        >
+                            Stats
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('chirps.index')}
+                            active={route().current('chirps.index')}
+                        >
+                            Notes
                         </ResponsiveNavLink>
                     </div>
 
-                    <div className="border-t border-gray-200 pb-1 pt-4">
-                        <div className="px-4">
+                    <div className="border-t border-gray-200">
+                        <div className="px-4 py-4 bg-gray-50">
                             <div className="text-base font-medium text-gray-800">
                                 {user.name}
                             </div>
@@ -176,14 +196,18 @@ export default function AuthenticatedLayout({ header, children }) {
                             </div>
                         </div>
 
-                        <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')}>
+                        <div className="space-y-1 px-2 pb-3 pt-2">
+                            <ResponsiveNavLink
+                                href={route('profile.edit')}
+                                className="hover:bg-indigo-50"
+                            >
                                 Profile
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 method="post"
                                 href={route('logout')}
                                 as="button"
+                                className="w-full text-left hover:bg-red-50 text-red-600 hover:text-red-700"
                             >
                                 Log Out
                             </ResponsiveNavLink>
