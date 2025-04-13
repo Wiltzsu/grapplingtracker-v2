@@ -48,9 +48,9 @@ class TechniqueController extends Controller
     public function create()
     {
         return Inertia::render('Techniques/CreateTechnique', [
-            'categories'       => Category::all(),
-            'positions'        => Position::all(),
-            'training_classes' => TrainingClass::all()
+            'categories'       => Category::where('user_id', auth()->id())->get(),
+            'positions'        => Position::where('user_id', auth()->id())->get(),
+            'training_classes' => TrainingClass::where('user_id', auth()->id())->get(),
         ]);
     }
 
@@ -111,9 +111,9 @@ class TechniqueController extends Controller
     {
         return Inertia::render('Techniques/EditTechnique', [
             'technique' => $technique->load(['category', 'position', 'trainingClass']),
-            'categories' => Category::all(),
-            'positions' => Position::all(),
-            'training_classes' => TrainingClass::all()
+            'categories' => Category::where('user_id', auth()->id())->get(),
+            'positions' => Position::where('user_id', auth()->id())->get(),
+            'training_classes' => TrainingClass::where('user_id', auth()->id())->get()
         ]);
     }
 
