@@ -65,6 +65,11 @@ class User extends Authenticatable
         return $this->hasMany(Note::class);
     }
 
+    public function trainingClasses(): HasMany
+{
+    return $this->hasMany(TrainingClass::class);
+}
+
     /**
      * Define a has many relationship on the user.
      *

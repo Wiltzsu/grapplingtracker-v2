@@ -8,6 +8,16 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    private function createTrainingClassesForUser(User $user, int $count = 5): void
+    {
+        if ($user->trainingClasses()->count() === 0) {
+            \App\Models\TrainingClass::factory()
+                ->count($count)
+                ->for($user)
+                ->create();
+        }
+    }
+
     /**
      * Seed the application's database.
      *
@@ -25,20 +35,18 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // Create chirps for test user if they don't have any
-        if ($user->chirps()->count() === 0) {
-            Chirp::factory()
-                ->count(3)
-                ->for($user)
-                ->create();
-        }
+        // Create default positions and categories for test user
+        $user->createDefaultData();
 
-        // Create 5 additional users with 2-5 chirps each
+        // Create 250 training classes for test user
+        $this->createTrainingClassesForUser($user, 250);
+
+        // Create 5 additional users with only default data
         User::factory(5)
-            ->has(
-                Chirp::factory()
-                    ->count(fake()->numberBetween(2, 5))
-            )
-            ->create();
+            ->create()
+            ->each(function ($user) {
+                $user->createDefaultData();
+                // No training classes created for these users
+            });
     }
 }
