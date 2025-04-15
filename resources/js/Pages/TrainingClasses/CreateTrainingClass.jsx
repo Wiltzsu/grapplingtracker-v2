@@ -182,34 +182,40 @@ export default function Create() {
                                             <InputError message={errors.class_duration} className="mt-2" />
                                         </div>
 
-                                        {/* Training class round amount */}
-                                        <div>
-                                            <InputLabel htmlFor="rounds" value="Rounds" />
-                                            <TextInput
-                                                id="rounds"
-                                                type="number"
-                                                name="rounds"
-                                                value={data.rounds}
-                                                className="mt-1 block w-full"
-                                                isFocused={true}
-                                                onChange={(e) => setData('rounds', e.target.value)}
-                                            />
-                                            <InputError message={errors.rounds} className="mt-2" />
+                                        {/* Training class round amount and duration*/}
+                                        <div className="flex gap-4">
+                                            <div className="flex-1">
+                                                <InputLabel htmlFor="rounds" value="Rounds" />
+                                                <TextInput
+                                                    id="rounds"
+                                                    type="number"
+                                                    name="rounds"
+                                                    value={data.rounds}
+                                                    className="mt-1 block w-full"
+                                                    isFocused={true}
+                                                    onChange={(e) => setData('rounds', e.target.value)}
+                                                />
+                                                <InputError message={errors.rounds} className="mt-2" />
+                                            </div>
+
+                                            <div className="flex-1">
+                                                <InputLabel htmlFor="round_duration" value="Round duration" />
+                                                <TextInput
+                                                    id="round_duration"
+                                                    type="number"
+                                                    name="round_duration"
+                                                    value={data.round_duration}
+                                                    className="mt-1 block w-full"
+                                                    isFocused={true}
+                                                    onChange={(e) => setData('round_duration', e.target.value)}
+                                                />
+                                                <InputError message={errors.round_duration} className="mt-2" />
+                                            </div>
                                         </div>
 
                                         {/* Training class round duration */}
                                         <div>
-                                            <InputLabel htmlFor="round_duration" value="Round duration" />
-                                            <TextInput
-                                                id="round_duration"
-                                                type="number"
-                                                name="round_duration"
-                                                value={data.round_duration}
-                                                className="mt-1 block w-full"
-                                                isFocused={true}
-                                                onChange={(e) => setData('round_duration', e.target.value)}
-                                            />
-                                            <InputError message={errors.round_duration} className="mt-2" />
+
                                         </div>
 
                                         {/* Submit button */}

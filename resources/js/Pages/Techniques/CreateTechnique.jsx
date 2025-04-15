@@ -119,12 +119,12 @@ export default function Create({ categories, training_classes, positions }) {
                                         {/* Training class description field */}
                                         <div>
                                             <InputLabel htmlFor="technique_description" value={<>Description <span className="text-red-500">*</span></>} />
-                                            <TextInput
+                                            <textarea
                                                 id="technique_description"
                                                 type="text"
                                                 name="technique_description"
                                                 value={data.technique_description}
-                                                className="mt-1 block w-full"
+                                                className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                                                 onChange={(e) => setData('technique_description', e.target.value)}
                                                 required
                                             />
