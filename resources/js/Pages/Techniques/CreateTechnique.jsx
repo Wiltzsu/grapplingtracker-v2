@@ -172,7 +172,7 @@ export default function Create({ categories, training_classes, positions }) {
                                                 {training_classes && training_classes.length > 0 ? (
                                                     training_classes.map((training_class) => (
                                                         <option key={training_class.class_id} value={training_class.class_id}>
-                                                            {`${training_class.location} - ${dayjs(training_class.class_date).format('DD/MM/YYYY')} - ${training_class.instructor || 'No instructor'}`}
+                                                            {`${dayjs(training_class.class_date).format('DD/MM/YYYY')} - ${training_class.location || 'No location'} - ${training_class.instructor || 'No instructor'}`}
                                                         </option>
                                                     ))
                                                 ) : (

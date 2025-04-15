@@ -50,13 +50,11 @@ class TrainingClassController extends Controller
                 'nullable',
                 'string',
                 'max:255',
-                'regex:/^[\p{L}\p{N}\s\-_]+$/u'  // Letters, numbers, spaces, hyphens, underscores
             ],
             'location' => [
-                'required',
+                'nullable',
                 'string',
                 'max:255',
-                'regex:/^[\p{L}\p{N}\s\-_]+$/u'
             ],
             'class_date' => [
                 'required',
@@ -66,7 +64,6 @@ class TrainingClassController extends Controller
                 'nullable',
                 'string',
                 'max:255',
-                'regex:/^[\p{L}\p{N}\s\-_]+$/u'
             ],
             'class_duration' => [
                 'required',

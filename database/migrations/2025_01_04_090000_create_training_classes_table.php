@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('class_id');
             $table->unsignedBigInteger('user_id')->index();
             $table->string('instructor')->nullable();
-            $table->string('location');
+            $table->string('location')->nullable();
             $table->date('class_date');
             $table->string('class_description')->nullable();
             $table->integer('class_duration');

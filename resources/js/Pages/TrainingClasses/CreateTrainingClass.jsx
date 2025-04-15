@@ -12,6 +12,12 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import SuccessPopup from '@/Components/SuccessPopup';
 
 export default function Create() {
+    // Helper function to get today's date in YYYY-MM-DD format
+    const getTodayDate = () => {
+        const today = new Date();
+        return today.toISOString().split('T')[0];
+    };
+
     // State to manage form submit success popup visibility (true = shown, false = hidden)
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
@@ -28,7 +34,7 @@ export default function Create() {
     const { data, setData, post, processing, errors, reset } = useForm({
         instructor: '',
         location: '',
-        class_date: '',
+        class_date: getTodayDate(),
         class_description: '',
         class_duration: '',
         rounds: '',
@@ -117,7 +123,7 @@ export default function Create() {
 
                                         {/* Training class location */}
                                         <div>
-                                            <InputLabel htmlFor="location" value={<>Location <span className="text-red-500">*</span></>} />
+                                            <InputLabel htmlFor="location" value={<>Location</>} />
                                             <TextInput
                                                 id="location"
                                                 type="text"
@@ -126,7 +132,6 @@ export default function Create() {
                                                 className="mt-1 block w-full"
                                                 isFocused={true}
                                                 onChange={(e) => setData('location', e.target.value)}
-                                                required
                                             />
                                             <InputError message={errors.location} className="mt-2" />
                                         </div>
@@ -150,13 +155,12 @@ export default function Create() {
                                         {/* Training class description */}
                                         <div>
                                             <InputLabel htmlFor="class_description" value="Description" />
-                                            <TextInput
+                                            <textarea
                                                 id="class_description"
-                                                type="text"
                                                 name="class_description"
                                                 value={data.class_description}
-                                                className="mt-1 block w-full"
-                                                isFocused={true}
+                                                className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                                rows={4}
                                                 onChange={(e) => setData('class_description', e.target.value)}
                                             />
                                             <InputError message={errors.class_description} className="mt-2" />

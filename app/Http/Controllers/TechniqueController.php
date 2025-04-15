@@ -65,13 +65,11 @@ class TechniqueController extends Controller
                 'required',
                 'string',
                 'max:255',
-                'regex:/^[\p{L}\p{N}\s\-_]+$/u'  // Letters, numbers, spaces, hyphens, underscores
             ],
             'technique_description' => [
                 'required',
                 'string',
                 'max:255',
-                'regex:/^[\p{L}\p{N}\s\-_]+$/u'  // Letters, numbers, spaces, hyphens, underscores
             ],
             'category_id' => [
                 'required',
@@ -128,12 +126,10 @@ class TechniqueController extends Controller
                 'required',
                 'string',
                 'max:255',
-                'regex:/^[\p{L}\p{N}\s\-_]+$/u'
             ],
             'technique_description' => [
                 'required',
                 'string',
-                'regex:/^[\p{L}\p{N}\s\-_]+$/u'
             ],
             'category_id' => [
                 'required',
