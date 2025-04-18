@@ -199,7 +199,7 @@ export default function Create() {
                                             </div>
 
                                             <div className="flex-1">
-                                                <InputLabel htmlFor="round_duration" value="Round duration" />
+                                                <InputLabel htmlFor="round_duration" value="Round duration (minutes)" />
                                                 <TextInput
                                                     id="round_duration"
                                                     type="number"

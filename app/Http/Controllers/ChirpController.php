@@ -41,7 +41,7 @@ class ChirpController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'message' => 'required|string|max:255',
+            'message' => 'required|string|max:1000',
         ]);
 
         $request->user()->chirps()->create($validated);
@@ -73,7 +73,7 @@ class ChirpController extends Controller
         Gate::authorize('update', $chirp);
 
         $validated = $request->validate([
-            'message' => 'required|string|max:255',
+            'message' => 'required|string|max:1000',
         ]);
 
         $chirp->update($validated);
