@@ -2,9 +2,44 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
 import { router } from '@inertiajs/react';
+import NoData from '@/Components/NoData';
 import dayjs from 'dayjs';
+import { Line, Pie } from 'react-chartjs-2';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+    ArcElement,
+} from 'chart.js';
 
-export default function Stats({ auth, totalClasses, totalRollingRounds, totalRoundDuration, totalClassDuration }) {
+// Register ChartJS components
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+    ArcElement
+);
+
+export default function Stats({ auth,
+                                totalClasses,
+                                totalRollingRounds,
+                                totalRoundDuration,
+                                totalClassDuration,
+                                averageRoundDuration,
+                                averageClassDuration,
+                                sparringRelativeToTraining,
+                                trainingFrequency,
+                                positionsRelative,
+                            }) {
     const [dateRange, setDateRange] = useState('month');
     const [customStartDate, setCustomStartDate] = useState('');
     const [customEndDate, setCustomEndDate] = useState('');
@@ -57,21 +92,23 @@ export default function Stats({ auth, totalClasses, totalRollingRounds, totalRou
             user={auth.user}
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    View stats
+                    Training Statistics
                 </h2>
             }
         >
-            <Head title="View stats" />
+            <Head title="Training Statistics" />
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            <div className="mb-6">
+                    {/* Date Range Selector Card */}
+                    <div className="mb-6 overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                        <div className="p-6">
+                            <div className="flex items-center justify-between">
+                                <h3 className="text-lg font-medium text-gray-900">Select Time Period</h3>
                                 <select
                                     value={dateRange}
                                     onChange={(e) => handleDateRangeChange(e.target.value)}
-                                    className="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="rounded-lg border-gray-300 px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 >
                                     <option value="month">Last Month</option>
                                     <option value="6months">Last 6 Months</option>
@@ -79,57 +116,238 @@ export default function Stats({ auth, totalClasses, totalRollingRounds, totalRou
                                     <option value="all">All Time</option>
                                     <option value="custom">Custom Range</option>
                                 </select>
+                            </div>
 
-                                {showCustomDates && (
-                                    <div className="mt-4 flex items-end gap-4">
-                                        <div>
-                                            <label className="block text-sm text-gray-700">Start Date</label>
-                                            <input
-                                                type="date"
-                                                value={customStartDate}
-                                                onChange={(e) => setCustomStartDate(e.target.value)}
-                                                className="mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm text-gray-700">End Date</label>
-                                            <input
-                                                type="date"
-                                                value={customEndDate}
-                                                onChange={(e) => setCustomEndDate(e.target.value)}
-                                                className="mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                            />
-                                        </div>
-                                        <button
-                                            onClick={handleCustomDateSubmit}
-                                            className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500"
-                                        >
-                                            Apply
-                                        </button>
+                            {showCustomDates && (
+                                <div className="mt-4 flex items-end gap-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700">Start Date</label>
+                                        <input
+                                            type="date"
+                                            value={customStartDate}
+                                            onChange={(e) => setCustomStartDate(e.target.value)}
+                                            className="mt-1 rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                        />
                                     </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700">End Date</label>
+                                        <input
+                                            type="date"
+                                            value={customEndDate}
+                                            onChange={(e) => setCustomEndDate(e.target.value)}
+                                            className="mt-1 rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                        />
+                                    </div>
+                                    <button
+                                        onClick={handleCustomDateSubmit}
+                                        className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                    >
+                                        Apply Range
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Stats Grid */}
+                    <div className="grid gap-6 md:grid-cols-2">
+                        {/* Training Overview Card */}
+                        <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                            <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
+                                <h3 className="text-lg font-medium text-gray-900">Training Overview</h3>
+                            </div>
+                            <div className="p-6">
+                                <div className="grid gap-4">
+                                    <div className="rounded-lg bg-gray-50 p-4">
+                                        <p className="text-sm text-gray-500">Total Classes</p>
+                                        <p className="text-2xl font-bold text-gray-900">{totalClasses}</p>
+                                    </div>
+                                    <div className="rounded-lg bg-gray-50 p-4">
+                                        <p className="text-sm text-gray-500">Total Training Time</p>
+                                        <p className="text-2xl font-bold text-gray-900">{formatDuration(totalClassDuration)}</p>
+                                    </div>
+                                    <div className="rounded-lg bg-gray-50 p-4">
+                                        <p className="text-sm text-gray-500">Average Class Duration</p>
+                                        <p className="text-2xl font-bold text-gray-900">{formatDuration(averageClassDuration)}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Sparring Stats Card */}
+                        <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                            <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
+                                <h3 className="text-lg font-medium text-gray-900">Sparring Statistics</h3>
+                            </div>
+                            <div className="p-6">
+                                <div className="grid gap-4">
+                                    <div className="rounded-lg bg-gray-50 p-4">
+                                        <p className="text-sm text-gray-500">Total Rounds</p>
+                                        <p className="text-2xl font-bold text-gray-900">{totalRollingRounds}</p>
+                                    </div>
+                                    <div className="rounded-lg bg-gray-50 p-4">
+                                        <p className="text-sm text-gray-500">Total Sparring Time</p>
+                                        <p className="text-2xl font-bold text-gray-900">{formatDuration(totalRoundDuration)}</p>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="rounded-lg bg-gray-50 p-4">
+                                            <p className="text-sm text-gray-500">Avg Round Duration</p>
+                                            <p className="text-2xl font-bold text-gray-900">{formatDuration(averageRoundDuration)}</p>
+                                        </div>
+                                        <div className="rounded-lg bg-gray-50 p-4">
+                                            <p className="text-sm text-gray-500">Sparring Ratio</p>
+                                            <p className="text-2xl font-bold text-gray-900">{sparringRelativeToTraining}%</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Training Frequency Chart */}
+                    <div className="mt-6 grid gap-6 md:grid-cols-2">
+                        <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                            <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
+                                <h3 className="text-lg font-medium text-gray-900">Training Frequency</h3>
+                            </div>
+                            <div className="p-6">
+                                {trainingFrequency && trainingFrequency > 0 ? (
+                                    <Line
+                                        data={{
+                                            labels: trainingFrequency.map(item => dayjs(item.month).format('MMM YYYY')),
+                                            datasets: [
+                                                {
+                                                    label: 'Classes per Month',
+                                                    data: trainingFrequency.map(item => item.count),
+                                                    borderColor: 'rgb(79, 70, 229)',
+                                                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                                                    tension: 0.1,
+                                                    fill: true,
+                                                },
+                                            ],
+                                        }}
+                                        options={{
+                                            responsive: true,
+                                            maintainAspectRatio: false,
+                                            plugins: {
+                                                legend: {
+                                                    position: 'top',
+                                                },
+                                                tooltip: {
+                                                    callbacks: {
+                                                        title: (context) => {
+                                                            return dayjs(trainingFrequency[context[0].dataIndex].month).format('MMMM YYYY');
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            scales: {
+                                                y: {
+                                                    beginAtZero: true,
+                                                    ticks: {
+                                                        stepSize: 1
+                                                    }
+                                                }
+                                            }
+                                        }}
+                                        height={300}
+                                    />
+                                ) : (
+                                        <NoData message="No data available"
+                                        secondaryMessage="Add classes to display training frequency"/>
                                 )}
                             </div>
+                        </div>
 
-                            <h3 className="text-lg font-semibold mb-4">Training Statistics</h3>
-                            <div className="bg-gray-50 p-4 rounded-lg">
-                                <h4 className="text-lg font-semibold mb-4">Time based statistics</h4>
-                                <p className="text-gray-700">
-                                    Total classes: <span className="font-semibold">{totalClasses}</span>
-                                </p>
-                                <p className="text-gray-700 mb-4">
-                                    Total class duration: <span className="font-semibold">{formatDuration(totalClassDuration)}</span>
-                                </p>
-
-                                <h4 className="text-lg font-semibold mb-4">Sparring statistics</h4>
-                                <p className="text-gray-700">
-                                    Total amount of rounds: <span className="font-semibold">{totalRollingRounds}</span>
-                                </p>
-
-                                <p className="text-gray-700">
-                                    Total time sparring: <span className="font-semibold">{formatDuration(totalRoundDuration)}</span>
-                                </p>
+                        {/* Sparring vs Training Chart */}
+                        <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                            <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
+                                <h3 className="text-lg font-medium text-gray-900">Training Distribution</h3>
+                            </div>
+                            <div className="p-6">
+                                {sparringRelativeToTraining && sparringRelativeToTraining > 0 ? (
+                                    <Pie
+                                        data={{
+                                            labels: ['Sparring', 'Other Training'],
+                                            datasets: [
+                                                {
+                                                    data: [sparringRelativeToTraining, 100 - sparringRelativeToTraining],
+                                                    backgroundColor: [
+                                                        'rgb(79, 70, 229)',
+                                                        'rgb(199, 210, 254)',
+                                                    ],
+                                                },
+                                            ],
+                                        }}
+                                        options={{
+                                            responsive: true,
+                                            maintainAspectRatio: false,
+                                        }}
+                                        height={300}
+                                    />
+                                ) : (
+                                    <NoData message="No data available"
+                                            secondaryMessage="Add classes and sparring statistics to display training distribution"
+                                    />
+                                )}
 
                             </div>
+                        </div>
+                    </div>
+
+                    {/* Positions Distribution Chart */}
+                    <div className="mt-6 overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                        <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
+                            <h3 className="text-lg font-medium text-gray-900">Positions Distribution</h3>
+                        </div>
+                        <div className="p-6">
+                            {positionsRelative && positionsRelative.length > 0 ? (
+                                <Pie
+                                    data={{
+                                        labels: positionsRelative.map(item => item.position_name),
+                                        datasets: [
+                                            {
+                                                data: positionsRelative.map(item => item.count),
+                                                backgroundColor: [
+                                                    'rgb(79, 70, 229)',  // Indigo
+                                                    'rgb(59, 130, 246)', // Blue
+                                                    'rgb(16, 185, 129)', // Green
+                                                    'rgb(245, 158, 11)', // Orange
+                                                    'rgb(239, 68, 68)',  // Red
+                                                    'rgb(139, 92, 246)', // Purple
+                                                    'rgb(236, 72, 153)', // Pink
+                                                    'rgb(14, 165, 233)', // Light Blue
+                                                    'rgb(168, 85, 247)', // Purple
+                                                    'rgb(251, 146, 60)'  // Light Orange
+                                                ],
+                                            },
+                                        ],
+                                    }}
+                                    options={{
+                                        responsive: true,
+                                        maintainAspectRatio: false,
+                                        plugins: {
+                                            legend: {
+                                                position: 'right',
+                                            },
+                                            tooltip: {
+                                                callbacks: {
+                                                    label: (context) => {
+                                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                                        const percentage = ((context.raw / total) * 100).toFixed(1);
+                                                        return `${context.label}: ${context.raw} (${percentage}%)`;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }}
+                                    height={300}
+                                />
+                            ) : (
+                                <NoData message="No position data available"
+                                        secondaryMessage="Add some techniques to your training sessions to see position statistics"
+                                />
+                            )}
                         </div>
                     </div>
                 </div>

@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
         $user->createDefaultData();
 
         // Create 250 training classes for test user
-        $this->createTrainingClassesForUser($user, 250);
+        $this->createTrainingClassesForUser($user, 1);
 
         // Create 5 additional users with only default data
         User::factory(5)
