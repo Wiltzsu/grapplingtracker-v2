@@ -63,7 +63,6 @@ class TrainingClassController extends Controller
             'class_description' => [
                 'nullable',
                 'string',
-                'max:255',
             ],
             'class_duration' => [
                 'required',
@@ -139,7 +138,6 @@ class TrainingClassController extends Controller
             'class_description' => [
                 'nullable',
                 'string',
-                'max:255',
             ],
             'class_duration' => [
                 'required',

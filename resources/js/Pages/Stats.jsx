@@ -211,7 +211,7 @@ export default function Stats({ auth,
                                 <h3 className="text-lg font-medium text-gray-900">Training Frequency</h3>
                             </div>
                             <div className="p-6">
-                                {trainingFrequency && trainingFrequency > 0 ? (
+                                {trainingFrequency && trainingFrequency.length > 0 ? (
                                     <Line
                                         data={{
                                             labels: trainingFrequency.map(item => dayjs(item.month).format('MMM YYYY')),

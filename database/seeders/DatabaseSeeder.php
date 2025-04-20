@@ -41,6 +41,8 @@ class DatabaseSeeder extends Seeder
         // Create 250 training classes for test user
         $this->createTrainingClassesForUser($user, 1);
 
+        $this->call(OldTrainingClassSeeder::class);
+
         // Create 5 additional users with only default data
         User::factory(5)
             ->create()
