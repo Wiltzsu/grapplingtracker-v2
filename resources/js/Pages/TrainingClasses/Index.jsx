@@ -111,15 +111,17 @@ export default function Index({ training_classes }) {
         >
             <Head title="Training Classes" />
 
-            <div className="py-12">
+            <div className="py-0 sm:py-6">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="mb-8 mt-5 flex justify-between items-center">
-                        <h2 className="text-xl font-semibold leading-tight text-gray-800">
+                        <h2 className="text-xl font-semibold leading-tight text-gray-800 pl-3 sm:pl-0">
                             Training Classes
                         </h2>
                         <Link
                             href={route('trainingclasses.create')}
-                            className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            className="inline-flex items-center rounded-md border border-transparent bg-indigo-600
+                            px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2
+                            focus:ring-indigo-500 focus:ring-offset-2 mr-3 sm:mr-0"
                         >
                             Add New Class
                         </Link>
