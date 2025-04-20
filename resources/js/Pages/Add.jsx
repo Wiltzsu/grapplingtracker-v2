@@ -46,10 +46,10 @@ export default function Add() {
         >
             <Head title="Add New Entry" />
 
-            <div className="py-12">
+            <div className="py-0 sm:py-6">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="mb-8 mt-5">
-                        <h2 className="text-xl font-semibold leading-tight text-gray-800">
+                        <h2 className="text-xl font-semibold leading-tight text-gray-800 sr-only">
                             Add new entry
                         </h2>
                     </div>

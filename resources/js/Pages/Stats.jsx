@@ -1,25 +1,60 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import { Tab } from '@headlessui/react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { router } from '@inertiajs/react';
+import dayjs from 'dayjs';
 
-export default function Stats() {
-    const [stats, setStats] = useState({
-        week: null,
-        month: null,
-        sixMonths: null,
-        year: null
-    });
+export default function Stats({ auth, totalClasses, totalRollingRounds, totalRoundDuration, totalClassDuration }) {
+    const [dateRange, setDateRange] = useState('month');
+    const [customStartDate, setCustomStartDate] = useState('');
+    const [customEndDate, setCustomEndDate] = useState('');
+    const [showCustomDates, setShowCustomDates] = useState(false);
 
-    const periods = [
-        { name: '1 Week', key: 'week' },
-        { name: '1 Month', key: 'month' },
-        { name: '6 Months', key: 'sixMonths' },
-        { name: '1 Year', key: 'year' },
-    ];
+    const handleDateRangeChange = (value) => {
+        setDateRange(value);
+        if (value === 'custom') {
+            setShowCustomDates(true);
+            return;
+        }
+        setShowCustomDates(false);
+
+        router.get(route('stats'), { range: value }, {
+            preserveState: true,
+            preserveScroll: true,
+        });
+    };
+
+    const handleCustomDateSubmit = () => {
+        if (customStartDate && customEndDate) {
+            router.get(route('stats'), {
+                range: 'custom',
+                startDate: customStartDate,
+                endDate: customEndDate
+            }, {
+                preserveState: true,
+                preserveScroll: true,
+            });
+        }
+    };
+
+    const formatDuration = (minutes) => {
+        const hours = Math.floor(minutes / 60);
+        const remainingMinutes = minutes % 60;
+
+        if (hours === 0) {
+            return `${minutes} minutes`;
+        }
+
+        if (remainingMinutes === 0) {
+            return `${hours} ${hours === 1 ? 'hour' : 'hours'}`;
+        }
+
+        return `${hours} ${hours === 1 ? 'hour' : 'hours'} ${remainingMinutes} ${remainingMinutes === 1 ? 'minute' : 'minutes'}`;
+    }
 
     return (
         <AuthenticatedLayout
+            user={auth.user}
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800">
                     View stats
@@ -31,67 +66,74 @@ export default function Stats() {
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div className="p-6">
-                            <Tab.Group>
-                                <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
-                                    {periods.map((period) => (
-                                        <Tab
-                                            key={period.key}
-                                            className={({ selected }) =>
-                                                `w-full rounded-lg py-2.5 text-sm font-medium leading-5 ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
-                                                    selected
-                                                        ? 'bg-white text-blue-700 shadow'
-                                                        : 'text-gray-600 hover:bg-white/[0.12] hover:text-blue-600'
-                                                }`
-                                            }
+                        <div className="p-6 text-gray-900">
+                            <div className="mb-6">
+                                <select
+                                    value={dateRange}
+                                    onChange={(e) => handleDateRangeChange(e.target.value)}
+                                    className="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                >
+                                    <option value="month">Last Month</option>
+                                    <option value="6months">Last 6 Months</option>
+                                    <option value="year">Last Year</option>
+                                    <option value="all">All Time</option>
+                                    <option value="custom">Custom Range</option>
+                                </select>
+
+                                {showCustomDates && (
+                                    <div className="mt-4 flex items-end gap-4">
+                                        <div>
+                                            <label className="block text-sm text-gray-700">Start Date</label>
+                                            <input
+                                                type="date"
+                                                value={customStartDate}
+                                                onChange={(e) => setCustomStartDate(e.target.value)}
+                                                className="mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm text-gray-700">End Date</label>
+                                            <input
+                                                type="date"
+                                                value={customEndDate}
+                                                onChange={(e) => setCustomEndDate(e.target.value)}
+                                                className="mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                            />
+                                        </div>
+                                        <button
+                                            onClick={handleCustomDateSubmit}
+                                            className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500"
                                         >
-                                            {period.name}
-                                        </Tab>
-                                    ))}
-                                </Tab.List>
-                                <Tab.Panels className="mt-4">
-                                    {periods.map((period) => (
-                                        <Tab.Panel
-                                            key={period.key}
-                                            className="rounded-xl bg-white p-3"
-                                        >
-                                            <StatsContent period={period.key} />
-                                        </Tab.Panel>
-                                    ))}
-                                </Tab.Panels>
-                            </Tab.Group>
+                                            Apply
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+
+                            <h3 className="text-lg font-semibold mb-4">Training Statistics</h3>
+                            <div className="bg-gray-50 p-4 rounded-lg">
+                                <h4 className="text-lg font-semibold mb-4">Time based statistics</h4>
+                                <p className="text-gray-700">
+                                    Total classes: <span className="font-semibold">{totalClasses}</span>
+                                </p>
+                                <p className="text-gray-700 mb-4">
+                                    Total class duration: <span className="font-semibold">{formatDuration(totalClassDuration)}</span>
+                                </p>
+
+                                <h4 className="text-lg font-semibold mb-4">Sparring statistics</h4>
+                                <p className="text-gray-700">
+                                    Total amount of rounds: <span className="font-semibold">{totalRollingRounds}</span>
+                                </p>
+
+                                <p className="text-gray-700">
+                                    Total time sparring: <span className="font-semibold">{formatDuration(totalRoundDuration)}</span>
+                                </p>
+
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </AuthenticatedLayout>
-    );
-}
-
-function StatsContent({ period }) {
-    const [loading, setLoading] = useState(true);
-    const [data, setData] = useState(null);
-
-    useEffect(() => {
-        // Here you would fetch your stats data
-        // Example: fetch(`/api/stats/${period}`)
-        setLoading(false);
-        setData({ /* your stats data */ });
-    }, [period]);
-
-    if (loading) {
-        return <div className="text-center py-4">Loading...</div>;
-    }
-
-    return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {/* Add your stats cards/content here */}
-            <div className="p-4 bg-gray-50 rounded-lg">
-                <h3 className="text-lg font-semibold">Total Expenses</h3>
-                <h3 className="text-lg font-semibold">% more than last week/month/year</h3>
-                <p className="text-2xl font-bold text-blue-600">$0.00</p>
-            </div>
-            {/* Add more stat cards as needed */}
-        </div>
     );
 }
