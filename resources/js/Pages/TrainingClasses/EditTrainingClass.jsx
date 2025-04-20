@@ -62,7 +62,7 @@ export default function EditTrainingClass({ training_class }) {
                         Class
                     </Link>
                     <span className="text-purple-900">|</span>
-                    <span>Edit {data.class_description}</span>
+                    <span>Edit {data.class_description.substring(0, 20)}...</span>
                     <img
                         src={CancelIcon}
                         alt="Cancel"

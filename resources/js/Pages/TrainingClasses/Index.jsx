@@ -204,7 +204,7 @@ export default function Index({ training_classes }) {
                                     </div>
 
                                     <div className="mt-4">
-                                        <span className="text-sm text-gray-500">Description</span>
+                                        <span className="text-sm text-gray-500">Notes</span>
                                         <p className="text-sm text-gray-900 mt-1">
                                             {training_class.class_description || 'No description provided'}
                                         </p>
