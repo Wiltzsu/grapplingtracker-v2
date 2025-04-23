@@ -1,7 +1,7 @@
 // Core Inertia and Layout imports
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, router, usePage } from '@inertiajs/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // UI Components
 import CancelIcon from '@/../../resources/svg/cancel.svg';
@@ -24,6 +24,10 @@ export default function Index({ training_classes }) {
     const [showErrorPopup, setShowErrorPopup] = useState(false);
     const [trainingClassToDelete, setTrainingClassToDelete] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
+    const [perPage, setPerPage] = useState(() => {
+        const params = new URLSearchParams(window.location.search);
+        return parseInt(params.get('perPage') || '15', 10);
+    });
 
     const { flash } = usePage().props;
 
@@ -117,19 +121,38 @@ export default function Index({ training_classes }) {
                         <h2 className="text-xl font-semibold leading-tight text-gray-800 pl-3 sm:pl-0">
                             Training Classes
                         </h2>
-                        <Link
-                            href={route('trainingclasses.create')}
-                            className="inline-flex items-center rounded-md border border-transparent bg-indigo-600
-                            px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2
-                            focus:ring-indigo-500 focus:ring-offset-2 mr-3 sm:mr-0"
-                        >
-                            Add New Class
-                        </Link>
+                        <div className="flex items-center gap-4">
+                            <select
+                                value={perPage}
+                                className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                onChange={(e) => {
+                                    setPerPage(e.target.value);
+                                    router.get(
+                                        route('trainingclasses.index', { perPage: e.target.value }),
+                                        {},
+                                        { preserveScroll: true }
+                                    );
+                                }}
+                            >
+                                <option value="15">15 per page</option>
+                                <option value="30">30 per page</option>
+                                <option value="50">50 per page</option>
+                                <option value="100">100 per page</option>
+                            </select>
+                            <Link
+                                href={route('trainingclasses.create')}
+                                className="inline-flex items-center rounded-md border border-transparent bg-indigo-600
+                                px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2
+                                focus:ring-indigo-500 focus:ring-offset-2 mr-3 sm:mr-0"
+                            >
+                                Add New Class
+                            </Link>
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-                        {training_classes && training_classes.length > 0 ? (
-                            training_classes.map((training_class) => (
+                        {training_classes.data && training_classes.data.length > 0 ? (
+                            training_classes.data.map((training_class) => (
                                 <div
                                     key={training_class.class_id}
                                     className="bg-white rounded-lg shadow-sm p-6 hover:bg-gray-50 transition-colors duration-200"
@@ -216,6 +239,21 @@ export default function Index({ training_classes }) {
                                 <p className="text-gray-500">No training classes found. Create one to get started.</p>
                             </div>
                         )}
+                    </div>
+
+                    {/* Simple pagination links */}
+                    <div className="mt-6">
+                        {training_classes.links.map((link, i) => (
+                            <Link
+                                key={i}
+                                href={link.url}
+                                className={`px-4 py-2 mx-1 rounded ${
+                                    link.active ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700'
+                                }`}
+                                preserveScroll
+                                dangerouslySetInnerHTML={{ __html: link.label }}
+                            />
+                        ))}
                     </div>
                 </div>
             </div>

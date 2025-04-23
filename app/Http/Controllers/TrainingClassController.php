@@ -18,12 +18,14 @@ class TrainingClassController extends Controller
      * - latest() orders the results by creation date
      * - get() executes the query and retrieves all records
      */
-    public function index()
+    public function index(Request $request)
     {
+        $perPage = $request->input('perPage', 15);
+
         return Inertia::render('TrainingClasses/Index', [
             'training_classes' => TrainingClass::where('user_id', auth()->id())
-                ->latest()
-                ->get()
+                ->orderBy('class_date', 'desc')
+                ->paginate($perPage)
         ]);
     }
 
