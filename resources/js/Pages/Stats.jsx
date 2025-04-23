@@ -3,6 +3,7 @@ import { Head } from '@inertiajs/react';
 import { useState } from 'react';
 import { router } from '@inertiajs/react';
 import NoData from '@/Components/NoData';
+import InfoCircle from '@/../../resources/svg/icons8-info.svg';
 import dayjs from 'dayjs';
 import { Line, Pie } from 'react-chartjs-2';
 import {
@@ -205,60 +206,68 @@ export default function Stats({ auth,
                     </div>
 
                     {/* Training Frequency Chart */}
-                    <div className="mt-6 grid gap-6 md:grid-cols-2">
-                        <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                            <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
+                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg mt-6">
+                        <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
+                            <div className="flex items-center gap-2">
                                 <h3 className="text-lg font-medium text-gray-900">Training Frequency</h3>
+                                <img
+                                    src={InfoCircle}
+                                    alt="Info"
+                                    className="h-5 w-5"
+                                />
                             </div>
-                            <div className="p-6">
-                                {trainingFrequency && trainingFrequency.length > 0 ? (
-                                    <Line
-                                        data={{
-                                            labels: trainingFrequency.map(item => dayjs(item.month).format('MMM YYYY')),
-                                            datasets: [
-                                                {
-                                                    label: 'Classes per Month',
-                                                    data: trainingFrequency.map(item => item.count),
-                                                    borderColor: 'rgb(79, 70, 229)',
-                                                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
-                                                    tension: 0.1,
-                                                    fill: true,
-                                                },
-                                            ],
-                                        }}
-                                        options={{
-                                            responsive: true,
-                                            maintainAspectRatio: false,
-                                            plugins: {
-                                                legend: {
-                                                    position: 'top',
-                                                },
-                                                tooltip: {
-                                                    callbacks: {
-                                                        title: (context) => {
-                                                            return dayjs(trainingFrequency[context[0].dataIndex].month).format('MMMM YYYY');
-                                                        }
-                                                    }
-                                                }
+
+                        </div>
+                        <div className="p-6">
+                            {trainingFrequency && trainingFrequency.length > 0 ? (
+                                <Line
+                                    data={{
+                                        labels: trainingFrequency.map(item => dayjs(item.month).format('MMM YYYY')),
+                                        datasets: [
+                                            {
+                                                label: 'Classes per Month',
+                                                data: trainingFrequency.map(item => item.count),
+                                                borderColor: 'rgb(79, 70, 229)',
+                                                backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                                                tension: 0.1,
+                                                fill: true,
                                             },
-                                            scales: {
-                                                y: {
-                                                    beginAtZero: true,
-                                                    ticks: {
-                                                        stepSize: 1
+                                        ],
+                                    }}
+                                    options={{
+                                        responsive: true,
+                                        maintainAspectRatio: false,
+                                        plugins: {
+                                            legend: {
+                                                position: 'top',
+                                            },
+                                            tooltip: {
+                                                callbacks: {
+                                                    title: (context) => {
+                                                        return dayjs(trainingFrequency[context[0].dataIndex].month).format('MMMM YYYY');
                                                     }
                                                 }
                                             }
-                                        }}
-                                        height={300}
-                                    />
-                                ) : (
-                                        <NoData message="No data available"
-                                        secondaryMessage="Add classes to display training frequency"/>
-                                )}
-                            </div>
+                                        },
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true,
+                                                ticks: {
+                                                    stepSize: 1
+                                                }
+                                            }
+                                        }
+                                    }}
+                                    height={300}
+                                />
+                            ) : (
+                                    <NoData message="No data available"
+                                    secondaryMessage="Add classes to display training frequency"/>
+                            )}
                         </div>
+                    </div>
 
+                    <div className="mt-6 grid gap-6 md:grid-cols-2">
                         {/* Sparring vs Training Chart */}
                         <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                             <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
@@ -293,61 +302,60 @@ export default function Stats({ auth,
 
                             </div>
                         </div>
-                    </div>
-
-                    {/* Positions Distribution Chart */}
-                    <div className="mt-6 overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
-                            <h3 className="text-lg font-medium text-gray-900">Positions Distribution</h3>
-                        </div>
-                        <div className="p-6">
-                            {positionsRelative && positionsRelative.length > 0 ? (
-                                <Pie
-                                    data={{
-                                        labels: positionsRelative.map(item => item.position_name),
-                                        datasets: [
-                                            {
-                                                data: positionsRelative.map(item => item.count),
-                                                backgroundColor: [
-                                                    'rgb(79, 70, 229)',  // Indigo
-                                                    'rgb(59, 130, 246)', // Blue
-                                                    'rgb(16, 185, 129)', // Green
-                                                    'rgb(245, 158, 11)', // Orange
-                                                    'rgb(239, 68, 68)',  // Red
-                                                    'rgb(139, 92, 246)', // Purple
-                                                    'rgb(236, 72, 153)', // Pink
-                                                    'rgb(14, 165, 233)', // Light Blue
-                                                    'rgb(168, 85, 247)', // Purple
-                                                    'rgb(251, 146, 60)'  // Light Orange
-                                                ],
-                                            },
-                                        ],
-                                    }}
-                                    options={{
-                                        responsive: true,
-                                        maintainAspectRatio: false,
-                                        plugins: {
-                                            legend: {
-                                                position: 'right',
-                                            },
-                                            tooltip: {
-                                                callbacks: {
-                                                    label: (context) => {
-                                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                                        const percentage = ((context.raw / total) * 100).toFixed(1);
-                                                        return `${context.label}: ${context.raw} (${percentage}%)`;
+                        {/* Positions Distribution Chart */}
+                        <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                            <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
+                                <h3 className="text-lg font-medium text-gray-900">Positions Distribution</h3>
+                            </div>
+                            <div className="p-6">
+                                {positionsRelative && positionsRelative.length > 0 ? (
+                                    <Pie
+                                        data={{
+                                            labels: positionsRelative.map(item => item.position_name),
+                                            datasets: [
+                                                {
+                                                    data: positionsRelative.map(item => item.count),
+                                                    backgroundColor: [
+                                                        'rgb(79, 70, 229)',  // Indigo
+                                                        'rgb(59, 130, 246)', // Blue
+                                                        'rgb(16, 185, 129)', // Green
+                                                        'rgb(245, 158, 11)', // Orange
+                                                        'rgb(239, 68, 68)',  // Red
+                                                        'rgb(139, 92, 246)', // Purple
+                                                        'rgb(236, 72, 153)', // Pink
+                                                        'rgb(14, 165, 233)', // Light Blue
+                                                        'rgb(168, 85, 247)', // Purple
+                                                        'rgb(251, 146, 60)'  // Light Orange
+                                                    ],
+                                                },
+                                            ],
+                                        }}
+                                        options={{
+                                            responsive: true,
+                                            maintainAspectRatio: false,
+                                            plugins: {
+                                                legend: {
+                                                    position: 'right',
+                                                },
+                                                tooltip: {
+                                                    callbacks: {
+                                                        label: (context) => {
+                                                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                                            const percentage = ((context.raw / total) * 100).toFixed(1);
+                                                            return `${context.label}: ${context.raw} (${percentage}%)`;
+                                                        }
                                                     }
                                                 }
                                             }
-                                        }
-                                    }}
-                                    height={300}
-                                />
-                            ) : (
-                                <NoData message="No position data available"
-                                        secondaryMessage="Add some techniques to your training sessions to see position statistics"
-                                />
-                            )}
+                                        }}
+                                        height={300}
+                                    />
+                                ) : (
+                                    <NoData message="No position data available"
+                                            secondaryMessage="Add some techniques to your training sessions to see position statistics"
+                                    />
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
