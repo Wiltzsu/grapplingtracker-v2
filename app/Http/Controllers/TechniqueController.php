@@ -69,7 +69,6 @@ class TechniqueController extends Controller
             'technique_description' => [
                 'required',
                 'string',
-                'max:255',
             ],
             'category_id' => [
                 'required',
