@@ -24,11 +24,13 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
+        $user = $request->user();
         return Inertia::render(
             'Profile/Edit',
             [
-            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-            'status' => session('status'),
+                'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+                'status' => session('status'),
+                'isOAuthUser' => $user->is_oauth_user,
             ]
         );
     }
@@ -68,18 +70,24 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $request->validate(
-            [
-            'password' => ['required', 'current_password'],
-            ]
-        );
-
         $user = $request->user();
 
+        if ($user->is_oauth_user) {
+            $request->validate([
+                'confirmation' => ['required', 'string', function ($attribute, $value, $fail) {
+                    if ($value !== 'DELETE') {
+                        $fail('Please type DELETE to confirm.');
+                    }
+                }],
+            ]);
+        } else {
+            $request->validate([
+                'password' => ['required', 'current_password'],
+            ]);
+        }
+
         Auth::logout();
-
         $user->delete();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

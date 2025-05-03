@@ -96,4 +96,49 @@ class ProfileTest extends TestCase
 
         $this->assertNotNull($user->fresh());
     }
+
+    public function test_oauth_user_can_view_profile(): void
+    {
+        $user = User::factory()->create(['is_oauth_user' => true]);
+
+        $response = $this
+            ->actingAs($user)
+            ->get('/profile');
+
+            $response->assertOk();
+            $response->assertInertia(fn ($page) => $page
+                ->component('Profile/Edit')
+                ->where('isOAuthUser', true)
+        );
+    }
+
+    public function test_oauth_user_cannot_see_password_form(): void
+    {
+        $user = User::factory()->create(['is_oauth_user' => true]);
+
+        $response = $this
+            ->actingAs($user)
+            ->get('/profile');
+
+        $response->assertOk();
+        $response->assertDontSee('Update Password');
+    }
+
+    public function test_oauth_user_can_delete_account_with_delete_confirmation(): void
+    {
+        $user = User::factory()->create(['is_oauth_user' => true]);
+
+        $response = $this
+            ->actingAs($user)
+            ->delete('/profile', [
+                'confirmation' => 'DELETE'
+            ]);
+
+        $response
+            ->assertSessionHasNoErrors()
+            ->assertRedirect('/');
+
+        $this->assertGuest();
+        $this->assertNull($user->fresh());
+    }
 }

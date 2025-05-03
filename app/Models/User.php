@@ -27,6 +27,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_oauth_user',
     ];
 
     /**
@@ -114,5 +115,12 @@ class User extends Authenticatable
         foreach ($defaultCategories as $category) {
             Category::create($category);
         }
+    }
+
+    public function isOAuthUser(): bool
+    {
+        // OAuth users have their password set to a random string during creation
+        return strlen($this->password) === 60 &&
+               $this->created_at !== null;
     }
 }
