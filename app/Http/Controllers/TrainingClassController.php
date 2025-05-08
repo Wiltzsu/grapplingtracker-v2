@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
+use App\Models\Category;
+use App\Models\Position;
+use App\Models\Technique;
 
 class TrainingClassController extends Controller
 {
@@ -34,7 +37,11 @@ class TrainingClassController extends Controller
      */
     public function create()
     {
-        return Inertia::render('TrainingClasses/CreateTrainingClass');
+        return Inertia::render('TrainingClasses/CreateTrainingClass', [
+            'categories' => Category::where('user_id', auth()->id())->get(),
+            'positions' => Position::where('user_id', auth()->id())->get(),
+            'training_classes' => TrainingClass::where('user_id', auth()->id())->get(),
+        ]);
     }
 
     /**
@@ -81,13 +88,25 @@ class TrainingClassController extends Controller
                 'integer',
                 'min:1'
             ],
+            'techniques' => ['array'],
+            'techniques.*.technique_name' => ['required', 'string', 'max:255'],
+            'techniques.*.technique_description' => ['required', 'string'],
+            'techniques.*.category_id' => ['required', 'integer'],
+            'techniques.*.position_id' => ['required', 'integer'],
         ]);
 
         // Add user_id to the validated data
         $validated['user_id'] = auth()->id();
 
         // Create the training class
-        TrainingClass::create($validated);
+        $trainingClass = TrainingClass::create($validated);
+
+        // Create the techniques and associate them with the training class
+        foreach ($request->techniques as $technique) {
+            $technique['user_id'] = auth()->id();
+            $technique['class_id'] = $trainingClass->class_id;
+            Technique::create($technique);
+        }
 
         return back()->with('success', true);
     }

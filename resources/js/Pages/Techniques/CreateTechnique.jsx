@@ -45,6 +45,9 @@ export default function Create({ categories, training_classes, positions }) {
      */
     const submit = (e) => {
         e.preventDefault();
+                // Log the form data
+                console.log('Submitting technique data:', data);
+
         post(route('techniques.store'), {
             onSuccess: () => {
                 reset();                    // Inertias built-in function for the useForm hook to reset fields

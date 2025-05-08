@@ -10,8 +10,9 @@ import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import PrimaryButton from '@/Components/PrimaryButton';
 import SuccessPopup from '@/Components/SuccessPopup';
+import { DynamicList } from '@/Components/DynamicList';
 
-export default function Create() {
+export default function Create({ categories, positions }) {
     // Helper function to get today's date in YYYY-MM-DD format
     const getTodayDate = () => {
         const today = new Date();
@@ -39,6 +40,7 @@ export default function Create() {
         class_duration: '',
         rounds: '',
         round_duration: '',
+        techniques: []
     });
 
     /**
@@ -69,6 +71,10 @@ export default function Create() {
     const closePopup = () => {
         setShowSuccessPopup(false);
         window.location = route('add');
+    };
+
+    const handleTechniquesChange = (techniques) => {
+        setData('techniques', techniques);
     };
 
     return (
@@ -165,6 +171,12 @@ export default function Create() {
                                             />
                                             <InputError message={errors.class_description} className="mt-2" />
                                         </div>
+
+                                        <DynamicList
+                                            categories={categories}
+                                            positions={positions}
+                                            onTechniquesChange={handleTechniquesChange}
+                                        />
 
                                         {/* Training class duration */}
                                         <div>
