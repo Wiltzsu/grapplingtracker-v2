@@ -31,7 +31,7 @@ export default function Welcome({ auth, canLogin, canRegister }) {
                 <GuestHeader auth={auth} showExtraNav={true} />
 
                 {/* Hero Section */}
-                <div className="relative px-6 pt-20 lg:px-8 bg-gradient-to-b from-indigo-50 to-white overflow-hidden">
+                <div className="relative px-6 pt-28 lg:px-8 bg-gradient-to-b from-indigo-50 to-white overflow-hidden">
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -52,7 +52,7 @@ export default function Welcome({ auth, canLogin, canRegister }) {
                                 variants={fadeIn}
                                 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl sm:leading-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-blue-500"
                             >
-                                Track Your Grappling Journey
+                                Track your Grappling Journey
                             </motion.h1>
                             <motion.p
                                 variants={fadeIn}
@@ -85,7 +85,7 @@ export default function Welcome({ auth, canLogin, canRegister }) {
 
                 {/* Features Section */}
                 <motion.div
-                    className="py-12 sm:py-16 bg-white relative"
+                    className="pt-12 pb-24 sm:pt-16 sm:pb-32 bg-white relative"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
