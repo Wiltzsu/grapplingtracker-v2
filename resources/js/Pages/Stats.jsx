@@ -102,7 +102,7 @@ export default function Stats({ auth,
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     {/* Date Range Selector Card */}
-                    <div className="mb-6 overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                    <div className="mb-6 overflow-hidden bg-gray-50 shadow-lm sm:rounded-lg">
                         <div className="p-6">
                             <div className="flex items-center justify-between">
                                 <h3 className="text-lg font-medium text-gray-900">Select Time Period</h3>
@@ -161,15 +161,15 @@ export default function Stats({ auth,
                                 <div className="grid gap-4">
                                     <div className="rounded-lg bg-gray-50 p-4">
                                         <p className="text-sm text-gray-500">Total Classes</p>
-                                        <p className="text-2xl font-bold text-gray-900">{totalClasses}</p>
+                                        <p className="text-2xl text-gray-900">{totalClasses}</p>
                                     </div>
                                     <div className="rounded-lg bg-gray-50 p-4">
                                         <p className="text-sm text-gray-500">Total Training Time</p>
-                                        <p className="text-2xl font-bold text-gray-900">{formatDuration(totalClassDuration)}</p>
+                                        <p className="text-2xl text-gray-900">{formatDuration(totalClassDuration)}</p>
                                     </div>
                                     <div className="rounded-lg bg-gray-50 p-4">
                                         <p className="text-sm text-gray-500">Average Class Duration</p>
-                                        <p className="text-2xl font-bold text-gray-900">{formatDuration(averageClassDuration)}</p>
+                                        <p className="text-2xl text-gray-900">{formatDuration(averageClassDuration)}</p>
                                     </div>
                                 </div>
                             </div>
@@ -184,20 +184,20 @@ export default function Stats({ auth,
                                 <div className="grid gap-4">
                                     <div className="rounded-lg bg-gray-50 p-4">
                                         <p className="text-sm text-gray-500">Total Rounds</p>
-                                        <p className="text-2xl font-bold text-gray-900">{totalRollingRounds}</p>
+                                        <p className="text-2xl text-gray-900">{totalRollingRounds}</p>
                                     </div>
                                     <div className="rounded-lg bg-gray-50 p-4">
                                         <p className="text-sm text-gray-500">Total Sparring Time</p>
-                                        <p className="text-2xl font-bold text-gray-900">{formatDuration(totalRoundDuration)}</p>
+                                        <p className="text-2xl text-gray-900">{formatDuration(totalRoundDuration)}</p>
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
                                         <div className="rounded-lg bg-gray-50 p-4">
                                             <p className="text-sm text-gray-500">Avg Round Duration</p>
-                                            <p className="text-2xl font-bold text-gray-900">{formatDuration(averageRoundDuration)}</p>
+                                            <p className="text-2xl text-gray-900">{formatDuration(averageRoundDuration)}</p>
                                         </div>
                                         <div className="rounded-lg bg-gray-50 p-4">
                                             <p className="text-sm text-gray-500">Sparring Ratio</p>
-                                            <p className="text-2xl font-bold text-gray-900">{sparringRelativeToTraining}%</p>
+                                            <p className="text-2xl text-gray-900">{sparringRelativeToTraining}%</p>
                                         </div>
                                     </div>
                                 </div>
