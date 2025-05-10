@@ -16,8 +16,6 @@ import SuccessPopup from '@/Components/SuccessPopup';
  * {{ position }} is a prop from CategoryController's edit method.
  */
 export default function EditPosition({ position }) {
-    console.log('Position Class Data:', position);
-
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
     const { data, setData, put, processing, errors } = useForm({
@@ -70,11 +68,14 @@ export default function EditPosition({ position }) {
             <Head title="Edit position" />
 
             <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-3xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             <div className="mb-8 mt-5 flex justify-center">
                                 <div className="w-[600px]">
+                                    <h2 className="text-xl font-semibold leading-tight text-gray-800">
+                                        Edit {data.position_name}
+                                    </h2>
                                     <form onSubmit={submit} className="mt-6 space-y-6">
                                         <div>
                                             <InputLabel htmlFor="position_name" value={<>Position name <span className="text-red-500">*</span></>} />

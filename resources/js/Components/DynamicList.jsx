@@ -7,10 +7,34 @@ import TextInput from '@/Components/TextInput';
 import InputError from '@/Components/InputError';
 import dayjs from 'dayjs';
 
-
-export const DynamicList = ({ categories, positions, onTechniquesChange }) => {
+/**
+ * A dynamic form component for managing multiple technique entries.
+ *
+ * @component
+ * @param {Object} props - Component properties
+ * @param {Array<Object>} props.categories - List of available technique categories
+ *   @param {number} props.categories[].category_id - Unique identifier for the category
+ *   @param {string} props.categories[].category_name - Name of the category
+ *
+ * @param {Array<Object>} props.positions - List of available technique positions
+ *   @param {number} props.positions[].position_id - Unique identifier for the position
+ *   @param {string} props.positions[].position_name - Name of the position
+ *
+ * @param {Array<Object>} [props.initialTechniques] - Initial technique data for editing
+ *   @param {string} props.initialTechniques[].technique_name - Name of the technique
+ *   @param {string} props.initialTechniques[].technique_description - Description of the technique
+ *   @param {number} props.initialTechniques[].category_id - Associated category ID
+ *   @param {number} props.initialTechniques[].position_id - Associated position ID
+ *   @param {number} props.initialTechniques[].class_id - Associated training class ID
+ *
+ * @param {Function} props.onTechniquesChange - Callback function when techniques are modified
+ *   @param {Array<Object>} techniques - Updated array of technique objects
+ *
+ * @returns {JSX.Element} A form component for managing multiple techniques
+ */
+export const DynamicList = ({ categories, positions, initialTechniques, onTechniquesChange, isEdit = false  }) => {
     const { data, setData, post, processing, errors } = useForm({
-        techniques: [{
+        techniques: initialTechniques || [{
             technique_name: '',
             technique_description: '',
             category_id: '',
@@ -19,11 +43,12 @@ export const DynamicList = ({ categories, positions, onTechniquesChange }) => {
         }]
     });
 
-    // Add useEffect to notify parent of changes
+    // Effect hook to notify parent component whenever techinques data changes
     useEffect(() => {
         onTechniquesChange(data.techniques);
     }, [data.techniques]);
 
+    // Adds a new empty technique form to the list
     const addTechniqueForm = () => {
         setData('techniques', [...data.techniques, {
             technique_name: '',
@@ -34,6 +59,7 @@ export const DynamicList = ({ categories, positions, onTechniquesChange }) => {
         }]);
     };
 
+    // Updates a specific field of a technique at the given index
     const updateTechnique = (index, field, value) => {
         const updatedTechniques = [...data.techniques];
         updatedTechniques[index] = {
@@ -43,17 +69,9 @@ export const DynamicList = ({ categories, positions, onTechniquesChange }) => {
         setData('techniques', updatedTechniques);
     };
 
+    // Removes a technique from the list at the specified index
     const removeTechnique = (index) => {
         setData('techniques', data.techniques.filter((_, i) => i !== index));
-    };
-
-    const submit = (e) => {
-        e.preventDefault();
-        post(route('techniques.store'), {
-            onSuccess: () => {
-                // Handle success
-            },
-        });
     };
 
     return (
@@ -62,7 +80,12 @@ export const DynamicList = ({ categories, positions, onTechniquesChange }) => {
                 {({ open }) => (
                     <>
                         <Disclosure.Button className="flex w-full justify-between rounded-lg bg-indigo-100 px-4 py-2 text-left text-sm font-medium text-indigo-900 hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-75">
-                            <span>Add New Technique{data.techniques.length > 1 ? 's' : ''}</span>
+                            <span>
+                                {isEdit
+                                    ? `Show class technique${data.techniques.length > 1 ? 's' : ''}`
+                                    : `Add technique${data.techniques.length > 1 ? 's' : ''} to class`
+                                }
+                            </span>
                             <ChevronUpIcon
                                 className={`${open ? 'rotate-180 transform' : ''} h-5 w-5 text-indigo-500`}
                             />

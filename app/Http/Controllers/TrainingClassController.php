@@ -27,6 +27,7 @@ class TrainingClassController extends Controller
 
         return Inertia::render('TrainingClasses/Index', [
             'training_classes' => TrainingClass::where('user_id', auth()->id())
+                ->with('techniques') // Eager load the techniques relationship
                 ->orderBy('class_date', 'desc')
                 ->paginate($perPage)
         ]);
@@ -126,12 +127,11 @@ class TrainingClassController extends Controller
      */
     public function edit(TrainingClass $trainingclass)
     {
-        \Log::info('Edit method called', [
-            'training_class' => $trainingclass->toArray()
-        ]);
-
         return Inertia::render('TrainingClasses/EditTrainingClass', [
-            'training_class' => $trainingclass
+            // Eager load the related techniques for the class
+            'training_class' => $trainingclass->load('techniques'),
+            'categories' => Category::where('user_id', auth()->id())->get(),
+            'positions' => Position::where('user_id', auth()->id())->get(),
         ]);
     }
 
@@ -175,10 +175,28 @@ class TrainingClassController extends Controller
                 'integer',
                 'min:1'
             ],
+            'techniques' => ['array'],
+            'techniques.*.technique_name' => ['required', 'string', 'max:255'],
+            'techniques.*.technique_description' => ['required', 'string'],
+            'techniques.*.category_id' => ['required', 'integer'],
+            'techniques.*.position_id' => ['required', 'integer'],
         ]);
 
-        // Update the database record
+        // Update the training class
         $trainingclass->update($validated);
+
+        // Update techniques
+        if (isset($request->techniques)) {
+            // Delete existing techniques
+            $trainingclass->techniques()->delete();
+
+            // Create new techniques
+            foreach ($request->techniques as $technique) {
+                $technique['user_id'] = auth()->id();
+                $technique['class_id'] = $trainingclass->class_id;
+                Technique::create($technique);
+            }
+        }
 
         return back()->with('success', true);
     }

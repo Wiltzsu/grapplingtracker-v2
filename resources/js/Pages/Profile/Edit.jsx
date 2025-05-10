@@ -5,7 +5,6 @@ import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
 
 export default function Edit({ mustVerifyEmail, status, isOAuthUser }) {
-    console.log(isOAuthUser);
     return (
         <AuthenticatedLayout
             header={

@@ -119,7 +119,7 @@ export default function Index({ techniques }) {
         >
             <Head title="Techniques" />
 
-            <div className="py-0 sm:py-6">
+            <div className="py-0 sm:py-6 pr-2 pl-2">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="mb-8 mt-5 flex justify-between items-center">
                         <h2 className="text-xl font-semibold leading-tight text-gray-800 pl-3 sm:pl-0">
@@ -160,7 +160,7 @@ export default function Index({ techniques }) {
                                                 </svg>
                                             </div>
                                             <h3 className="text-lg font-medium text-gray-900">
-                                                {techniques.location}
+                                                {techniques.technique_name}
                                             </h3>
                                         </div>
                                         <Dropdown className="z-[9999]">
@@ -192,26 +192,28 @@ export default function Index({ techniques }) {
                                         </Dropdown>
                                     </div>
 
-                                    <div className="grid grid-cols-2 gap-3 mt-4">
+                                    <div className="grid grid-cols-1 gap-3 mt-4">
                                         <div className="flex flex-col">
-                                            <span className="text-sm text-gray-500">Name</span>
-                                            <span className="text-sm font-medium text-gray-900">{techniques.technique_name}</span>
+                                            <span className="text-sm text-gray-500">Location</span>
+                                            <span className="text-sm font-medium text-gray-900">{techniques.location}</span>
                                         </div>
                                         <div className="flex flex-col">
                                             <span className="text-sm text-gray-500">Description</span>
                                             <span className="text-sm font-medium text-gray-900">{techniques.technique_description}</span>
                                         </div>
-                                        <div className="flex flex-col">
-                                            <span className="text-sm text-gray-500">Category</span>
-                                            <span className="text-sm font-medium text-gray-900">{techniques.category_name}</span>
-                                        </div>
-                                        <div className="flex flex-col">
-                                            <span className="text-sm text-gray-500">Class</span>
-                                            <span className="text-sm font-medium text-gray-900">{techniques.location}</span>
-                                        </div>
-                                        <div className="flex flex-col">
-                                            <span className="text-sm text-gray-500">Position</span>
-                                            <span className="text-sm font-medium text-gray-900">{techniques.position_name}</span>
+                                        <div class="grid grid-cols-2 gap-3 mt-4">
+                                            <div className="flex flex-col">
+                                                <span className="text-sm text-gray-500">Category</span>
+                                                <span className="text-sm font-medium text-gray-900">{techniques.category_name}</span>
+                                            </div>
+                                            <div className="flex flex-col">
+                                                <span className="text-sm text-gray-500">Class</span>
+                                                <span className="text-sm font-medium text-gray-900">{techniques.location}</span>
+                                            </div>
+                                            <div className="flex flex-col">
+                                                <span className="text-sm text-gray-500">Position</span>
+                                                <span className="text-sm font-medium text-gray-900">{techniques.position_name}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

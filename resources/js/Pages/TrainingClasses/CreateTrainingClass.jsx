@@ -176,6 +176,7 @@ export default function Create({ categories, positions }) {
                                             categories={categories}
                                             positions={positions}
                                             onTechniquesChange={handleTechniquesChange}
+                                            isEdit={false}
                                         />
 
                                         {/* Training class duration */}

@@ -33,7 +33,6 @@ export default function Index({ training_classes }) {
 
     // Handler function for training class deletion
     const confirmDelete = (training_class) => {
-        console.log('Confirming delete for class:', training_class);
         setTrainingClassToDelete(training_class);
         setShowConfirmation(true);
     };
@@ -116,34 +115,36 @@ export default function Index({ training_classes }) {
             <Head title="Training Classes" />
 
             <div className="py-0 sm:py-6">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="mb-8 mt-5 flex justify-between items-center">
+                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 pr-2 pl-2">
+                    <div className="mb-8 mt-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                         <h2 className="text-xl font-semibold leading-tight text-gray-800 pl-3 sm:pl-0">
                             Training Classes
                         </h2>
-                        <div className="flex items-center gap-4">
-                            <select
-                                value={perPage}
-                                className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                onChange={(e) => {
-                                    setPerPage(e.target.value);
-                                    router.get(
-                                        route('trainingclasses.index', { perPage: e.target.value }),
-                                        {},
-                                        { preserveScroll: true }
-                                    );
-                                }}
-                            >
-                                <option value="15">15 per page</option>
-                                <option value="30">30 per page</option>
-                                <option value="50">50 per page</option>
-                                <option value="100">100 per page</option>
-                            </select>
+                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+                            <div className="relative">
+                                <select
+                                    value={perPage}
+                                    className="w-full sm:w-auto appearance-none bg-white pl-3 pr-10 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                    onChange={(e) => {
+                                        setPerPage(e.target.value);
+                                        router.get(
+                                            route('trainingclasses.index', { perPage: e.target.value }),
+                                            {},
+                                            { preserveScroll: true }
+                                        );
+                                    }}
+                                >
+                                    <option value="15">15 per page</option>
+                                    <option value="30">30 per page</option>
+                                    <option value="50">50 per page</option>
+                                    <option value="100">100 per page</option>
+                                </select>
+                            </div>
                             <Link
                                 href={route('trainingclasses.create')}
-                                className="inline-flex items-center rounded-md border border-transparent bg-indigo-600
-                                px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2
-                                focus:ring-indigo-500 focus:ring-offset-2 mr-3 sm:mr-0"
+                                className="w-full sm:w-auto inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2
+                                text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500
+                                focus:ring-offset-2"
                             >
                                 Add New Class
                             </Link>
@@ -224,10 +225,32 @@ export default function Index({ training_classes }) {
                                             <span className="text-sm text-gray-500">Rounds</span>
                                             <span className="text-sm font-medium text-gray-900">{training_class.rounds} × {training_class.round_duration}</span>
                                         </div>
+
+                                        <div className="col-span-2 mt-2">
+                                            <span className="text-sm text-gray-500">Techniques</span>
+                                            <div className="mt-1">
+                                                {training_class.techniques && training_class.techniques.length > 0 ? (
+                                                    <ul className="text-sm font-medium text-gray-900">
+                                                        {training_class.techniques.map((technique) => (
+                                                            <li key={technique.technique_id} className="mb-1">
+                                                                <Link
+                                                                    href={route('techniques.edit', technique.technique_id, {from: 'trainingclasses'})}
+                                                                    className="text-indigo-600 hover:text-indigo-800"
+                                                                >
+                                                                    {technique.technique_name}
+                                                                </Link>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                ) : (
+                                                    <span className="text-sm text-gray-500">No techniques added</span>
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div className="mt-4">
-                                        <span className="text-sm text-gray-500">Notes</span>
+                                        <span className="text-sm text-gray-500">Class notes</span>
                                         <p className="text-sm text-gray-900 mt-1">
                                             {training_class.class_description || 'No description provided'}
                                         </p>
@@ -242,14 +265,16 @@ export default function Index({ training_classes }) {
                     </div>
 
                     {/* Simple pagination links */}
-                    <div className="mt-6">
+                    <div className="mt-6 flex flex-wrap justify-center gap-2">
                         {training_classes.links.map((link, i) => (
                             <Link
                                 key={i}
                                 href={link.url}
-                                className={`px-4 py-2 mx-1 rounded ${
-                                    link.active ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700'
-                                }`}
+                                className={`px-3 py-1 text-sm rounded ${
+                                    link.active
+                                        ? 'bg-indigo-600 text-white'
+                                        : 'bg-white text-gray-700 hover:bg-gray-50'
+                                } ${!link.url && 'opacity-50 cursor-not-allowed'}`}
                                 preserveScroll
                                 dangerouslySetInnerHTML={{ __html: link.label }}
                             />

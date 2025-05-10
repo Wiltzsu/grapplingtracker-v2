@@ -17,7 +17,6 @@ import SuccessPopup from '@/Components/SuccessPopup';
  * {{ technique }} is a prop from TechniqueController's edit method.
  */
 export default function EditTechnique({ technique, categories, positions, training_classes }) {
-    console.log('Technique data:', technique);
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
     // Initialize form with existing technique data
@@ -40,7 +39,13 @@ export default function EditTechnique({ technique, categories, positions, traini
 
     const closePopup = () => {
         setShowSuccessPopup(false);
-        window.location = route('techniques.index');
+
+        // Get the 'from' parameter from the URL to decide where user came from
+        if (from === 'trainingclasses') {
+            window.location = route('trainingclasses.index');
+        } else {
+            window.location = route('techniques.index');
+        }
     };
 
     return (
@@ -74,11 +79,14 @@ export default function EditTechnique({ technique, categories, positions, traini
             <Head title="Edit technique" />
 
             <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-3xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             <div className="mb-8 mt-5 flex justify-center">
                                 <div className="w-[600px]">
+                                    <h2 className="text-xl font-semibold leading-tight text-gray-800">
+                                        Edit {data.technique_name}
+                                    </h2>
                                     <form onSubmit={submit} className="mt-6 space-y-6">
                                         <div>
                                             <InputLabel htmlFor="technique_name" value="Technique name" />

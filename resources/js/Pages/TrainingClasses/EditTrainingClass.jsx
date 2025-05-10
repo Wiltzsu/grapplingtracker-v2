@@ -9,14 +9,14 @@ import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import PrimaryButton from '@/Components/PrimaryButton';
 import SuccessPopup from '@/Components/SuccessPopup';
+import { DynamicList } from '@/Components/DynamicList';
 
 /**
  * Method to edit training class.
  *
  * {{ training_class }} is a prop from TrainingClasscontroller's edit method.
  */
-export default function EditTrainingClass({ training_class }) {
-    console.log('Training Class Data:', training_class);
+export default function EditTrainingClass({ training_class, categories, positions }) {
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
     // Initialize form with existing training class data
@@ -28,7 +28,9 @@ export default function EditTrainingClass({ training_class }) {
         class_duration: training_class.class_duration,
         rounds: training_class.rounds,
         round_duration: training_class.round_duration,
+        techniques: training_class.techniques || []
     });
+    console.log(data);
 
     const submit = (e) => {
         e.preventDefault();
@@ -42,6 +44,10 @@ export default function EditTrainingClass({ training_class }) {
     const closePopup = () => {
         setShowSuccessPopup(false);
         window.location = route('trainingclasses.index');
+    };
+
+    const handleTechniquesChange = (techniques) => {
+        setData('techniques', techniques);
     };
 
     return (
@@ -75,11 +81,14 @@ export default function EditTrainingClass({ training_class }) {
             <Head title="Edit training class" />
 
             <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-3xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             <div className="mb-8 mt-5 flex justify-center">
                                 <div className="w-[600px]">
+                                    <h2 className="text-xl font-semibold leading-tight text-gray-800">
+                                        Edit training class
+                                    </h2>
                                     <form onSubmit={submit} className="mt-6 space-y-6">
                                         <div>
                                             <InputLabel htmlFor="instructor" value="Instructor name" />
@@ -134,6 +143,15 @@ export default function EditTrainingClass({ training_class }) {
                                             />
                                             <InputError message={errors.class_description} className="mt-2" />
                                         </div>
+
+                                        <DynamicList
+                                            // Pass the data to the DynamicList component
+                                            categories={categories}
+                                            positions={positions}
+                                            initialTechniques={training_class.techniques}
+                                            onTechniquesChange={(techniques) => setData('techniques', techniques)}
+                                            isEdit={true}
+                                        />
 
                                         <div>
                                             <InputLabel htmlFor="class_duration" value={<>Class duration (minutes) <span className="text-red-500">*</span></>} />

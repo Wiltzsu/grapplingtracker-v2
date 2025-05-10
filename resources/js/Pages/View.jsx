@@ -46,7 +46,7 @@ export default function View() {
         >
             <Head title="View items" />
 
-            <div className="py-0 sm:py-6">
+            <div className="py-0 sm:py-6 pr-2 pl-2">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="mb-8 mt-5">
                         <h2 className="text-xl font-semibold leading-tight text-gray-800 sr-only">
@@ -54,7 +54,7 @@ export default function View() {
                         </h2>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
                         {options.map((option) => (
                             <Link
                                 key={option.name}
