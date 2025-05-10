@@ -37,7 +37,7 @@ Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 
 // All authenticated routes
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard, Add, View, Stats routes
     Route::get('/add', [AddController::class, 'index'])->name('add');
     Route::get('/view', [ViewController::class, 'index'])->name('view');

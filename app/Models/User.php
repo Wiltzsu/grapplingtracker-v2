@@ -9,14 +9,17 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Position;
 use App\Models\Category;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\ConditionallyVerifiesEmail;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     /**
  * @use HasFactory<\Database\Factories\UserFactory>
 */
     use HasFactory;
     use Notifiable;
+    use ConditionallyVerifiesEmail;
 
     /**
      * The attributes that are mass assignable.

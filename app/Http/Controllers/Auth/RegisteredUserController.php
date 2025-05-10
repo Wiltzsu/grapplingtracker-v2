@@ -40,6 +40,7 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'email_verified_at' => null,
         ]);
 
         // Create default positions and categories for the new user
@@ -49,6 +50,11 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        // Only redirect to verification for non-OAuth users
+        if (!$user->is_oauth_user) {
+            return redirect(route('verification.notice'));
+        }
+
+        return redirect(route('dashboard'));
     }
 }
