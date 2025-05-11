@@ -101,53 +101,91 @@ export default function Stats({ auth,
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    {/* Date Range Selector Card */}
-                    <div className="mb-6 overflow-hidden bg-gray-50 shadow-lm sm:rounded-lg">
-                        <div className="p-6">
-                            <div className="flex items-center justify-between">
-                                <h3 className="text-lg font-medium text-gray-900">Select Time Period</h3>
-                                <select
-                                    value={dateRange}
-                                    onChange={(e) => handleDateRangeChange(e.target.value)}
-                                    className="rounded-lg border-gray-300 px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                >
-                                    <option value="month">Last Month</option>
-                                    <option value="6months">Last 6 Months</option>
-                                    <option value="year">Last Year</option>
-                                    <option value="all">All Time</option>
-                                    <option value="custom">Custom Range</option>
-                                </select>
-                            </div>
-
-                            {showCustomDates && (
-                                <div className="mt-4 flex items-end gap-4">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700">Start Date</label>
-                                        <input
-                                            type="date"
-                                            value={customStartDate}
-                                            onChange={(e) => setCustomStartDate(e.target.value)}
-                                            className="mt-1 rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700">End Date</label>
-                                        <input
-                                            type="date"
-                                            value={customEndDate}
-                                            onChange={(e) => setCustomEndDate(e.target.value)}
-                                            className="mt-1 rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                        />
-                                    </div>
-                                    <button
-                                        onClick={handleCustomDateSubmit}
-                                        className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                    >
-                                        Apply Range
-                                    </button>
-                                </div>
-                            )}
+                    {/* Date Range Selector */}
+                    <div className="mb-6">
+                        <div className="flex flex-wrap items-center gap-3">
+                            {/* Time period pills */}
+                            <button
+                                onClick={() => handleDateRangeChange('month')}
+                                className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
+                                    dateRange === 'month'
+                                    ? 'bg-indigo-100 text-indigo-700'
+                                    : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                                }`}
+                            >
+                                Last Month
+                            </button>
+                            <button
+                                onClick={() => handleDateRangeChange('6months')}
+                                className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
+                                    dateRange === '6months'
+                                    ? 'bg-indigo-100 text-indigo-700'
+                                    : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                                }`}
+                            >
+                                Last 6 Months
+                            </button>
+                            <button
+                                onClick={() => handleDateRangeChange('year')}
+                                className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
+                                    dateRange === 'year'
+                                    ? 'bg-indigo-100 text-indigo-700'
+                                    : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                                }`}
+                            >
+                                Last Year
+                            </button>
+                            <button
+                                onClick={() => handleDateRangeChange('all')}
+                                className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
+                                    dateRange === 'all'
+                                    ? 'bg-indigo-100 text-indigo-700'
+                                    : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                                }`}
+                            >
+                                All Time
+                            </button>
+                            <button
+                                onClick={() => handleDateRangeChange('custom')}
+                                className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
+                                    dateRange === 'custom'
+                                    ? 'bg-indigo-100 text-indigo-700'
+                                    : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                                }`}
+                            >
+                                Custom Range
+                            </button>
                         </div>
+
+                        {/* Custom date range inputs */}
+                        {showCustomDates && (
+                            <div className="mt-4 flex flex-wrap items-end gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-500">Start Date</label>
+                                    <input
+                                        type="date"
+                                        value={customStartDate}
+                                        onChange={(e) => setCustomStartDate(e.target.value)}
+                                        className="mt-1 rounded-lg border-gray-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-500">End Date</label>
+                                    <input
+                                        type="date"
+                                        value={customEndDate}
+                                        onChange={(e) => setCustomEndDate(e.target.value)}
+                                        className="mt-1 rounded-lg border-gray-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                    />
+                                </div>
+                                <button
+                                    onClick={handleCustomDateSubmit}
+                                    className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                >
+                                    Apply Range
+                                </button>
+                            </div>
+                        )}
                     </div>
 
                     {/* Stats Grid */}
