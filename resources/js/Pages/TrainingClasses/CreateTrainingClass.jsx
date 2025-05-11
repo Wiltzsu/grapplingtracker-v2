@@ -100,14 +100,14 @@ export default function Create({ categories, positions }) {
         >
             <Head title="Add training class" />
 
-            <div className="py-12">
+            <div className="py-6 sm:py-12 pr-2 pl-2">
                 <div className="mx-auto max-w-3xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                    <div className="overflow-hidden bg-white shadow-sm rounded-lg">
                         <div className="p-6 text-gray-900">
                             <div className="mb-8 mt-5 flex justify-center">
                                 <div className="w-[600px]">
                                     <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                                        Training class
+                                        Add session
                                     </h2>
 
                                     {/* Training class creation form */}
@@ -160,7 +160,7 @@ export default function Create({ categories, positions }) {
 
                                         {/* Training class description */}
                                         <div>
-                                            <InputLabel htmlFor="class_description" value="Description" />
+                                            <InputLabel htmlFor="class_description" value="Session description" />
                                             <textarea
                                                 id="class_description"
                                                 name="class_description"
@@ -181,7 +181,7 @@ export default function Create({ categories, positions }) {
 
                                         {/* Training class duration */}
                                         <div>
-                                            <InputLabel htmlFor="class_duration" value={<>Class duration (minutes) <span className="text-red-500">*</span></>} />
+                                            <InputLabel htmlFor="class_duration" value={<>Session duration (min.) <span className="text-red-500">*</span></>} />
                                             <TextInput
                                                 id="class_duration"
                                                 type="number"
@@ -212,7 +212,7 @@ export default function Create({ categories, positions }) {
                                             </div>
 
                                             <div className="flex-1">
-                                                <InputLabel htmlFor="round_duration" value="Round duration (minutes)" />
+                                                <InputLabel htmlFor="round_duration" value="Round duration (min.)" />
                                                 <TextInput
                                                     id="round_duration"
                                                     type="number"

@@ -28,7 +28,7 @@ export default function Dashboard({ recent_classes }) {
         >
             <Head title="Dashboard" />
 
-            <div className="py-12">
+            <div className="py-6 sm:py-12 pr-2 pl-2">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
@@ -68,9 +68,9 @@ export default function Dashboard({ recent_classes }) {
             </div>
 
             {/* Recent Classes Section */}
-            <div className="pb-12">
+            <div className="pb-6 sm:py-6 pr-2 pl-2">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div className="bg-white overflow-hidden shadow-sm rounded-lg">
                         <div className="p-6">
                             <h2 className="text-xl font-semibold mb-4">Recent Training Classes</h2>
                             {recent_classes.length > 0 ? (

@@ -102,7 +102,7 @@ export default function Index({ training_classes }) {
                         View
                     </Link>
                     <span className="text-red-900">|</span>
-                    <span>Training Class</span>
+                    <span>Session</span>
                     <img
                         src={CancelIcon}
                         alt="Cancel"
@@ -112,13 +112,13 @@ export default function Index({ training_classes }) {
                 </div>
             }
         >
-            <Head title="Training Classes" />
+            <Head title="Sessions" />
 
             <div className="py-0 sm:py-6">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 pr-2 pl-2">
-                    <div className="mb-8 mt-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div className="mb-5 mt-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                         <h2 className="text-xl font-semibold leading-tight text-gray-800 pl-3 sm:pl-0">
-                            Training Classes
+                            Sessions
                         </h2>
                         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
                             <div className="relative">
@@ -146,7 +146,7 @@ export default function Index({ training_classes }) {
                                 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500
                                 focus:ring-offset-2"
                             >
-                                Add New Class
+                                Add new session
                             </Link>
                         </div>
                     </div>
@@ -259,13 +259,13 @@ export default function Index({ training_classes }) {
                             ))
                         ) : (
                             <div className="col-span-full text-center py-12 bg-white rounded-lg">
-                                <p className="text-gray-500">No training classes found. Create one to get started.</p>
+                                <p className="text-gray-500">No sessions found. Create one to get started.</p>
                             </div>
                         )}
                     </div>
 
                     {/* Simple pagination links */}
-                    <div className="mt-6 flex flex-wrap justify-center gap-2">
+                    <div className="mt-6 flex flex-wrap justify-center gap-2 mb-5">
                         {training_classes.links.map((link, i) => (
                             <Link
                                 key={i}

@@ -83,14 +83,14 @@ export default function Create() {
         >
             <Head title="Add position" />
 
-            <div className="py-12">
+            <div className="py-6 sm:py-12 pl-2 pr-2">
                 <div className="mx-auto max-w-3xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                    <div className="overflow-hidden bg-white shadow-sm rounded-lg">
                         <div className="p-6 text-gray-900">
                             <div className="mb-8 mt-5 flex justify-center">
                                 <div className="w-[600px]">
                                     <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                                        Position
+                                        Add position
                                     </h2>
 
                                     {/* Position creation form */}

@@ -93,13 +93,13 @@ export default function Stats({ auth,
             user={auth.user}
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Training Statistics
+                    Statistics and data
                 </h2>
             }
         >
             <Head title="Training Statistics" />
 
-            <div className="py-12">
+            <div className="py-6 sm:py-12 pr-2 pl-2">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     {/* Date Range Selector */}
                     <div className="mb-6">
@@ -191,7 +191,7 @@ export default function Stats({ auth,
                     {/* Stats Grid */}
                     <div className="grid gap-6 md:grid-cols-2">
                         {/* Training Overview Card */}
-                        <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                        <div className="overflow-hidden bg-white shadow-sm rounded-lg">
                             <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
                                 <h3 className="text-lg font-medium text-gray-900">Training Overview</h3>
                             </div>
@@ -214,7 +214,7 @@ export default function Stats({ auth,
                         </div>
 
                         {/* Sparring Stats Card */}
-                        <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                        <div className="overflow-hidden bg-white shadow-sm rounded-lg">
                             <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
                                 <h3 className="text-lg font-medium text-gray-900">Sparring Statistics</h3>
                             </div>
@@ -244,7 +244,7 @@ export default function Stats({ auth,
                     </div>
 
                     {/* Training Frequency Chart */}
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg mt-6">
+                    <div className="overflow-hidden bg-white shadow-sm rounded-lg mt-6">
                         <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
                             <div className="flex items-center gap-2">
                                 <h3 className="text-lg font-medium text-gray-900">Training Frequency</h3>
@@ -307,7 +307,7 @@ export default function Stats({ auth,
 
                     <div className="mt-6 grid gap-6 md:grid-cols-2">
                         {/* Sparring vs Training Chart */}
-                        <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                        <div className="overflow-hidden bg-white shadow-sm rounded-lg">
                             <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
                                 <h3 className="text-lg font-medium text-gray-900">Training Distribution</h3>
                             </div>
@@ -341,7 +341,7 @@ export default function Stats({ auth,
                             </div>
                         </div>
                         {/* Positions Distribution Chart */}
-                        <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                        <div className="overflow-hidden bg-white shadow-sm rounded-lg">
                             <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
                                 <h3 className="text-lg font-medium text-gray-900">Positions Distribution</h3>
                             </div>

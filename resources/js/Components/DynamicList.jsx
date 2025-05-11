@@ -82,8 +82,8 @@ export const DynamicList = ({ categories, positions, initialTechniques, onTechni
                         <Disclosure.Button className="flex w-full justify-between rounded-lg bg-indigo-100 px-4 py-2 text-left text-sm font-medium text-indigo-900 hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-75">
                             <span>
                                 {isEdit
-                                    ? `Show class technique${data.techniques.length > 1 ? 's' : ''}`
-                                    : `Add technique${data.techniques.length > 1 ? 's' : ''} to class`
+                                    ? `Show session${data.techniques.length > 1 ? 's' : ''}`
+                                    : `Add technique${data.techniques.length > 1 ? 's' : ''} to session`
                                 }
                             </span>
                             <ChevronUpIcon

@@ -19,7 +19,7 @@ export default function Index({ auth, chirps }) {
         <AuthenticatedLayout>
             <Head title="Chirps" />
 
-            <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
+            <div className="max-w-2xl mx-auto pl-2 pr-2 py-6 sm:py-12 lg:p-8">
                 <form onSubmit={submit}>
                     <textarea
                         value={data.message}
@@ -28,7 +28,7 @@ export default function Index({ auth, chirps }) {
                         onChange={e => setData('message', e.target.value)}
                     ></textarea>
                     <InputError message={errors.message} className="mt-2" />
-                    <PrimaryButton className="mt-4" disabled={processing}>Chirp</PrimaryButton>
+                    <PrimaryButton className="mt-4" disabled={processing}>Add note</PrimaryButton>
                 </form>
 
                 <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">

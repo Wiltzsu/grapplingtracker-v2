@@ -121,7 +121,7 @@ export default function Index({ techniques }) {
 
             <div className="py-0 sm:py-6 pr-2 pl-2">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="mb-8 mt-5 flex justify-between items-center">
+                    <div className="mb-5 mt-5 flex justify-between items-center">
                         <h2 className="text-xl font-semibold leading-tight text-gray-800 pl-3 sm:pl-0">
                             Techniques
                         </h2>
@@ -135,7 +135,7 @@ export default function Index({ techniques }) {
                         </Link>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mb-5">
                         {techniques && techniques.length > 0 ? (
                             techniques.map((techniques) => (
                                 <div
