@@ -30,7 +30,6 @@ export default function EditTrainingClass({ training_class, categories, position
         round_duration: training_class.round_duration,
         techniques: training_class.techniques || []
     });
-    console.log(data);
 
     const submit = (e) => {
         e.preventDefault();
@@ -65,7 +64,7 @@ export default function EditTrainingClass({ training_class, categories, position
                         href={route('trainingclasses.index')}
                         className="text-gray-600 hover:text-gray-900"
                     >
-                        Class
+                        Session
                     </Link>
                     <span className="text-purple-900">|</span>
                     <span>Edit {data.class_description.substring(0, 20)}...</span>
@@ -78,16 +77,16 @@ export default function EditTrainingClass({ training_class, categories, position
                 </div>
             }
         >
-            <Head title="Edit training class" />
+            <Head title="Edit session" />
 
-            <div className="py-12">
+            <div className="py-6 sm:py-12 pr-2 pl-2">
                 <div className="mx-auto max-w-3xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                    <div className="overflow-hidden bg-white shadow-sm rounded-lg">
                         <div className="p-6 text-gray-900">
                             <div className="mb-8 mt-5 flex justify-center">
                                 <div className="w-[600px]">
                                     <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                                        Edit training class
+                                        Edit session
                                     </h2>
                                     <form onSubmit={submit} className="mt-6 space-y-6">
                                         <div>
@@ -132,7 +131,7 @@ export default function EditTrainingClass({ training_class, categories, position
                                         </div>
 
                                         <div>
-                                            <InputLabel htmlFor="class_description" value="Description" />
+                                            <InputLabel htmlFor="class_description" value="Session description" />
                                             <TextInput
                                                 id="class_description"
                                                 type="text"

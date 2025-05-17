@@ -67,14 +67,14 @@ export default function EditCategory({ category }) {
         >
             <Head title="Edit category" />
 
-            <div className="py-12">
+            <div className="py-6 sm:py-12 pr-2 pl-2">
                 <div className="mx-auto max-w-3xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                    <div className="overflow-hidden bg-white shadow-sm rounded-lg">
                         <div className="p-6 text-gray-900">
                             <div className="mb-8 mt-5 flex justify-center">
                                 <div className="w-[600px]">
                                     <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                                        Edit {data.category_name}
+                                        Edit <span className="px-2 py-1 bg-purple-50 text-purple-600 font-bold rounded-md transition-all duration-200 hover:bg-purple-100">{data.category_name}</span>
                                     </h2>
                                     <form onSubmit={submit} className="mt-6 space-y-6">
                                         <div>

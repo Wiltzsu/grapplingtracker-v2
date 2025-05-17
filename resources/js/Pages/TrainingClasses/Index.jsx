@@ -28,6 +28,7 @@ export default function Index({ training_classes }) {
         const params = new URLSearchParams(window.location.search);
         return parseInt(params.get('perPage') || '15', 10);
     });
+    const [search, setSearch] = useState('');
 
     const { flash } = usePage().props;
 
@@ -63,7 +64,6 @@ export default function Index({ training_classes }) {
             },
             // If the request fails (network error, etc)
             onError: (errors) => {
-                console.error('Delete failed:', errors);
                 // Hide the confirmation popup
                 setShowConfirmation(false);
                 // Clear the class that was being deleted
@@ -121,6 +121,22 @@ export default function Index({ training_classes }) {
                             Sessions
                         </h2>
                         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+                            <div className="relative">
+                                <input
+                                    type="text"
+                                    value={search}
+                                    onChange={(e) => {
+                                        setSearch(e.target.value);
+                                        router.get(
+                                            route('trainingclasses.index'),
+                                            { search: e.target.value, perPage },
+                                            { preserveState: true, preserveScroll: true }
+                                        );
+                                    }}
+                                    placeholder="Search sessions..."
+                                    className="w-full sm:w-64 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                />
+                            </div>
                             <div className="relative">
                                 <select
                                     value={perPage}
@@ -298,7 +314,7 @@ export default function Index({ training_classes }) {
 
             <ErrorPopup
                 isVisible={showErrorPopup}
-                onClose={() => setShowErrorPopup(false)}
+                onClose={closeErrorPopup}
                 message={errorMessage || "An error occurred while deleting the class"}
             />
 

@@ -54,11 +54,15 @@ export default function Create({ categories, positions }) {
      */
     const submit = (e) => {
         e.preventDefault();
+        console.log('Form data being submitted:', data);
         post(route('trainingclasses.store'), {
             onSuccess: () => {
-                reset();                    // Inertias built-in function for the useForm hook to reset fields
-                setShowSuccessPopup(true);  // Trigger the SuccessPopup on form submission
+                reset();
+                setShowSuccessPopup(true);
             },
+            onError: (errors) => {
+                console.log('Submission errors:', errors);
+            }
         });
     };
 

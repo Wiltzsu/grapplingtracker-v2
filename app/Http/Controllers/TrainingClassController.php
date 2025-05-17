@@ -23,12 +23,15 @@ class TrainingClassController extends Controller
      */
     public function index(Request $request)
     {
+        $search = $request->input('search');
         $perPage = $request->input('perPage', 15);
 
         return Inertia::render('TrainingClasses/Index', [
-            'training_classes' => TrainingClass::where('user_id', auth()->id())
-                ->with('techniques') // Eager load the techniques relationship
-                ->orderBy('class_date', 'desc')
+            'training_classes' => TrainingClass::search($search)
+                ->where('user_id', auth()->id())
+                ->query(function ($query) {
+                    $query->with('techniques');
+                })
                 ->paginate($perPage)
         ]);
     }
@@ -89,11 +92,11 @@ class TrainingClassController extends Controller
                 'integer',
                 'min:1'
             ],
-            'techniques' => ['array'],
-            'techniques.*.technique_name' => ['required', 'string', 'max:255'],
-            'techniques.*.technique_description' => ['required', 'string'],
-            'techniques.*.category_id' => ['required', 'integer'],
-            'techniques.*.position_id' => ['required', 'integer'],
+            'techniques' => ['sometimes', 'array'],
+            'techniques.*.technique_name' => ['required_with:techniques', 'string', 'max:255'],
+            'techniques.*.technique_description' => ['required_with:techniques', 'string'],
+            'techniques.*.category_id' => ['required_with:techniques', 'integer'],
+            'techniques.*.position_id' => ['required_with:techniques', 'integer'],
         ]);
 
         // Add user_id to the validated data
@@ -175,11 +178,11 @@ class TrainingClassController extends Controller
                 'integer',
                 'min:1'
             ],
-            'techniques' => ['array'],
-            'techniques.*.technique_name' => ['required', 'string', 'max:255'],
-            'techniques.*.technique_description' => ['required', 'string'],
-            'techniques.*.category_id' => ['required', 'integer'],
-            'techniques.*.position_id' => ['required', 'integer'],
+            'techniques' => ['sometimes', 'array'],
+            'techniques.*.technique_name' => ['required_with:techniques', 'string', 'max:255'],
+            'techniques.*.technique_description' => ['required_with:techniques', 'string'],
+            'techniques.*.category_id' => ['required_with:techniques', 'integer'],
+            'techniques.*.position_id' => ['required_with:techniques', 'integer'],
         ]);
 
         // Update the training class

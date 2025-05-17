@@ -11,11 +11,14 @@
     "require": {
         "php": "^8.2",
         "doctrine/dbal": "^4.2",
+        "http-interop/http-factory-guzzle": "^1.2",
         "inertiajs/inertia-laravel": "^1.0",
         "laravel/framework": "^11.31",
         "laravel/sanctum": "^4.0",
+        "laravel/scout": "^10.14",
         "laravel/socialite": "^5.20",
         "laravel/tinker": "^2.9",
+        "meilisearch/meilisearch-php": "^1.14",
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {

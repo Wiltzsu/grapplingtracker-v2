@@ -34,13 +34,7 @@ import dayjs from 'dayjs';
  */
 export const DynamicList = ({ categories, positions, initialTechniques, onTechniquesChange, isEdit = false  }) => {
     const { data, setData, post, processing, errors } = useForm({
-        techniques: initialTechniques || [{
-            technique_name: '',
-            technique_description: '',
-            category_id: '',
-            position_id: '',
-            class_id: ''
-        }]
+        techniques: initialTechniques || []
     });
 
     // Effect hook to notify parent component whenever techinques data changes
