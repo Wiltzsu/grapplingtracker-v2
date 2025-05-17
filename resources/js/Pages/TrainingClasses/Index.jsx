@@ -74,6 +74,21 @@ export default function Index({ training_classes }) {
         });
     };
 
+    const formatDuration = (minutes) => {
+        const hours = Math.floor(minutes / 60);
+        const remainingMinutes = minutes % 60;
+
+        if (hours === 0) {
+            return `${minutes} minutes`;
+        }
+
+        if (remainingMinutes === 0) {
+            return `${hours} ${hours === 1 ? 'hour' : 'hours'}`;
+        }
+
+        return `${hours} ${hours === 1 ? 'hour' : 'hours'} ${remainingMinutes} ${remainingMinutes === 1 ? 'minute' : 'minutes'}`;
+    }
+
     // Cancels the delete operation
     const cancelDelete = () => {
         setShowConfirmation(false);                 // Hides the confirmation popup
@@ -136,25 +151,6 @@ export default function Index({ training_classes }) {
                                     placeholder="Search sessions..."
                                     className="w-full sm:w-64 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                                 />
-                            </div>
-                            <div className="relative">
-                                <select
-                                    value={perPage}
-                                    className="w-full sm:w-auto appearance-none bg-white pl-3 pr-10 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                                    onChange={(e) => {
-                                        setPerPage(e.target.value);
-                                        router.get(
-                                            route('trainingclasses.index', { perPage: e.target.value }),
-                                            {},
-                                            { preserveScroll: true }
-                                        );
-                                    }}
-                                >
-                                    <option value="15">15 per page</option>
-                                    <option value="30">30 per page</option>
-                                    <option value="50">50 per page</option>
-                                    <option value="100">100 per page</option>
-                                </select>
                             </div>
                             <Link
                                 href={route('trainingclasses.create')}
@@ -235,11 +231,16 @@ export default function Index({ training_classes }) {
                                         </div>
                                         <div className="flex flex-col">
                                             <span className="text-sm text-gray-500">Duration</span>
-                                            <span className="text-sm font-medium text-gray-900">{training_class.class_duration}</span>
+                                            <span className="text-sm font-medium text-gray-900">{formatDuration(training_class.class_duration)}</span>
                                         </div>
                                         <div className="flex flex-col">
                                             <span className="text-sm text-gray-500">Rounds</span>
-                                            <span className="text-sm font-medium text-gray-900">{training_class.rounds} × {training_class.round_duration}</span>
+                                            {training_class.rounds && training_class.rounds > 0 ? (
+                                                <span className="text-sm font-medium text-gray-900">{training_class.rounds} × {training_class.round_duration}</span>
+
+                                            ) : (
+                                                <span className="text-sm text-gray-500">No rounds added</span>
+                                            )}
                                         </div>
 
                                         <div className="col-span-2 mt-2">
@@ -266,9 +267,9 @@ export default function Index({ training_classes }) {
                                     </div>
 
                                     <div className="mt-4">
-                                        <span className="text-sm text-gray-500">Class notes</span>
+                                        <span className="text-sm text-gray-500">Session notes</span>
                                         <p className="text-sm text-gray-900 mt-1">
-                                            {training_class.class_description || 'No description provided'}
+                                            <span className="text-sm text-gray-500">{training_class.class_description || 'No notes provided'}</span>
                                         </p>
                                     </div>
                                 </div>
@@ -278,6 +279,29 @@ export default function Index({ training_classes }) {
                                 <p className="text-gray-500">No sessions found. Create one to get started.</p>
                             </div>
                         )}
+                    </div>
+
+                    {/* Per page */}
+                    <div className="flex justify-end pt-3">
+                        <div className="relative">
+                            <select
+                                value={perPage}
+                                className="w-full sm:w-auto appearance-none bg-white pl-3 pr-10 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                onChange={(e) => {
+                                    setPerPage(e.target.value);
+                                    router.get(
+                                        route('trainingclasses.index', { perPage: e.target.value }),
+                                        {},
+                                        { preserveScroll: true }
+                                    );
+                                }}
+                            >
+                                <option value="15">15 per page</option>
+                                <option value="30">30 per page</option>
+                                <option value="50">50 per page</option>
+                                <option value="100">100 per page</option>
+                            </select>
+                        </div>
                     </div>
 
                     {/* Simple pagination links */}

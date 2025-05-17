@@ -44,13 +44,15 @@ class TechniqueController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * Category, position and training class data is passed to the CreateTechnique
+     * React component.
      */
     public function create()
     {
         return Inertia::render('Techniques/CreateTechnique', [
             'categories'       => Category::where('user_id', auth()->id())->get(),
             'positions'        => Position::where('user_id', auth()->id())->get(),
-            'training_classes' => TrainingClass::where('user_id', auth()->id())->get(),
+            'training_classes' => TrainingClass::where('user_id', auth()->id())->orderby('class_date', 'DESC')->get(),
         ]);
     }
 
@@ -110,7 +112,7 @@ class TechniqueController extends Controller
             'technique' => $technique->load(['category', 'position', 'trainingClass']),
             'categories' => Category::where('user_id', auth()->id())->get(),
             'positions' => Position::where('user_id', auth()->id())->get(),
-            'training_classes' => TrainingClass::where('user_id', auth()->id())->get()
+            'training_classes' => TrainingClass::where('user_id', auth()->id())->orderby('class_date', 'DESC')->get()
         ]);
     }
 

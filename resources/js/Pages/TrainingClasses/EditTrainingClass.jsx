@@ -67,7 +67,11 @@ export default function EditTrainingClass({ training_class, categories, position
                         Session
                     </Link>
                     <span className="text-purple-900">|</span>
-                    <span>Edit {data.class_description.substring(0, 20)}...</span>
+                    Edit {data.instructor ? (
+                        <span>{data.instructor}'s session</span>
+                    ) : (
+                        <span className="text-sm text-gray-500">No description added</span>
+                    )}
                     <img
                         src={CancelIcon}
                         alt="Cancel"

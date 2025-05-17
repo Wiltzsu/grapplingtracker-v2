@@ -29,6 +29,7 @@ class TrainingClassController extends Controller
         return Inertia::render('TrainingClasses/Index', [
             'training_classes' => TrainingClass::search($search)
                 ->where('user_id', auth()->id())
+                ->orderby('class_date', 'DESC')
                 ->query(function ($query) {
                     $query->with('techniques');
                 })
