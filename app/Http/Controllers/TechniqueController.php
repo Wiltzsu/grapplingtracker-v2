@@ -112,7 +112,8 @@ class TechniqueController extends Controller
             'technique' => $technique->load(['category', 'position', 'trainingClass']),
             'categories' => Category::where('user_id', auth()->id())->get(),
             'positions' => Position::where('user_id', auth()->id())->get(),
-            'training_classes' => TrainingClass::where('user_id', auth()->id())->orderby('class_date', 'DESC')->get()
+            'training_classes' => TrainingClass::where('user_id', auth()->id())->orderby('class_date', 'DESC')->get(),
+            'from' => request()->query('from', 'techniques')
         ]);
     }
 

@@ -112,7 +112,7 @@ export default function Index({ techniques }) {
                         src={CancelIcon}
                         alt="Cancel"
                         className="h-5 w-5 cursor-pointer"
-                        onClick={() => window.history.back()}
+                        onClick={() => window.location = route('view')}
                     />
                 </div>
             }
@@ -194,20 +194,16 @@ export default function Index({ techniques }) {
 
                                     <div className="grid grid-cols-1 gap-3 mt-4">
                                         <div className="flex flex-col">
-                                            <span className="text-sm text-gray-500">Location</span>
-                                            <span className="text-sm font-medium text-gray-900">{techniques.location}</span>
-                                        </div>
-                                        <div className="flex flex-col">
                                             <span className="text-sm text-gray-500">Description</span>
                                             <span className="text-sm font-medium text-gray-900">{techniques.technique_description}</span>
                                         </div>
-                                        <div class="grid grid-cols-2 gap-3 mt-4">
+                                        <div className="grid grid-cols-2 gap-3 mt-4">
                                             <div className="flex flex-col">
                                                 <span className="text-sm text-gray-500">Category</span>
                                                 <span className="text-sm font-medium text-gray-900">{techniques.category_name}</span>
                                             </div>
                                             <div className="flex flex-col">
-                                                <span className="text-sm text-gray-500">Class</span>
+                                                <span className="text-sm text-gray-500">Session</span>
                                                 <span className="text-sm font-medium text-gray-900">{techniques.location}</span>
                                             </div>
                                             <div className="flex flex-col">

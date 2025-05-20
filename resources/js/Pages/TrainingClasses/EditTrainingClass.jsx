@@ -70,7 +70,7 @@ export default function EditTrainingClass({ training_class, categories, position
                     Edit {data.instructor ? (
                         <span>{data.instructor}'s session</span>
                     ) : (
-                        <span className="text-sm text-gray-500">No description added</span>
+                        <span className="text-sm text-gray-500">No instructor</span>
                     )}
                     <img
                         src={CancelIcon}

@@ -113,7 +113,7 @@ export default function Stats({ auth,
                                     : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
                                 }`}
                             >
-                                Last Month
+                                Last month
                             </button>
                             <button
                                 onClick={() => handleDateRangeChange('6months')}
@@ -123,7 +123,7 @@ export default function Stats({ auth,
                                     : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
                                 }`}
                             >
-                                Last 6 Months
+                                Last 6 months
                             </button>
                             <button
                                 onClick={() => handleDateRangeChange('year')}
@@ -133,7 +133,7 @@ export default function Stats({ auth,
                                     : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
                                 }`}
                             >
-                                Last Year
+                                Last year
                             </button>
                             <button
                                 onClick={() => handleDateRangeChange('all')}
@@ -143,7 +143,7 @@ export default function Stats({ auth,
                                     : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
                                 }`}
                             >
-                                All Time
+                                All time
                             </button>
                             <button
                                 onClick={() => handleDateRangeChange('custom')}
@@ -153,7 +153,7 @@ export default function Stats({ auth,
                                     : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
                                 }`}
                             >
-                                Custom Range
+                                Custom range
                             </button>
                         </div>
 
@@ -198,15 +198,15 @@ export default function Stats({ auth,
                             <div className="p-6">
                                 <div className="grid gap-4">
                                     <div className="rounded-lg bg-gray-50 p-4">
-                                        <p className="text-sm text-gray-500">Total Classes</p>
+                                        <p className="text-sm text-gray-500">Total sessions</p>
                                         <p className="text-2xl text-gray-900">{totalClasses}</p>
                                     </div>
                                     <div className="rounded-lg bg-gray-50 p-4">
-                                        <p className="text-sm text-gray-500">Total Training Time</p>
+                                        <p className="text-sm text-gray-500">Total training time</p>
                                         <p className="text-2xl text-gray-900">{formatDuration(totalClassDuration)}</p>
                                     </div>
                                     <div className="rounded-lg bg-gray-50 p-4">
-                                        <p className="text-sm text-gray-500">Average Class Duration</p>
+                                        <p className="text-sm text-gray-500">Average class duration</p>
                                         <p className="text-2xl text-gray-900">{formatDuration(averageClassDuration)}</p>
                                     </div>
                                 </div>
@@ -221,20 +221,20 @@ export default function Stats({ auth,
                             <div className="p-6">
                                 <div className="grid gap-4">
                                     <div className="rounded-lg bg-gray-50 p-4">
-                                        <p className="text-sm text-gray-500">Total Rounds</p>
+                                        <p className="text-sm text-gray-500">Total rounds</p>
                                         <p className="text-2xl text-gray-900">{totalRollingRounds}</p>
                                     </div>
                                     <div className="rounded-lg bg-gray-50 p-4">
-                                        <p className="text-sm text-gray-500">Total Sparring Time</p>
+                                        <p className="text-sm text-gray-500">Total sparring time</p>
                                         <p className="text-2xl text-gray-900">{formatDuration(totalRoundDuration)}</p>
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
                                         <div className="rounded-lg bg-gray-50 p-4">
-                                            <p className="text-sm text-gray-500">Avg Round Duration</p>
+                                            <p className="text-sm text-gray-500">Average round duration</p>
                                             <p className="text-2xl text-gray-900">{formatDuration(averageRoundDuration)}</p>
                                         </div>
                                         <div className="rounded-lg bg-gray-50 p-4">
-                                            <p className="text-sm text-gray-500">Sparring Ratio</p>
+                                            <p className="text-sm text-gray-500">Sparring ratio</p>
                                             <p className="text-2xl text-gray-900">{sparringRelativeToTraining}%</p>
                                         </div>
                                     </div>

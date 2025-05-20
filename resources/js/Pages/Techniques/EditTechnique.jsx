@@ -16,7 +16,7 @@ import SuccessPopup from '@/Components/SuccessPopup';
  *
  * {{ technique }} is a prop from TechniqueController's edit method.
  */
-export default function EditTechnique({ technique, categories, positions, training_classes }) {
+export default function EditTechnique({ technique, categories, positions, training_classes, from }) {
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
     // Initialize form with existing technique data
@@ -27,7 +27,7 @@ export default function EditTechnique({ technique, categories, positions, traini
         position_id: technique.position_id,
         class_id: technique.class_id
     });
-
+console.log(from);
     const submit = (e) => {
         e.preventDefault();
         put(route('techniques.update', technique.technique_id), {
@@ -60,10 +60,10 @@ export default function EditTechnique({ technique, categories, positions, traini
                     </Link>
                     <span className="text-purple-900">|</span>
                     <Link
-                        href={route('techniques.index')}
+                        href={from === 'trainingclasses' ? route('trainingclasses.index') : route('techniques.index')}
                         className="text-gray-600 hover:text-gray-900"
                     >
-                        Technique
+                        {from === 'trainingclasses' ? 'Session' : 'Technique'}
                     </Link>
                     <span className="text-purple-900">|</span>
                     <span>Edit {data.technique_name}</span>

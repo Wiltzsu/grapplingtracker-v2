@@ -122,7 +122,7 @@ export default function Index({ training_classes }) {
                         src={CancelIcon}
                         alt="Cancel"
                         className="h-5 w-5 cursor-pointer"
-                        onClick={() => window.history.back()}
+                        onClick={() => window.location = route('view')}
                     />
                 </div>
             }
@@ -223,7 +223,11 @@ export default function Index({ training_classes }) {
                                     <div className="grid grid-cols-2 gap-3 mt-4">
                                         <div className="flex flex-col">
                                             <span className="text-sm text-gray-500">Instructor</span>
-                                            <span className="text-sm font-medium text-gray-900">{training_class.instructor}</span>
+                                            <span className="text-sm font-medium text-gray-900">{training_class.instructor ? (
+                                                <span className="text-sm font-medium text-gray-900">{training_class.instructor}</span>
+                                            ) : (
+                                                <span className="text-sm text-gray-500">No instructor</span>
+                                            )}</span>
                                         </div>
                                         <div className="flex flex-col">
                                             <span className="text-sm text-gray-500">Date</span>
@@ -251,7 +255,7 @@ export default function Index({ training_classes }) {
                                                         {training_class.techniques.map((technique) => (
                                                             <li key={technique.technique_id} className="mb-1">
                                                                 <Link
-                                                                    href={route('techniques.edit', technique.technique_id, {from: 'trainingclasses'})}
+                                                                    href={route('techniques.edit', technique.technique_id) + '?from=trainingclasses'}
                                                                     className="text-indigo-600 hover:text-indigo-800"
                                                                 >
                                                                     {technique.technique_name}
@@ -269,7 +273,7 @@ export default function Index({ training_classes }) {
                                     <div className="mt-4">
                                         <span className="text-sm text-gray-500">Session notes</span>
                                         <p className="text-sm text-gray-900 mt-1">
-                                            <span className="text-sm text-gray-500">{training_class.class_description || 'No notes provided'}</span>
+                                            {training_class.class_description || 'No notes provided'}
                                         </p>
                                     </div>
                                 </div>
