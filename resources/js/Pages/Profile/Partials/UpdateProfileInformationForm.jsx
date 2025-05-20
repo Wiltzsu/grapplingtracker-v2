@@ -24,6 +24,13 @@ export default function UpdateProfileInformation({
         patch(route('profile.update'));
     };
 
+    const { post } = useForm();
+
+    const resendVerification = (e) => {
+        e.preventDefault();
+        post(route('verification.send'));
+    };
+
     return (
         <section className={className}>
             <header>
@@ -69,24 +76,21 @@ export default function UpdateProfileInformation({
                     <InputError className="mt-2" message={errors.email} />
                 </div>
 
-                {mustVerifyEmail && user.email_verified_at === null && (
-                    <div>
-                        <p className="mt-2 text-sm text-gray-800">
-                            Your email address is unverified.
-                            <Link
-                                href={route('verification.send')}
-                                method="post"
-                                as="button"
-                                className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                {mustVerifyEmail && !user.email_verified_at && (
+                    <div className="mb-4 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700">
+                        <p>Your email address is unverified.</p>
+                        <form onSubmit={resendVerification}>
+                            <button
+                                type="submit"
+                                className="underline text-sm text-gray-600 hover:text-gray-900"
+                                disabled={processing}
                             >
-                                Click here to re-send the verification email.
-                            </Link>
-                        </p>
-
+                                Click here to resend the verification email.
+                            </button>
+                        </form>
                         {status === 'verification-link-sent' && (
-                            <div className="mt-2 text-sm font-medium text-green-600">
-                                A new verification link has been sent to your
-                                email address.
+                            <div className="mt-2 font-medium text-sm text-green-600">
+                                A new verification link has been sent to your email address.
                             </div>
                         )}
                     </div>

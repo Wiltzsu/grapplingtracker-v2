@@ -5,6 +5,9 @@ namespace Tests\Feature;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Auth\Notifications\VerifyEmail;
 
 class ProfileTest extends TestCase
 {
@@ -140,5 +143,28 @@ class ProfileTest extends TestCase
 
         $this->assertGuest();
         $this->assertNull($user->fresh());
+    }
+
+    public function test_verification_email_is_sent_when_email_is_changed(): void
+    {
+        Notification::fake();
+
+        $user = User::factory()->create([
+            'email_verified_at' => now(),
+        ]);
+
+        $this->actingAs($user)->patch('/profile', [
+            'name' => 'Test User',
+            'email' => 'newemail@example.com',
+        ]);
+
+        $user->refresh();
+
+        $this->assertNull($user->email_verified_at);
+
+        Notification::assertSentTo(
+            $user,
+            VerifyEmail::class
+        );
     }
 }
