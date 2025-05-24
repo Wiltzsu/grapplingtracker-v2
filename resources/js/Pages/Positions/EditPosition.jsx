@@ -25,7 +25,6 @@ export default function EditPosition({ position }) {
 
     const submit = (e) => {
         e.preventDefault();
-        console.log('Form data being submitted:', data);
         put(route('positions.update', position.position_id), {
             onSuccess: () => {
                 setShowSuccessPopup(true);

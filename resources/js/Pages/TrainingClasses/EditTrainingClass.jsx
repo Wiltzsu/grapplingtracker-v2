@@ -13,14 +13,14 @@ import SuccessPopup from '@/Components/SuccessPopup';
 import { DynamicList } from '@/Components/DynamicList';
 
 /**
- * Method to edit training class.
+ * Method to edit session.
  *
  * {{ training_class }} is a prop from TrainingClasscontroller's edit method.
  */
 export default function EditTrainingClass({ training_class, categories, positions, instructors, locations }) {
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
-    // Initialize form with existing training class data
+    // Initialize form with existing session data
     const { data, setData, put, processing, errors } = useForm({
         instructor: training_class.instructor,
         location: training_class.location,
@@ -35,7 +35,6 @@ export default function EditTrainingClass({ training_class, categories, position
 
     const submit = (e) => {
         e.preventDefault();
-        console.log('Form data being submitted:', data);
         put(route('trainingclasses.update', training_class.class_id), {
             onSuccess: () => {
                 setShowSuccessPopup(true);
@@ -66,7 +65,7 @@ export default function EditTrainingClass({ training_class, categories, position
                         View
                     </Link>
                     <span className="text-red-900 dark:text-gray-400">|</span>
-                    <span className="dark:text-white">Training Class</span>
+                    <span className="dark:text-white">Session</span>
                     <img
                         src={CancelIcon}
                         alt="Cancel"
@@ -76,12 +75,12 @@ export default function EditTrainingClass({ training_class, categories, position
                 </div>
             }
         >
-            <Head title="Edit training class" />
+            <Head title="Edit session" />
 
             <div className="py-6 sm:py-12 pl-2 pr-2 dark:bg-gray-700">
                 <div className="mx-auto max-w-3xl sm:px-6 lg:px-8">
                     <div className="border-b border-gray-200 rounded-t-lg bg-gray-50 px-6 py-4 dark:bg-gray-900 dark:border-gray-500">
-                        <h3 className="text-lg font-medium text-gray-900 dark:text-white">Edit training class</h3>
+                        <h3 className="text-lg font-medium text-gray-900 dark:text-white">Edit session</h3>
                     </div>
                     <div className="overflow-hidden bg-white shadow-sm dark:bg-gray-800 rounded-b-lg">
                         <div className="p-6 text-gray-900">
@@ -219,7 +218,7 @@ export default function EditTrainingClass({ training_class, categories, position
                                         </div>
 
                                         <div className="flex items-center gap-4">
-                                            <PrimaryButton disabled={processing}>Update Training Class</PrimaryButton>
+                                            <PrimaryButton disabled={processing}>Update session</PrimaryButton>
                                         </div>
                                     </form>
                                 </div>
@@ -232,7 +231,7 @@ export default function EditTrainingClass({ training_class, categories, position
             <SuccessPopup
                 isVisible={showSuccessPopup}
                 onClose={closePopup}
-                message="Training class updated successfully!"
+                message="Session updated successfully!"
             />
         </AuthenticatedLayout>
     );

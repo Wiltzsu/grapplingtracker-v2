@@ -110,7 +110,7 @@ export default function Dashboard({ recent_classes }) {
                                     ))}
                                 </div>
                             ) : (
-                                <p className="text-gray-600">No recent training classes found.</p>
+                                <p className="text-gray-600">No recent sessions found.</p>
                             )}
                         </div>
                     </div>

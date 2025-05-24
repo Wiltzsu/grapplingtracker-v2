@@ -54,7 +54,6 @@ export default function Create({ categories, positions }) {
      */
     const submit = (e) => {
         e.preventDefault();
-        console.log('Form data being submitted:', data);
         post(route('trainingclasses.store'), {
             onSuccess: () => {
                 reset();
@@ -102,7 +101,7 @@ export default function Create({ categories, positions }) {
                 </div>
             }
         >
-            <Head title="Add training class" />
+            <Head title="Add session" />
 
             <div className="py-6 sm:py-12 pr-2 pl-2 dark:bg-gray-700">
                 <div className="mx-auto max-w-3xl sm:px-6 lg:px-8">
@@ -113,9 +112,9 @@ export default function Create({ categories, positions }) {
                         <div className="p-6 text-gray-900">
                             <div className="mb-8 flex justify-center">
                                 <div className="w-[600px]">
-                                    {/* Training class creation form */}
+                                    {/* Session creation form */}
                                     <form onSubmit={submit} className="mt-6 space-y-6">
-                                        {/* Training class instructor field */}
+                                        {/* Session instructor field */}
                                         <div>
                                             <InputLabel htmlFor="instructor" value="Instructor name" className="dark:text-white" />
                                             <TextInput
@@ -130,7 +129,7 @@ export default function Create({ categories, positions }) {
                                             <InputError message={errors.instructor} className="mt-2" />
                                         </div>
 
-                                        {/* Training class location */}
+                                        {/* Session location */}
                                         <div>
                                             <InputLabel htmlFor="location" value={<>Location</>} className="dark:text-white" />
                                             <TextInput
@@ -139,13 +138,12 @@ export default function Create({ categories, positions }) {
                                                 name="location"
                                                 value={data.location}
                                                 className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
-                                                isFocused={true}
                                                 onChange={(e) => setData('location', e.target.value)}
                                             />
                                             <InputError message={errors.location} className="mt-2" />
                                         </div>
 
-                                        {/* Training class date */}
+                                        {/* Session date */}
                                         <div>
                                             <InputLabel htmlFor="class_date" value={<>Date <span className="text-red-500">*</span></>} className="dark:text-white" />
                                             <TextInput
@@ -154,14 +152,13 @@ export default function Create({ categories, positions }) {
                                                 name="class_date"
                                                 value={data.class_date}
                                                 className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
-                                                isFocused={true}
                                                 onChange={(e) => setData('class_date', e.target.value)}
                                                 required
                                             />
                                             <InputError message={errors.class_date} className="mt-2" />
                                         </div>
 
-                                        {/* Training class description */}
+                                        {/* Session description */}
                                         <div>
                                             <InputLabel htmlFor="class_description" value="Session description" className="dark:text-white"/>
                                             <textarea
@@ -182,7 +179,7 @@ export default function Create({ categories, positions }) {
                                             isEdit={false}
                                         />
 
-                                        {/* Training class duration */}
+                                        {/* Session duration */}
                                         <div>
                                             <InputLabel htmlFor="class_duration" value={<>Session duration (min.) <span className="text-red-500">*</span></>} className="dark:text-white" />
                                             <TextInput
@@ -191,14 +188,13 @@ export default function Create({ categories, positions }) {
                                                 name="class_duration"
                                                 value={data.class_duration}
                                                 className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
-                                                isFocused={true}
                                                 onChange={(e) => setData('class_duration', e.target.value)}
                                                 required
                                             />
                                             <InputError message={errors.class_duration} className="mt-2" />
                                         </div>
 
-                                        {/* Training class round amount and duration*/}
+                                        {/* Session round amount and duration*/}
                                         <div className="flex gap-4">
                                             <div className="flex-1">
                                                 <InputLabel htmlFor="rounds" value="Rounds" className="dark:text-white"/>
@@ -208,7 +204,6 @@ export default function Create({ categories, positions }) {
                                                     name="rounds"
                                                     value={data.rounds}
                                                     className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
-                                                    isFocused={true}
                                                     onChange={(e) => setData('rounds', e.target.value)}
                                                 />
                                                 <InputError message={errors.rounds} className="mt-2" />
@@ -222,7 +217,6 @@ export default function Create({ categories, positions }) {
                                                     name="round_duration"
                                                     value={data.round_duration}
                                                     className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
-                                                    isFocused={true}
                                                     onChange={(e) => setData('round_duration', e.target.value)}
                                                 />
                                                 <InputError message={errors.round_duration} className="mt-2" />
@@ -231,7 +225,7 @@ export default function Create({ categories, positions }) {
 
                                         {/* Submit button */}
                                         <div className="flex items-center gap-4">
-                                            <PrimaryButton disabled={processing}>Save training class</PrimaryButton>
+                                            <PrimaryButton disabled={processing}>Save session</PrimaryButton>
                                         </div>
                                     </form>
                                 </div>
@@ -250,7 +244,7 @@ export default function Create({ categories, positions }) {
             <SuccessPopup
                 isVisible={showSuccessPopup}
                 onClose={closePopup}
-                message="Training class added succesfully!"
+                message="Session added succesfully!"
             />
         </AuthenticatedLayout>
     );

@@ -17,7 +17,7 @@ export default function Edit({ mustVerifyEmail, status, isOAuthUser }) {
 
             <div className="py-6 sm:py-12 pr-2 pl-2">
                 <div className="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-                    <div className="bg-white p-4 shadow rounded-lg sm:p-8">
+                    <div className="bg-white p-4 shadow rounded-lg sm:p-8 dark:bg-gray-900">
                         <UpdateProfileInformationForm
                             mustVerifyEmail={mustVerifyEmail}
                             status={status}
@@ -26,12 +26,12 @@ export default function Edit({ mustVerifyEmail, status, isOAuthUser }) {
                     </div>
 
                     {!isOAuthUser && (
-                        <div className="bg-white p-4 shadow rounded-lg sm:p-8">
+                        <div className="bg-white p-4 shadow rounded-lg sm:p-8 dark:bg-gray-900">
                             <UpdatePasswordForm className="max-w-xl" />
                         </div>
                     )}
 
-                    <div className="bg-white p-4 shadow rounded-lg sm:p-8">
+                    <div className="bg-white p-4 shadow rounded-lg sm:p-8 dark:bg-gray-900">
                         <DeleteUserForm className="max-w-xl" isOAuthUser={isOAuthUser} />
                     </div>
                 </div>

@@ -39,7 +39,6 @@ export default function Create() {
      */
     const submit = (e) => {
         e.preventDefault();
-        console.log('Form data being submitted:', data);
         post(route('categories.store'), {
             onSuccess: () => {
                 reset();                    // Inertias built-in function for the useForm hook to reset fields

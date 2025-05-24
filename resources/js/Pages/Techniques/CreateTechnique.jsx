@@ -45,7 +45,6 @@ export default function Create({ categories, training_classes, positions }) {
      */
     const submit = (e) => {
         e.preventDefault();
-        console.log('Form data being submitted:', data);
         post(route('techniques.store'), {
             onSuccess: () => {
                 reset();
@@ -125,7 +124,7 @@ export default function Create({ categories, training_classes, positions }) {
                                                 id="technique_description"
                                                 name="technique_description"
                                                 value={data.technique_description}
-                                                className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600"
+                                                className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                                 rows={4}
                                                 onChange={(e) => setData('technique_description', e.target.value)}
                                             />
@@ -182,7 +181,7 @@ export default function Create({ categories, training_classes, positions }) {
                                             <InputError message={errors.position_id} className="mt-2" />
                                         </div>
 
-                                        {/* Training class selection field */}
+                                        {/* Session selection field */}
                                         <div>
                                             <InputLabel htmlFor="class_id" value={<>Class <span className="text-red-500">*</span></>} className="dark:text-white" />
                                             <select
@@ -193,7 +192,7 @@ export default function Create({ categories, training_classes, positions }) {
                                                 onChange={(e) => setData('class_id', e.target.value)}
                                                 required
                                             >
-                                                <option value="">Select a training class</option>
+                                                <option value="">Select a session</option>
                                                 {training_classes && training_classes.length > 0 ? (
                                                     training_classes.map((training_class) => (
                                                         <option key={training_class.class_id} value={training_class.class_id}>
@@ -201,7 +200,7 @@ export default function Create({ categories, training_classes, positions }) {
                                                         </option>
                                                     ))
                                                 ) : (
-                                                    <option value="">No training classes available</option>
+                                                    <option value="">No session available</option>
                                                 )}
                                             </select>
                                             <InputError message={errors.class_id} className="mt-2" />

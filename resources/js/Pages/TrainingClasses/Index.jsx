@@ -11,9 +11,9 @@ import SuccessPopup from '@/Components/SuccessPopup';
 import ErrorPopup from '@/Components/ErrorPopup';
 
 /**
- * Index Component - Displays and manages the training classes list
+ * Index Component - Displays and manages the Session list
  *
- * @param {Array} training_classes - Array of training class object
+ * @param {Array} training_classes - Array of Session object
  *
  * {{ training_classes }} is a prop from TrainingClassController's index method
  */
@@ -32,7 +32,7 @@ export default function Index({ training_classes }) {
 
     const { flash } = usePage().props;
 
-    // Handler function for training class deletion
+    // Handler function for Session deletion
     const confirmDelete = (training_class) => {
         setTrainingClassToDelete(training_class);
         setShowConfirmation(true);

@@ -25,7 +25,6 @@ export default function EditCategory({ category }) {
 
     const submit = (e) => {
         e.preventDefault();
-        console.log('Form data being submitted:', data);
         put(route('categories.update', category.category_id), {
             onSuccess: () => {
                 setShowSuccessPopup(true);

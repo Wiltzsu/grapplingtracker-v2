@@ -27,10 +27,9 @@ export default function EditTechnique({ technique, categories, positions, traini
         position_id: technique.position_id,
         class_id: technique.class_id
     });
-console.log(from);
+
     const submit = (e) => {
         e.preventDefault();
-        console.log('Form data being submitted:', data);
         put(route('techniques.update', technique.technique_id), {
             onSuccess: () => {
                 setShowSuccessPopup(true);
@@ -163,7 +162,7 @@ console.log(from);
                                                 onChange={(e) => setData('class_id', e.target.value)}
                                                 required
                                             >
-                                                <option value="">Select a training class</option>
+                                                <option value="">Select a session</option>
                                                 {training_classes && training_classes.map((training_class) => (
                                                     <option key={training_class.class_id} value={training_class.class_id}>
                                                         {`${training_class.location} - ${dayjs(training_class.class_date).format('DD/MM/YYYY')} - ${training_class.instructor || 'No instructor'}`}
