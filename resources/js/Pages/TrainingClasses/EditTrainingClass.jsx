@@ -88,42 +88,28 @@ export default function EditTrainingClass({ training_class, categories, position
                                 <div className="w-[600px]">
                                     <form onSubmit={submit} className="mt-6 space-y-6">
                                         <div>
-                                            <InputLabel htmlFor="instructor" value={<>Instructor <span className="text-red-500">*</span></>} className="dark:text-white" />
-                                            <select
+                                            <InputLabel htmlFor="instructor" value={<>Instructor</>} className="dark:text-white" />
+                                            <TextInput
                                                 id="instructor"
                                                 name="instructor"
                                                 value={data.instructor}
                                                 className="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                                 onChange={(e) => setData('instructor', e.target.value)}
-                                                required
                                             >
-                                                <option value="">Select an instructor</option>
-                                                {instructors && instructors.map((instructor) => (
-                                                    <option key={instructor} value={instructor}>
-                                                        {instructor}
-                                                    </option>
-                                                ))}
-                                            </select>
+                                            </TextInput>
                                             <InputError message={errors.instructor} className="mt-2" />
                                         </div>
 
                                         <div>
-                                            <InputLabel htmlFor="location" value={<>Location <span className="text-red-500">*</span></>} className="dark:text-white" />
-                                            <select
+                                            <InputLabel htmlFor="location" value={<>Location</>} className="dark:text-white" />
+                                            <TextInput
                                                 id="location"
                                                 name="location"
                                                 value={data.location}
                                                 className="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                                 onChange={(e) => setData('location', e.target.value)}
-                                                required
                                             >
-                                                <option value="">Select a location</option>
-                                                {locations && locations.map((location) => (
-                                                    <option key={location} value={location}>
-                                                        {location}
-                                                    </option>
-                                                ))}
-                                            </select>
+                                            </TextInput>
                                             <InputError message={errors.location} className="mt-2" />
                                         </div>
 
@@ -178,7 +164,7 @@ export default function EditTrainingClass({ training_class, categories, position
                                         </div>
 
                                         <div>
-                                            <InputLabel htmlFor="rounds" value={<>Rounds <span className="text-red-500">*</span></>} className="dark:text-white" />
+                                            <InputLabel htmlFor="rounds" value={<>Rounds</>} className="dark:text-white" />
                                             <TextInput
                                                 id="rounds"
                                                 type="number"
@@ -186,7 +172,6 @@ export default function EditTrainingClass({ training_class, categories, position
                                                 value={data.rounds}
                                                 className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
                                                 onChange={(e) => setData('rounds', e.target.value)}
-                                                required
                                             />
                                             <InputError message={errors.rounds} className="mt-2" />
                                         </div>
@@ -210,7 +195,7 @@ export default function EditTrainingClass({ training_class, categories, position
                                                 id="session_notes"
                                                 name="session_notes"
                                                 value={data.session_notes}
-                                                className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600"
+                                                className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                                 rows={4}
                                                 onChange={(e) => setData('session_notes', e.target.value)}
                                             />
