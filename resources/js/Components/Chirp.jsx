@@ -53,9 +53,9 @@ export default function Chirp({ chirp }) {
             <div className="flex-1">
                 <div className="flex justify-between items-center pr-5">
                     <div>
-                        <span className="text-gray-800">{chirp.user.name}</span>
-                        <small className="ml-2 text-sm text-gray-600">{dayjs(chirp.created_at).fromNow()}</small>
-                        { chirp.created_at !== chirp.updated_at && <small className="text-sm text-gray-600"> &middot; edited</small>}
+                        <span className="text-gray-800 dark:text-white">{chirp.user.name}</span>
+                        <small className="ml-2 text-sm text-gray-600 dark:text-gray-200">{dayjs(chirp.created_at).fromNow()}</small>
+                        { chirp.created_at !== chirp.updated_at && <small className="text-sm text-gray-600 dark:text-white"> &middot; edited</small>}
                     </div>
                     {chirp.user.id === auth.user.id &&
                         <Dropdown>
@@ -90,7 +90,7 @@ export default function Chirp({ chirp }) {
                             <button className="mt-4" onClick={() => { setEditing(false); reset(); clearErrors(); }}>Cancel</button>
                         </div>
                     </form>
-                    : <p className="mt-4 text-lg text-gray-900 break-all overflow-hidden overflow-wrap-anywhere whitespace-pre-wrap pr-5 sm:pr-10">
+                    : <p className="mt-4 text-lg text-gray-900 break-all overflow-hidden overflow-wrap-anywhere whitespace-pre-wrap pr-5 sm:pr-10 dark:text-white">
                         {formatMessageWithLinks(chirp.message)}
                     </p>
                 }

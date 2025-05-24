@@ -38,37 +38,24 @@ export default function Index({ training_classes }) {
         setShowConfirmation(true);
     };
 
-    /**
-     * Handler function for when user confirms deletion
-     */
+    // Executes the delete operation via Inertia router
     const handleDelete = () => {
-        // Send DELETE request to the server using Inertia router
-        // route('trainingclasses.destroy', id) generates the URL like /trainingclasses/1
         router.delete(route('trainingclasses.destroy', trainingClassToDelete.class_id), {
-            preserveScroll: true, // Maintain scroll position after request
+            preserveScroll: true,
             onSuccess: (page) => {
-                // Hide the confirmation popup
                 setShowConfirmation(false);
-                // Clear the class that was being deleted from state
                 setTrainingClassToDelete(null);
 
-                // Check if there's an error message in the response
                 if (page.props.flash && page.props.flash.error) {
-                    // If there's an error, store it and show error popup
                     setErrorMessage(page.props.flash.error);
                     setShowErrorPopup(true);
                 } else {
-                    // If successful, show success popup
                     setShowSuccessPopup(true);
                 }
             },
-            // If the request fails (network error, etc)
             onError: (errors) => {
-                // Hide the confirmation popup
                 setShowConfirmation(false);
-                // Clear the class that was being deleted
                 setTrainingClassToDelete(null);
-                // Show error popup
                 setShowErrorPopup(true);
             }
         });
@@ -91,19 +78,20 @@ export default function Index({ training_classes }) {
 
     // Cancels the delete operation
     const cancelDelete = () => {
-        setShowConfirmation(false);                 // Hides the confirmation popup
-        setTrainingClassToDelete(null);             // Clears the training class that was going to be deleted
+        setShowConfirmation(false);
+        setTrainingClassToDelete(null);
     };
 
     // Called after successful deletion and when the user closes the success popup
     const closeSuccessPopup = () => {
-        setShowSuccessPopup(false);                         // Hides the success popup
-        router.visit(route('trainingclasses.index'));       // Refreshes the page to show updated training class list
+        setShowSuccessPopup(false);
+        router.visit(route('trainingclasses.index'));
     };
 
-    // Called after showing user the error popup
+    // Called when the user closes the error popup
     const closeErrorPopup = () => {
         setShowErrorPopup(false);
+        setErrorMessage('');
     };
 
     return (
@@ -112,27 +100,27 @@ export default function Index({ training_classes }) {
                 <div className="flex items-center gap-4">
                     <Link
                         href={route('view')}
-                        className="text-gray-600 hover:text-gray-900"
+                        className="text-gray-600 hover:text-gray-900 dark:text-white"
                     >
                         View
                     </Link>
-                    <span className="text-red-900">|</span>
-                    <span>Session</span>
+                    <span className="text-red-900 dark:text-gray-400">|</span>
+                    <span className="dark:text-white">Session</span>
                     <img
                         src={CancelIcon}
                         alt="Cancel"
                         className="h-5 w-5 cursor-pointer"
-                        onClick={() => window.location = route('view')}
+                        onClick={() => window.history.back()}
                     />
                 </div>
             }
         >
             <Head title="Sessions" />
 
-            <div className="py-0 sm:py-6">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 pr-2 pl-2">
-                    <div className="mb-5 mt-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                        <h2 className="text-xl font-semibold leading-tight text-gray-800 pl-3 sm:pl-0">
+            <div className="py-6 sm:py-12 pl-2 pr-2 dark:bg-gray-700">
+                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                    <div className="mb-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-white pl-3 sm:pl-0">
                             Sessions
                         </h2>
                         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
@@ -149,14 +137,14 @@ export default function Index({ training_classes }) {
                                         );
                                     }}
                                     placeholder="Search sessions..."
-                                    className="w-full sm:w-64 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                    className="w-full sm:w-64 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                 />
                             </div>
                             <Link
                                 href={route('trainingclasses.create')}
                                 className="w-full sm:w-auto inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2
                                 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500
-                                focus:ring-offset-2"
+                                focus:ring-offset-2 dark:bg-indigo-500 dark:hover:bg-indigo-600"
                             >
                                 Add new session
                             </Link>
@@ -168,13 +156,13 @@ export default function Index({ training_classes }) {
                             training_classes.data.map((training_class) => (
                                 <div
                                     key={training_class.class_id}
-                                    className="bg-white rounded-lg shadow-sm p-6 hover:bg-gray-50 transition-colors duration-200"
+                                    className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-200"
                                 >
                                     <div className="flex justify-between items-start">
                                         <div className="flex items-center gap-4 mb-4">
-                                            <div className="p-2 bg-indigo-100 rounded-lg">
+                                            <div className="p-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg">
                                                 <svg
-                                                    className="w-6 h-6 text-indigo-600"
+                                                    className="w-6 h-6 text-indigo-600 dark:text-indigo-300"
                                                     fill="none"
                                                     viewBox="0 0 24 24"
                                                     stroke="currentColor"
@@ -187,14 +175,14 @@ export default function Index({ training_classes }) {
                                                     />
                                                 </svg>
                                             </div>
-                                            <h3 className="text-lg font-medium text-gray-900">
+                                            <h3 className="text-lg font-medium text-gray-900 dark:text-white">
                                                 {training_class.location}
                                             </h3>
                                         </div>
                                         <Dropdown className="z-[9999]">
                                             <Dropdown.Trigger>
-                                                <button>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                                <button className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 dark:text-gray-500" viewBox="0 0 20 20" fill="currentColor">
                                                         <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
                                                     </svg>
                                                 </button>
@@ -202,7 +190,7 @@ export default function Index({ training_classes }) {
                                             <Dropdown.Content>
                                                 <Link
                                                     href={route('trainingclasses.edit', training_class.class_id)}
-                                                    className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
+                                                    className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:bg-gray-100 dark:focus:bg-gray-700"
                                                 >
                                                     Edit
                                                 </Link>
@@ -213,6 +201,7 @@ export default function Index({ training_classes }) {
                                                         e.stopPropagation();
                                                         confirmDelete(training_class);
                                                     }}
+                                                    className="text-red-600 dark:text-red-400"
                                                 >
                                                     Delete
                                                 </Dropdown.Link>
@@ -222,41 +211,40 @@ export default function Index({ training_classes }) {
 
                                     <div className="grid grid-cols-2 gap-3 mt-4">
                                         <div className="flex flex-col">
-                                            <span className="text-sm text-gray-500">Instructor</span>
-                                            <span className="text-sm font-medium text-gray-900">{training_class.instructor ? (
-                                                <span className="text-sm font-medium text-gray-900">{training_class.instructor}</span>
+                                            <span className="text-sm text-gray-500 dark:text-gray-400">Instructor</span>
+                                            <span className="text-sm font-medium text-gray-900 dark:text-white">{training_class.instructor ? (
+                                                <span className="text-sm font-medium text-gray-900 dark:text-white">{training_class.instructor}</span>
                                             ) : (
-                                                <span className="text-sm text-gray-500">No instructor</span>
+                                                <span className="text-sm text-gray-500 dark:text-gray-400">No instructor</span>
                                             )}</span>
                                         </div>
                                         <div className="flex flex-col">
-                                            <span className="text-sm text-gray-500">Date</span>
-                                            <span className="text-sm font-medium text-gray-900">{training_class.class_date}</span>
+                                            <span className="text-sm text-gray-500 dark:text-gray-400">Date</span>
+                                            <span className="text-sm font-medium text-gray-900 dark:text-white">{training_class.class_date}</span>
                                         </div>
                                         <div className="flex flex-col">
-                                            <span className="text-sm text-gray-500">Duration</span>
-                                            <span className="text-sm font-medium text-gray-900">{formatDuration(training_class.class_duration)}</span>
+                                            <span className="text-sm text-gray-500 dark:text-gray-400">Duration</span>
+                                            <span className="text-sm font-medium text-gray-900 dark:text-white">{formatDuration(training_class.class_duration)}</span>
                                         </div>
                                         <div className="flex flex-col">
-                                            <span className="text-sm text-gray-500">Rounds</span>
+                                            <span className="text-sm text-gray-500 dark:text-gray-400">Rounds</span>
                                             {training_class.rounds && training_class.rounds > 0 ? (
-                                                <span className="text-sm font-medium text-gray-900">{training_class.rounds} × {training_class.round_duration}</span>
-
+                                                <span className="text-sm font-medium text-gray-900 dark:text-white">{training_class.rounds} × {training_class.round_duration}</span>
                                             ) : (
-                                                <span className="text-sm text-gray-500">No rounds added</span>
+                                                <span className="text-sm text-gray-500 dark:text-gray-400">No rounds added</span>
                                             )}
                                         </div>
 
                                         <div className="col-span-2 mt-2">
-                                            <span className="text-sm text-gray-500">Techniques</span>
+                                            <span className="text-sm text-gray-500 dark:text-gray-400">Techniques</span>
                                             <div className="mt-1">
                                                 {training_class.techniques && training_class.techniques.length > 0 ? (
-                                                    <ul className="text-sm font-medium text-gray-900">
+                                                    <ul className="text-sm font-medium text-gray-900 dark:text-white">
                                                         {training_class.techniques.map((technique) => (
                                                             <li key={technique.technique_id} className="mb-1">
                                                                 <Link
                                                                     href={route('techniques.edit', technique.technique_id) + '?from=trainingclasses'}
-                                                                    className="text-indigo-600 hover:text-indigo-800"
+                                                                    className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300"
                                                                 >
                                                                     {technique.technique_name}
                                                                 </Link>
@@ -264,23 +252,23 @@ export default function Index({ training_classes }) {
                                                         ))}
                                                     </ul>
                                                 ) : (
-                                                    <span className="text-sm text-gray-500">No techniques added</span>
+                                                    <span className="text-sm text-gray-500 dark:text-gray-400">No techniques added</span>
                                                 )}
                                             </div>
                                         </div>
                                     </div>
 
                                     <div className="mt-4">
-                                        <span className="text-sm text-gray-500">Session notes</span>
-                                        <p className="text-sm text-gray-900 mt-1">
+                                        <span className="text-sm text-gray-500 dark:text-gray-400">Session notes</span>
+                                        <p className="text-sm text-gray-900 dark:text-white mt-1">
                                             {training_class.class_description || 'No notes provided'}
                                         </p>
                                     </div>
                                 </div>
                             ))
                         ) : (
-                            <div className="col-span-full text-center py-12 bg-white rounded-lg">
-                                <p className="text-gray-500">No sessions found. Create one to get started.</p>
+                            <div className="col-span-full text-center py-12 bg-white dark:bg-gray-800 rounded-lg">
+                                <p className="text-gray-500 dark:text-gray-400">No sessions found. Create one to get started.</p>
                             </div>
                         )}
                     </div>
@@ -290,7 +278,7 @@ export default function Index({ training_classes }) {
                         <div className="relative">
                             <select
                                 value={perPage}
-                                className="w-full sm:w-auto appearance-none bg-white pl-3 pr-10 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                className="w-full sm:w-auto appearance-none bg-white dark:bg-gray-700 pl-3 pr-10 py-2 text-sm font-medium text-gray-700 dark:text-white border border-gray-300 dark:border-gray-600 rounded-md shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                                 onChange={(e) => {
                                     setPerPage(e.target.value);
                                     router.get(
@@ -317,7 +305,7 @@ export default function Index({ training_classes }) {
                                 className={`px-3 py-1 text-sm rounded ${
                                     link.active
                                         ? 'bg-indigo-600 text-white'
-                                        : 'bg-white text-gray-700 hover:bg-gray-50'
+                                        : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-600'
                                 } ${!link.url && 'opacity-50 cursor-not-allowed'}`}
                                 preserveScroll
                                 dangerouslySetInnerHTML={{ __html: link.label }}
@@ -345,7 +333,6 @@ export default function Index({ training_classes }) {
                 onClose={closeErrorPopup}
                 message={errorMessage || "An error occurred while deleting the class"}
             />
-
         </AuthenticatedLayout>
-    )
+    );
 }

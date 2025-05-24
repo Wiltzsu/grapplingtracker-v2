@@ -73,7 +73,7 @@ export const DynamicList = ({ categories, positions, initialTechniques, onTechni
             <Disclosure>
                 {({ open }) => (
                     <>
-                        <Disclosure.Button className="flex w-full justify-between rounded-lg bg-indigo-100 px-4 py-2 text-left text-sm font-medium text-indigo-900 hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-75">
+                        <Disclosure.Button className="flex w-full justify-between rounded-lg bg-indigo-100 dark:bg-indigo-700 py-4 px-4 py-2 text-left text-sm font-medium text-indigo-900 dark:text-indigo-100 hover:bg-indigo-200 dark:hover:bg-indigo-800 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-75">
                             <span>
                                 {isEdit
                                     ? `Show technique${data.techniques.length > 1 ? 's' : ''}`
@@ -84,9 +84,9 @@ export const DynamicList = ({ categories, positions, initialTechniques, onTechni
                                 className={`${open ? 'rotate-180 transform' : ''} h-5 w-5 text-indigo-500`}
                             />
                         </Disclosure.Button>
-                        <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+                        <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500 dark:text-gray-400">
                             {data.techniques.map((technique, index) => (
-                                <div key={index} className="mb-8 p-4 border rounded-lg bg-white shadow-sm">
+                                <div key={index} className="mb-8 p-4 border rounded-lg bg-white dark:bg-gray-800 shadow-sm dark:border-gray-700">
                                     <div className="flex justify-between items-center mb-4">
                                         <h3 className="text-lg font-medium">Technique #{index + 1}</h3>
                                         {data.techniques.length > 1 && (
@@ -101,12 +101,12 @@ export const DynamicList = ({ categories, positions, initialTechniques, onTechni
 
                                     {/* Name field */}
                                     <div className="mb-4">
-                                        <InputLabel htmlFor={`technique_name_${index}`} value={<>Name <span className="text-red-500">*</span></>} />
+                                        <InputLabel htmlFor={`technique_name_${index}`} value={<>Name <span className="text-red-500">*</span></>} className="dark:text-white" />
                                         <TextInput
                                             id={`technique_name_${index}`}
                                             type="text"
                                             value={technique.technique_name}
-                                            className="mt-1 block w-full"
+                                            className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
                                             onChange={(e) => updateTechnique(index, 'technique_name', e.target.value)}
                                             required
                                         />
@@ -114,11 +114,11 @@ export const DynamicList = ({ categories, positions, initialTechniques, onTechni
 
                                     {/* Description field */}
                                     <div className="mb-4">
-                                        <InputLabel htmlFor={`technique_description_${index}`} value={<>Description <span className="text-red-500">*</span></>} />
+                                        <InputLabel htmlFor={`technique_description_${index}`} value={<>Description <span className="text-red-500">*</span></>} className="dark:text-white"/>
                                         <textarea
                                             id={`technique_description_${index}`}
                                             value={technique.technique_description}
-                                            className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                            className="mt-1 block w-full border-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm dark:bg-gray-700 dark:text-white"
                                             onChange={(e) => updateTechnique(index, 'technique_description', e.target.value)}
                                             required
                                         />
@@ -126,12 +126,12 @@ export const DynamicList = ({ categories, positions, initialTechniques, onTechni
 
                                     {/* Category selection field */}
                                     <div className="mb-4">
-                                        <InputLabel htmlFor={`category_id_${index}`} value={<>Category <span className="text-red-500">*</span></>} />
+                                        <InputLabel htmlFor={`category_id_${index}`} value={<>Category <span className="text-red-500">*</span></>} className="dark:text-white"/>
                                         <select
                                             id={`category_id_${index}`}
                                             name={`category_id_${index}`}
                                             value={technique.category_id}
-                                            className="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-opacity-50 rounded-md shadow-sm"
+                                            className="mt-1 block w-full border-gray-300 dark:border-gray-600 focus:border-indigo-300 focus:ring focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:text-white"
                                             onChange={(e) => updateTechnique(index, 'category_id', e.target.value)}
                                             required
                                         >
@@ -150,12 +150,12 @@ export const DynamicList = ({ categories, positions, initialTechniques, onTechni
 
                                     {/* Position selection field */}
                                     <div className="mb-4">
-                                        <InputLabel htmlFor={`position_id_${index}`} value={<>Position <span className="text-red-500">*</span></>} />
+                                        <InputLabel htmlFor={`position_id_${index}`} value={<>Position <span className="text-red-500">*</span></>} className="dark:text-white"/>
                                         <select
                                             id={`position_id_${index}`}
                                             name={`position_id_${index}`}
                                             value={technique.position_id}
-                                            className="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-opacity-50 rounded-md shadow-sm"
+                                            className="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                             onChange={(e) => updateTechnique(index, 'position_id', e.target.value)}
                                             required
                                         >
@@ -177,7 +177,7 @@ export const DynamicList = ({ categories, positions, initialTechniques, onTechni
                             <button
                                 type="button"
                                 onClick={addTechniqueForm}
-                                className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
                                 <PlusIcon className="h-5 w-5 mr-2" />
                                 Add Another Technique

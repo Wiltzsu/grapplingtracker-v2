@@ -36,7 +36,7 @@ export default function Add() {
                 <div className="flex items-center gap-4">
                     <Link
                         href={route('add')}
-                        className="text-gray-600 hover:text-gray-900"
+                        className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover-text-white"
                     >
                         Add
                     </Link>
@@ -58,12 +58,12 @@ export default function Add() {
                             <Link
                                 key={option.name}
                                 href={route(option.route)}
-                                className="flex flex-col p-6 bg-white rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-200"
+                                className="flex flex-col p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-200"
                             >
                                 <div className="flex items-center gap-4 mb-4">
-                                    <div className="p-2 bg-indigo-100 rounded-lg">
+                                    <div className="p-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg">
                                         <svg
-                                            className="w-6 h-6 text-indigo-600"
+                                            className="w-6 h-6 text-indigo-600 dark:text-indigo-400"
                                             fill="none"
                                             viewBox="0 0 24 24"
                                             stroke="currentColor"
@@ -76,11 +76,11 @@ export default function Add() {
                                             />
                                         </svg>
                                     </div>
-                                    <span className="text-lg font-medium text-gray-900">
+                                    <span className="text-lg font-medium text-gray-900 dark:text-white">
                                         {option.name}
                                     </span>
                                 </div>
-                                <p className="text-sm text-gray-500">
+                                <p className="text-sm text-gray-500 dark:text-gray-400">
                                     {option.description}
                                 </p>
                             </Link>

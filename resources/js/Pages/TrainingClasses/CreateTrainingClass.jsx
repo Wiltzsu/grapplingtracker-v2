@@ -87,12 +87,12 @@ export default function Create({ categories, positions }) {
                 <div className="flex items-center gap-4">
                     <Link
                         href={route('add')}
-                        className="text-gray-600 hover:text-gray-900"
+                        className="text-gray-600 hover:text-gray-900 dark:text-white"
                     >
                         Add
                     </Link>
-                    <span className="text-red-900">|</span>
-                    <span>Class</span>
+                    <span className="text-red-900 dark:text-gray-400">|</span>
+                    <span className="dark:text-white">Session</span>
                     <img
                         src={CancelIcon}
                         alt="Cancel"
@@ -104,27 +104,26 @@ export default function Create({ categories, positions }) {
         >
             <Head title="Add training class" />
 
-            <div className="py-6 sm:py-12 pr-2 pl-2">
+            <div className="py-6 sm:py-12 pr-2 pl-2 dark:bg-gray-700">
                 <div className="mx-auto max-w-3xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm rounded-lg">
+                    <div className="border-b border-gray-200 rounded-t-lg bg-gray-50 px-6 py-4 dark:bg-gray-900 dark:border-gray-500">
+                        <h3 className="text-lg font-medium text-gray-900 dark:text-white">Add session</h3>
+                    </div>
+                    <div className="overflow-hidden bg-white shadow-sm dark:bg-gray-800 rounded-b-lg">
                         <div className="p-6 text-gray-900">
-                            <div className="mb-8 mt-5 flex justify-center">
+                            <div className="mb-8 flex justify-center">
                                 <div className="w-[600px]">
-                                    <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                                        Add session
-                                    </h2>
-
                                     {/* Training class creation form */}
                                     <form onSubmit={submit} className="mt-6 space-y-6">
                                         {/* Training class instructor field */}
                                         <div>
-                                            <InputLabel htmlFor="instructor" value="Instructor name" />
+                                            <InputLabel htmlFor="instructor" value="Instructor name" className="dark:text-white" />
                                             <TextInput
                                                 id="instructor"
                                                 type="text"
                                                 name="instructor"
                                                 value={data.instructor}
-                                                className="mt-1 block w-full"
+                                                className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
                                                 isFocused={true}
                                                 onChange={(e) => setData('instructor', e.target.value)}
                                             />
@@ -133,13 +132,13 @@ export default function Create({ categories, positions }) {
 
                                         {/* Training class location */}
                                         <div>
-                                            <InputLabel htmlFor="location" value={<>Location</>} />
+                                            <InputLabel htmlFor="location" value={<>Location</>} className="dark:text-white" />
                                             <TextInput
                                                 id="location"
                                                 type="text"
                                                 name="location"
                                                 value={data.location}
-                                                className="mt-1 block w-full"
+                                                className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
                                                 isFocused={true}
                                                 onChange={(e) => setData('location', e.target.value)}
                                             />
@@ -148,13 +147,13 @@ export default function Create({ categories, positions }) {
 
                                         {/* Training class date */}
                                         <div>
-                                            <InputLabel htmlFor="class_date" value={<>Date <span className="text-red-500">*</span></>} />
+                                            <InputLabel htmlFor="class_date" value={<>Date <span className="text-red-500">*</span></>} className="dark:text-white" />
                                             <TextInput
                                                 id="class_date"
                                                 type="date"
                                                 name="class_date"
                                                 value={data.class_date}
-                                                className="mt-1 block w-full"
+                                                className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
                                                 isFocused={true}
                                                 onChange={(e) => setData('class_date', e.target.value)}
                                                 required
@@ -164,12 +163,12 @@ export default function Create({ categories, positions }) {
 
                                         {/* Training class description */}
                                         <div>
-                                            <InputLabel htmlFor="class_description" value="Session description" />
+                                            <InputLabel htmlFor="class_description" value="Session description" className="dark:text-white"/>
                                             <textarea
                                                 id="class_description"
                                                 name="class_description"
                                                 value={data.class_description}
-                                                className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                                className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600"
                                                 rows={4}
                                                 onChange={(e) => setData('class_description', e.target.value)}
                                             />
@@ -185,13 +184,13 @@ export default function Create({ categories, positions }) {
 
                                         {/* Training class duration */}
                                         <div>
-                                            <InputLabel htmlFor="class_duration" value={<>Session duration (min.) <span className="text-red-500">*</span></>} />
+                                            <InputLabel htmlFor="class_duration" value={<>Session duration (min.) <span className="text-red-500">*</span></>} className="dark:text-white" />
                                             <TextInput
                                                 id="class_duration"
                                                 type="number"
                                                 name="class_duration"
                                                 value={data.class_duration}
-                                                className="mt-1 block w-full"
+                                                className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
                                                 isFocused={true}
                                                 onChange={(e) => setData('class_duration', e.target.value)}
                                                 required
@@ -202,13 +201,13 @@ export default function Create({ categories, positions }) {
                                         {/* Training class round amount and duration*/}
                                         <div className="flex gap-4">
                                             <div className="flex-1">
-                                                <InputLabel htmlFor="rounds" value="Rounds" />
+                                                <InputLabel htmlFor="rounds" value="Rounds" className="dark:text-white"/>
                                                 <TextInput
                                                     id="rounds"
                                                     type="number"
                                                     name="rounds"
                                                     value={data.rounds}
-                                                    className="mt-1 block w-full"
+                                                    className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
                                                     isFocused={true}
                                                     onChange={(e) => setData('rounds', e.target.value)}
                                                 />
@@ -216,23 +215,18 @@ export default function Create({ categories, positions }) {
                                             </div>
 
                                             <div className="flex-1">
-                                                <InputLabel htmlFor="round_duration" value="Round duration (min.)" />
+                                                <InputLabel htmlFor="round_duration" value="Round duration (min.)" className="dark:text-white"/>
                                                 <TextInput
                                                     id="round_duration"
                                                     type="number"
                                                     name="round_duration"
                                                     value={data.round_duration}
-                                                    className="mt-1 block w-full"
+                                                    className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
                                                     isFocused={true}
                                                     onChange={(e) => setData('round_duration', e.target.value)}
                                                 />
                                                 <InputError message={errors.round_duration} className="mt-2" />
                                             </div>
-                                        </div>
-
-                                        {/* Training class round duration */}
-                                        <div>
-
                                         </div>
 
                                         {/* Submit button */}

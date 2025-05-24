@@ -92,7 +92,7 @@ export default function Stats({ auth,
         <AuthenticatedLayout
             user={auth.user}
             header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
+                <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-white">
                     Statistics and data
                 </h2>
             }
@@ -107,50 +107,50 @@ export default function Stats({ auth,
                             {/* Time period pills */}
                             <button
                                 onClick={() => handleDateRangeChange('month')}
-                                className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
+                                className={`px-4 py-2 text-sm font-medium rounded-full transition-colors dark:bg-gray-900 ${
                                     dateRange === 'month'
-                                    ? 'bg-indigo-100 text-indigo-700'
-                                    : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                                    ? 'bg-indigo-100 text-indigo-700 dark:text-indigo-300 dark:bg-gray-900'
+                                    : 'bg-gray-50 text-gray-600 hover:bg-gray-100 dark:text-white'
                                 }`}
                             >
                                 Last month
                             </button>
                             <button
                                 onClick={() => handleDateRangeChange('6months')}
-                                className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
+                                className={`px-4 py-2 text-sm font-medium rounded-full transition-colors dark:bg-gray-900 ${
                                     dateRange === '6months'
-                                    ? 'bg-indigo-100 text-indigo-700'
-                                    : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                                    ? 'bg-indigo-100 text-indigo-700 dark:text-indigo-300 dark:bg-gray-900'
+                                    : 'bg-gray-50 text-gray-600 hover:bg-gray-100 dark:text-white'
                                 }`}
                             >
                                 Last 6 months
                             </button>
                             <button
                                 onClick={() => handleDateRangeChange('year')}
-                                className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
+                                className={`px-4 py-2 text-sm font-medium rounded-full transition-colors dark:bg-gray-900 ${
                                     dateRange === 'year'
-                                    ? 'bg-indigo-100 text-indigo-700'
-                                    : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                                    ? 'bg-indigo-100 text-indigo-700 dark:text-indigo-300 dark:bg-gray-900'
+                                    : 'bg-gray-50 text-gray-600 hover:bg-gray-100 dark:text-white'
                                 }`}
                             >
                                 Last year
                             </button>
                             <button
                                 onClick={() => handleDateRangeChange('all')}
-                                className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
+                                className={`px-4 py-2 text-sm font-medium rounded-full transition-colors dark:bg-gray-900 ${
                                     dateRange === 'all'
                                     ? 'bg-indigo-100 text-indigo-700'
-                                    : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                                    : 'bg-gray-50 text-gray-600 hover:bg-gray-100 dark:text-white'
                                 }`}
                             >
                                 All time
                             </button>
                             <button
                                 onClick={() => handleDateRangeChange('custom')}
-                                className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
+                                className={`px-4 py-2 text-sm font-medium rounded-full transition-colors dark:bg-gray-900 ${
                                     dateRange === 'custom'
                                     ? 'bg-indigo-100 text-indigo-700'
-                                    : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                                    : 'bg-gray-50 text-gray-600 hover:bg-gray-100 dark:text-white'
                                 }`}
                             >
                                 Custom range
@@ -161,21 +161,21 @@ export default function Stats({ auth,
                         {showCustomDates && (
                             <div className="mt-4 flex flex-wrap items-end gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-500">Start Date</label>
+                                    <label className="block text-sm font-medium text-gray-500 dark:text-white">Start Date</label>
                                     <input
                                         type="date"
                                         value={customStartDate}
                                         onChange={(e) => setCustomStartDate(e.target.value)}
-                                        className="mt-1 rounded-lg border-gray-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                        className="mt-1 rounded-lg border-gray-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 dark:bg-gray-600 dark:text-white dark:border-gray-700"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-500">End Date</label>
+                                    <label className="block text-sm font-medium text-gray-500 dark:text-white">End Date</label>
                                     <input
                                         type="date"
                                         value={customEndDate}
                                         onChange={(e) => setCustomEndDate(e.target.value)}
-                                        className="mt-1 rounded-lg border-gray-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                        className="mt-1 rounded-lg border-gray-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 dark:bg-gray-600 dark:text-white dark:border-gray-700"
                                     />
                                 </div>
                                 <button
@@ -192,22 +192,22 @@ export default function Stats({ auth,
                     <div className="grid gap-6 md:grid-cols-2">
                         {/* Training Overview Card */}
                         <div className="overflow-hidden bg-white shadow-sm rounded-lg">
-                            <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
-                                <h3 className="text-lg font-medium text-gray-900">Training Overview</h3>
+                            <div className="border-b border-gray-200 bg-gray-50 px-6 py-4 dark:bg-gray-900 dark:border-gray-700">
+                                <h3 className="text-lg font-medium text-gray-900 dark:text-white">Training Overview</h3>
                             </div>
-                            <div className="p-6">
+                            <div className="p-6 dark:bg-gray-800">
                                 <div className="grid gap-4">
-                                    <div className="rounded-lg bg-gray-50 p-4">
-                                        <p className="text-sm text-gray-500">Total sessions</p>
-                                        <p className="text-2xl text-gray-900">{totalClasses}</p>
+                                    <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
+                                        <p className="text-sm text-gray-500 dark:text-white">Total sessions</p>
+                                        <p className="text-2xl text-gray-900 dark:text-white">{totalClasses}</p>
                                     </div>
-                                    <div className="rounded-lg bg-gray-50 p-4">
-                                        <p className="text-sm text-gray-500">Total training time</p>
-                                        <p className="text-2xl text-gray-900">{formatDuration(totalClassDuration)}</p>
+                                    <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
+                                        <p className="text-sm text-gray-500 dark:text-white">Total training time</p>
+                                        <p className="text-2xl text-gray-900 dark:text-white">{formatDuration(totalClassDuration)}</p>
                                     </div>
-                                    <div className="rounded-lg bg-gray-50 p-4">
-                                        <p className="text-sm text-gray-500">Average class duration</p>
-                                        <p className="text-2xl text-gray-900">{formatDuration(averageClassDuration)}</p>
+                                    <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
+                                        <p className="text-sm text-gray-500 dark:text-white">Average class duration</p>
+                                        <p className="text-2xl text-gray-900 dark:text-white">{formatDuration(averageClassDuration)}</p>
                                     </div>
                                 </div>
                             </div>
@@ -215,27 +215,27 @@ export default function Stats({ auth,
 
                         {/* Sparring Stats Card */}
                         <div className="overflow-hidden bg-white shadow-sm rounded-lg">
-                            <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
-                                <h3 className="text-lg font-medium text-gray-900">Sparring Statistics</h3>
+                            <div className="border-b border-gray-200 bg-gray-50 px-6 py-4 dark:bg-gray-900 dark:border-gray-700">
+                                <h3 className="text-lg font-medium text-gray-900 dark:text-white">Sparring Statistics</h3>
                             </div>
-                            <div className="p-6">
+                            <div className="p-6 dark:bg-gray-800">
                                 <div className="grid gap-4">
-                                    <div className="rounded-lg bg-gray-50 p-4">
-                                        <p className="text-sm text-gray-500">Total rounds</p>
-                                        <p className="text-2xl text-gray-900">{totalRollingRounds}</p>
+                                    <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
+                                        <p className="text-sm text-gray-500 dark:text-white">Total rounds</p>
+                                        <p className="text-2xl text-gray-900 dark:text-white">{totalRollingRounds}</p>
                                     </div>
-                                    <div className="rounded-lg bg-gray-50 p-4">
-                                        <p className="text-sm text-gray-500">Total sparring time</p>
-                                        <p className="text-2xl text-gray-900">{formatDuration(totalRoundDuration)}</p>
+                                    <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
+                                        <p className="text-sm text-gray-500 dark:text-white">Total sparring time</p>
+                                        <p className="text-2xl text-gray-900 dark:text-white">{formatDuration(totalRoundDuration)}</p>
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
-                                        <div className="rounded-lg bg-gray-50 p-4">
-                                            <p className="text-sm text-gray-500">Average round duration</p>
-                                            <p className="text-2xl text-gray-900">{formatDuration(averageRoundDuration)}</p>
+                                        <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
+                                            <p className="text-sm text-gray-500 dark:text-white">Average round duration</p>
+                                            <p className="text-2xl text-gray-900 dark:text-white">{formatDuration(averageRoundDuration)}</p>
                                         </div>
-                                        <div className="rounded-lg bg-gray-50 p-4">
-                                            <p className="text-sm text-gray-500">Sparring ratio</p>
-                                            <p className="text-2xl text-gray-900">{sparringRelativeToTraining}%</p>
+                                        <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
+                                            <p className="text-sm text-gray-500 dark:text-white">Sparring ratio</p>
+                                            <p className="text-2xl text-gray-900 dark:text-white">{sparringRelativeToTraining}%</p>
                                         </div>
                                     </div>
                                 </div>
@@ -244,10 +244,10 @@ export default function Stats({ auth,
                     </div>
 
                     {/* Training Frequency Chart */}
-                    <div className="overflow-hidden bg-white shadow-sm rounded-lg mt-6">
-                        <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
+                    <div className="overflow-hidden bg-white shadow-sm rounded-lg dark:bg-gray-600 mt-6">
+                        <div className="border-b border-gray-200 bg-gray-50 px-6 py-4 dark:bg-gray-900 dark:border-gray-700">
                             <div className="flex items-center gap-2">
-                                <h3 className="text-lg font-medium text-gray-900">Training Frequency</h3>
+                                <h3 className="text-lg font-medium text-gray-900 dark:text-white">Training Frequency</h3>
                                 <img
                                     src={InfoCircle}
                                     alt="Info"
@@ -256,7 +256,7 @@ export default function Stats({ auth,
                             </div>
 
                         </div>
-                        <div className="p-6">
+                        <div className="p-6 dark:bg-gray-800">
                             {trainingFrequency && trainingFrequency.length > 0 ? (
                                 <Line
                                     data={{
@@ -265,10 +265,10 @@ export default function Stats({ auth,
                                             {
                                                 label: 'Classes per Month',
                                                 data: trainingFrequency.map(item => item.count),
-                                                borderColor: 'rgb(79, 70, 229)',
+                                                borderColor: 'rgb(230, 83, 190)',
                                                 backgroundColor: 'rgba(79, 70, 229, 0.1)',
                                                 tension: 0.1,
-                                                fill: true,
+                                                fill: false,
                                             },
                                         ],
                                     }}
@@ -278,6 +278,9 @@ export default function Stats({ auth,
                                         plugins: {
                                             legend: {
                                                 position: 'top',
+                                                labels: {
+                                                    color: document.documentElement.classList.contains('dark') ? 'white' : 'black'
+                                                }
                                             },
                                             tooltip: {
                                                 callbacks: {
@@ -291,7 +294,19 @@ export default function Stats({ auth,
                                             y: {
                                                 beginAtZero: true,
                                                 ticks: {
-                                                    stepSize: 1
+                                                    stepSize: 1,
+                                                    color: document.documentElement.classList.contains('dark') ? 'white' : 'black'
+                                                },
+                                                grid: {
+                                                    color: document.documentElement.classList.contains('dark') ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                                                }
+                                            },
+                                            x: {
+                                                ticks: {
+                                                    color: document.documentElement.classList.contains('dark') ? 'white' : 'red'
+                                                },
+                                                grid: {
+                                                    color: document.documentElement.classList.contains('dark') ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
                                                 }
                                             }
                                         }
@@ -307,9 +322,9 @@ export default function Stats({ auth,
 
                     <div className="mt-6 grid gap-6 md:grid-cols-2">
                         {/* Sparring vs Training Chart */}
-                        <div className="overflow-hidden bg-white shadow-sm rounded-lg">
-                            <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
-                                <h3 className="text-lg font-medium text-gray-900">Training Distribution</h3>
+                        <div className="overflow-hidden bg-white shadow-sm rounded-lg dark:bg-gray-800">
+                            <div className="border-b border-gray-200 bg-gray-50 px-6 py-4 dark:bg-gray-900 dark:border-gray-500">
+                                <h3 className="text-lg font-medium text-gray-900 dark:text-white">Training Distribution</h3>
                             </div>
                             <div className="p-6">
                                 {sparringRelativeToTraining && sparringRelativeToTraining > 0 ? (
@@ -329,6 +344,14 @@ export default function Stats({ auth,
                                         options={{
                                             responsive: true,
                                             maintainAspectRatio: false,
+                                            plugins: {
+                                                legend: {
+                                                    position: 'right',
+                                                    labels: {
+                                                        color: document.documentElement.classList.contains('dark') ? 'white' : 'black'
+                                                    }
+                                                }
+                                            }
                                         }}
                                         height={300}
                                     />
@@ -341,9 +364,9 @@ export default function Stats({ auth,
                             </div>
                         </div>
                         {/* Positions Distribution Chart */}
-                        <div className="overflow-hidden bg-white shadow-sm rounded-lg">
-                            <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
-                                <h3 className="text-lg font-medium text-gray-900">Positions Distribution</h3>
+                        <div className="overflow-hidden bg-white shadow-sm rounded-lg dark:bg-gray-800">
+                            <div className="border-b border-gray-200 bg-gray-50 px-6 py-4 dark:bg-gray-900 dark:border-gray-500">
+                                <h3 className="text-lg font-medium text-gray-900 dark:text-white">Positions Distribution</h3>
                             </div>
                             <div className="p-6">
                                 {positionsRelative && positionsRelative.length > 0 ? (
@@ -374,6 +397,9 @@ export default function Stats({ auth,
                                             plugins: {
                                                 legend: {
                                                     position: 'right',
+                                                    labels: {
+                                                        color: document.documentElement.classList.contains('dark') ? 'white' : 'black'
+                                                    }
                                                 },
                                                 tooltip: {
                                                     callbacks: {

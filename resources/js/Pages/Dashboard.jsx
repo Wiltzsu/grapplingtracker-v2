@@ -21,7 +21,7 @@ export default function Dashboard({ recent_classes }) {
     return (
         <AuthenticatedLayout
             header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
+                <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-white">
                     Dashboard
                 </h2>
             }
@@ -36,12 +36,12 @@ export default function Dashboard({ recent_classes }) {
                             <Link
                                 key={option.name}
                                 href={route(option.route)}
-                                className="flex flex-col p-6 bg-white rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-200"
+                                className="flex flex-col p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-200"
                             >
                                 <div className="flex items-center gap-4 mb-4">
-                                    <div className="p-2 bg-indigo-100 rounded-lg">
+                                    <div className="p-2 bg-indigo-100 rounded-lg dark:bg-indigo-900">
                                         <svg
-                                            className="w-6 h-6 text-indigo-600"
+                                            className="w-6 h-6 text-indigo-600 dark:text-indigo-400"
                                             fill="none"
                                             viewBox="0 0 24 24"
                                             stroke="currentColor"
@@ -54,11 +54,11 @@ export default function Dashboard({ recent_classes }) {
                                             />
                                         </svg>
                                     </div>
-                                    <span className="text-lg font-medium text-gray-900">
+                                    <span className="text-lg font-medium text-gray-900 dark:text-white">
                                         {option.name}
                                     </span>
                                 </div>
-                                <p className="text-sm text-gray-500">
+                                <p className="text-sm text-gray-500 dark:text-gray-400">
                                     {option.description}
                                 </p>
                             </Link>
@@ -70,35 +70,35 @@ export default function Dashboard({ recent_classes }) {
             {/* Recent Classes Section */}
             <div className="pb-12 pr-2 pl-2">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm rounded-lg">
+                    <div className="bg-white overflow-hidden shadow-sm rounded-lg dark:bg-gray-800">
                         <div className="p-6">
-                            <h2 className="text-xl font-semibold mb-4">Recent sessions</h2>
+                            <h2 className="text-xl font-semibold mb-4 dark:text-white">Recent sessions</h2>
                             {recent_classes.length > 0 ? (
                                 <div className="space-y-4">
                                     {recent_classes.map((training_class) => (
                                         <div
                                             key={training_class.class_id}
-                                            className="border rounded-lg p-4 hover:bg-gray-50"
+                                            className="border rounded-lg p-4 hover:bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
                                         >
                                             <div className="flex justify-between items-start">
                                                 <div>
-                                                    <h3 className="font-medium">{training_class.location || 'No location'}</h3>
-                                                    <p className="text-sm text-gray-600">
+                                                    <h3 className="font-medium dark:text-white">{training_class.location || 'No location'}</h3>
+                                                    <p className="text-sm text-gray-600 dark:text-gray-300">
                                                         {training_class.class_date} - {training_class.instructor || 'No instructor'}
                                                     </p>
                                                 </div>
-                                                <div className="text-sm text-gray-600">
+                                                <div className="text-sm text-gray-600 dark:text-white">
                                                     {training_class.class_duration} min
                                                 </div>
                                             </div>
                                             {training_class.techniques?.length > 0 && (
                                                 <div className="mt-2">
-                                                    <p className="text-sm text-gray-600">Techniques:</p>
+                                                    <p className="text-sm text-gray-600 dark:text-white">Techniques:</p>
                                                     <div className="flex flex-wrap gap-2 mt-1">
                                                         {training_class.techniques.map((technique) => (
                                                             <span
                                                                 key={technique.technique_id}
-                                                                className="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded"
+                                                                className="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded dark:bg-indigo-800 dark:text-indigo-100"
                                                             >
                                                                 {technique.technique_name}
                                                             </span>

@@ -24,7 +24,7 @@ export default function Register() {
         <GuestLayout>
             <Head title="Register" />
 
-            <h3 className="mb-8 text-3xl font-bold text-center text-gray-900">
+            <h3 className="mb-8 text-3xl font-bold text-center text-gray-900 dark:text-white">
                 Create account
             </h3>
 
@@ -32,7 +32,7 @@ export default function Register() {
             <div className="space-y-4">
                 <a
                     href={usePage().props.googleLogin}
-                    className="w-full flex items-center justify-center px-4 py-3 space-x-2 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50"
+                    className="w-full flex items-center justify-center px-4 py-3 space-x-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                 >
                     <svg className="w-5 h-5" viewBox="0 0 24 24">
                         <path
@@ -52,29 +52,29 @@ export default function Register() {
                             fill="#EA4335"
                         />
                     </svg>
-                    <span>Continue with Google</span>
+                    <span className="text-gray-700 dark:text-gray-200">Continue with Google</span>
                 </a>
             </div>
 
             {/* Divider */}
             <div className="relative my-6">
                 <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-300"></div>
+                    <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                    <span className="px-2 bg-white text-gray-500">Or continue with email</span>
+                    <span className="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">Or continue with email</span>
                 </div>
             </div>
 
             {/* Traditional Registration Form */}
             <form onSubmit={submit} className="space-y-6">
                 <div>
-                    <InputLabel htmlFor="name" value="Name" className="text-gray-700 text-sm font-medium" />
+                    <InputLabel htmlFor="name" value="Name" className="text-gray-700 dark:text-gray-300 text-sm font-medium" />
                     <TextInput
                         id="name"
                         name="name"
                         value={data.name}
-                        className="mt-2 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 text-sm transition duration-150 ease-in-out focus:ring-2 focus:ring-indigo-500 focus:border-transparent hover:bg-gray-50/80"
+                        className="mt-2 block w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white text-sm transition duration-150 ease-in-out focus:ring-2 focus:ring-indigo-500 focus:border-transparent hover:bg-gray-50/80 dark:hover:bg-gray-700/80"
                         autoComplete="name"
                         isFocused={true}
                         onChange={(e) => setData('name', e.target.value)}
@@ -84,13 +84,13 @@ export default function Register() {
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="email" value="Email" className="text-gray-700 text-sm font-medium" />
+                    <InputLabel htmlFor="email" value="Email" className="text-gray-700 dark:text-gray-300 text-sm font-medium" />
                     <TextInput
                         id="email"
                         type="email"
                         name="email"
                         value={data.email}
-                        className="mt-2 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 text-sm transition duration-150 ease-in-out focus:ring-2 focus:ring-indigo-500 focus:border-transparent hover:bg-gray-50/80"
+                        className="mt-2 block w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white text-sm transition duration-150 ease-in-out focus:ring-2 focus:ring-indigo-500 focus:border-transparent hover:bg-gray-50/80 dark:hover:bg-gray-700/80"
                         autoComplete="username"
                         onChange={(e) => setData('email', e.target.value)}
                         required
@@ -99,13 +99,13 @@ export default function Register() {
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="password" value="Password" className="text-gray-700 text-sm font-medium" />
+                    <InputLabel htmlFor="password" value="Password" className="text-gray-700 dark:text-gray-300 text-sm font-medium" />
                     <TextInput
                         id="password"
                         type="password"
                         name="password"
                         value={data.password}
-                        className="mt-2 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 text-sm transition duration-150 ease-in-out focus:ring-2 focus:ring-indigo-500 focus:border-transparent hover:bg-gray-50/80"
+                        className="mt-2 block w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white text-sm transition duration-150 ease-in-out focus:ring-2 focus:ring-indigo-500 focus:border-transparent hover:bg-gray-50/80 dark:hover:bg-gray-700/80"
                         autoComplete="new-password"
                         onChange={(e) => setData('password', e.target.value)}
                         required
@@ -114,13 +114,13 @@ export default function Register() {
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" className="text-gray-700 text-sm font-medium" />
+                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" className="text-gray-700 dark:text-gray-300 text-sm font-medium" />
                     <TextInput
                         id="password_confirmation"
                         type="password"
                         name="password_confirmation"
                         value={data.password_confirmation}
-                        className="mt-2 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 text-sm transition duration-150 ease-in-out focus:ring-2 focus:ring-indigo-500 focus:border-transparent hover:bg-gray-50/80"
+                        className="mt-2 block w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white text-sm transition duration-150 ease-in-out focus:ring-2 focus:ring-indigo-500 focus:border-transparent hover:bg-gray-50/80 dark:hover:bg-gray-700/80"
                         autoComplete="new-password"
                         onChange={(e) => setData('password_confirmation', e.target.value)}
                         required
@@ -131,13 +131,13 @@ export default function Register() {
                 <div className="flex items-center justify-end">
                     <Link
                         href={route('login')}
-                        className="text-sm text-indigo-600 hover:text-indigo-500 transition-colors"
+                        className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors"
                     >
                         Already registered?
                     </Link>
 
                     <PrimaryButton
-                        className="ms-4 bg-indigo-600 hover:bg-indigo-500 transition-all duration-300 shadow-lg hover:shadow-xl px-6"
+                        className="ms-4 bg-indigo-600 hover:bg-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition-all duration-300 shadow-lg hover:shadow-xl px-6"
                         disabled={processing}
                     >
                         Register

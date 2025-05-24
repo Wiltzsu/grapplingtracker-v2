@@ -27,18 +27,18 @@ export default function Welcome({ auth, canLogin, canRegister }) {
     return (
         <>
             <Head title="Welcome" />
-            <div className="min-h-screen bg-white flex flex-col">
+            <div className="min-h-screen bg-white dark:bg-gray-900 flex flex-col">
                 <GuestHeader auth={auth} showExtraNav={true} />
 
                 {/* Hero Section */}
-                <div className="relative px-6 pt-28 lg:px-8 bg-gradient-to-b from-indigo-50 to-white overflow-hidden">
+                <div className="relative px-6 pt-28 lg:px-8 bg-gradient-to-b from-indigo-50 to-white dark:from-gray-800 dark:to-gray-900 overflow-hidden">
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 1 }}
                         className="absolute inset-0"
                     >
-                        <div className="absolute inset-0 bg-[linear-gradient(30deg,#f0f7ff_0%,#ffffff_100%)] opacity-50" />
+                        <div className="absolute inset-0 bg-[linear-gradient(30deg,#f0f7ff_0%,#ffffff_100%)] dark:bg-[linear-gradient(30deg,#1a1a1a_0%,#2d3748_100%)] opacity-50" />
                         <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,transparent)] dark:bg-grid-slate-700/25" />
                     </motion.div>
                     <div className="mx-auto max-w-3xl py-16 sm:py-20 lg:py-24 relative">
@@ -50,13 +50,13 @@ export default function Welcome({ auth, canLogin, canRegister }) {
                         >
                             <motion.h1
                                 variants={fadeIn}
-                                className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl sm:leading-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-blue-500"
+                                className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl sm:leading-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-blue-500 dark:from-indigo-400 dark:to-blue-400"
                             >
                                 Track your Grappling Journey
                             </motion.h1>
                             <motion.p
                                 variants={fadeIn}
-                                className="mt-6 text-lg leading-8 text-gray-600"
+                                className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300"
                             >
                                 Record techniques, track progress, and analyze your training. The ultimate companion for Brazilian Jiu-Jitsu and grappling practitioners.
                             </motion.p>
@@ -85,7 +85,7 @@ export default function Welcome({ auth, canLogin, canRegister }) {
 
                 {/* Features Section */}
                 <motion.div
-                    className="pt-12 pb-24 sm:pt-16 sm:pb-32 bg-white relative"
+                    className="pt-12 pb-24 sm:pt-16 sm:pb-32 bg-white dark:bg-gray-900 relative"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -120,11 +120,11 @@ export default function Welcome({ auth, canLogin, canRegister }) {
                                 >
                                     <motion.div
                                         whileHover={{ scale: 1.05 }}
-                                        className="p-6 bg-gradient-to-br from-indigo-50 to-blue-50 rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
+                                        className="p-6 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-800 dark:to-gray-700 rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
                                     >
                                         <span className="text-4xl mb-4 block">{feature.icon}</span>
-                                        <h3 className="text-xl font-semibold text-gray-900">{feature.title}</h3>
-                                        <p className="mt-4 text-gray-600">{feature.description}</p>
+                                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{feature.title}</h3>
+                                        <p className="mt-4 text-gray-600 dark:text-gray-300">{feature.description}</p>
                                     </motion.div>
                                 </motion.div>
                             ))}

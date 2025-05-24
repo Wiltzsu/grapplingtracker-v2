@@ -20,57 +20,42 @@ import ErrorPopup from '@/Components/ErrorPopup';
 /**
  * Index Component - Displays and manages the techniques list
  *
- * @param {Array} techniques - Array of technique objects
+ * @param {Array} techniques - Array of technique objects from the backend
  *
  * {{ techniques }} is a prop from TechniqueController's index method
  */
 export default function Index({ techniques }) {
-    /**
-     * State management for delete confirmation and success popup
-     * https://react.dev/reference/react/useState
-     */
-    const [showConfirmation, setShowConfirmation]   = useState(false);
-    const [showSuccessPopup, setShowSuccessPopup]   = useState(false);
-    const [showErrorPopup, setShowErrorPopup]       = useState(false);
+    // State management for delete confirmation and success/error popups
+    const [showConfirmation, setShowConfirmation] = useState(false);
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+    const [showErrorPopup, setShowErrorPopup] = useState(false);
     const [techniqueToDelete, setTechniqueToDelete] = useState(null);
-    const [errorMessage, setErrorMessage]           = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
-    /**
-     * Collects the errors and makes them accessible
-     * https://inertiajs.com/validation#error-handling
-     */
     const { flash } = usePage().props;
 
     // Handler function for technique deletion
     const confirmDelete = (technique) => {
-        setTechniqueToDelete(technique); // Sets the technique to delete based on id
-        setShowConfirmation(true);       // Shows the confirmation popup
-    }
+        setTechniqueToDelete(technique);
+        setShowConfirmation(true);
+    };
 
-    /**
-     * Handler function for when user confirms deletion
-     */
+    // Executes the delete operation via Inertia router
     const handleDelete = () => {
-        /**
-         * Sends a DELETE request to the server using the Inertia router
-         * Generates the route URL like /techniques/1
-         */
         router.delete(route('techniques.destroy', techniqueToDelete.technique_id), {
-            preserveScroll: true, // Maintains scroll technique after request
+            preserveScroll: true,
             onSuccess: (page) => {
-                // Clear states
-                setShowConfirmation(false); // Hides the confirmation dialog
-                setTechniqueToDelete(null); // Clears the technique that was being deleted from the state
+                setShowConfirmation(false);
+                setTechniqueToDelete(null);
 
-                // Check if there are errors in the response
-                if (flash?.error) {
-                    setErrorMessage(flash.error);
+                if (page.props.flash && page.props.flash.error) {
+                    setErrorMessage(page.props.flash.error);
                     setShowErrorPopup(true);
                 } else {
-                    setShowSuccessPopup(true); // Show success popup instead of just hiding confirmation
+                    setShowSuccessPopup(true);
                 }
             },
-            onError: () => {
+            onError: (errors) => {
                 setShowConfirmation(false);
                 setTechniqueToDelete(null);
                 setShowErrorPopup(true);
@@ -78,103 +63,93 @@ export default function Index({ techniques }) {
         });
     };
 
-    /**
-     * Cancels the delete operation by resetting the confirmation dialog state
-     * and clearing the selected technique from memory.
-     */
+    // Cancels the delete operation
     const cancelDelete = () => {
         setShowConfirmation(false);
         setTechniqueToDelete(null);
     };
 
-    /**
-     * Called after successful deletion and when the user closes the popup.
-     * Hides the success message and performs a full page refresh to
-     * ensure the techniques list is up-to-date.
-     */
+    // Called after successful deletion and when the user closes the success popup
     const closeSuccessPopup = () => {
         setShowSuccessPopup(false);
         router.visit(route('techniques.index'));
-    }
+    };
+
+    // Called when the user closes the error popup
+    const closeErrorPopup = () => {
+        setShowErrorPopup(false);
+        setErrorMessage('');
+    };
+
     return (
         <AuthenticatedLayout
             header={
                 <div className="flex items-center gap-4">
                     <Link
                         href={route('view')}
-                        className="text-gray-600 hover:text-gray-900"
+                        className="text-gray-600 hover:text-gray-900 dark:text-white"
                     >
                         View
                     </Link>
-                    <span className="text-red-900">|</span>
-                    <span>Technique</span>
+                    <span className="text-red-900 dark:text-gray-400">|</span>
+                    <span className="dark:text-white">Techniques</span>
                     <img
                         src={CancelIcon}
                         alt="Cancel"
                         className="h-5 w-5 cursor-pointer"
-                        onClick={() => window.location = route('view')}
+                        onClick={() => window.history.back()}
                     />
                 </div>
             }
         >
             <Head title="Techniques" />
 
-            <div className="py-0 sm:py-6 pr-2 pl-2">
+            <div className="py-6 sm:py-12 pl-2 pr-2 dark:bg-gray-700">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="mb-5 mt-5 flex justify-between items-center">
-                        <h2 className="text-xl font-semibold leading-tight text-gray-800 pl-3 sm:pl-0">
+                    <div className="mb-5 flex justify-between items-center">
+                        <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-white pl-3 sm:pl-0">
                             Techniques
                         </h2>
                         <Link
                             href={route('techniques.create')}
-                            className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2
-                            text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500
-                            focus:ring-offset-2 mr-3 mr:sm-0"
+                            className="inline-flex items-center rounded-md border border-transparent bg-indigo-600
+                            px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2
+                            focus:ring-indigo-500 focus:ring-offset-2 mr-3 sm:mr-0 dark:bg-indigo-500 dark:hover:bg-indigo-600"
                         >
                             Add New Technique
                         </Link>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mb-5">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
                         {techniques && techniques.length > 0 ? (
-                            techniques.map((techniques) => (
+                            techniques.map((technique) => (
                                 <div
-                                    key={techniques.technique_id}
-                                    className="bg-white rounded-lg shadow-sm p-6 hover:bg-gray-50 transition-colors duration-200"
+                                    key={technique.technique_id}
+                                    className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-200"
                                 >
-                                    <div className="flex justify-between items-start">
-                                        <div className="flex items-center gap-4 mb-4">
-                                            <div className="p-2 bg-indigo-100 rounded-lg">
-                                                <svg
-                                                    className="w-6 h-6 text-indigo-600"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    stroke="currentColor"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={1.5}
-                                                        d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
-                                                    />
+                                    <div className="flex justify-between items-start mb-4">
+                                        <div className="flex items-center gap-4">
+                                            <div className="p-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg">
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-indigo-600 dark:text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                                                 </svg>
                                             </div>
-                                            <h3 className="text-lg font-medium text-gray-900">
-                                                {techniques.technique_name}
+                                            <h3 className="text-lg font-medium text-gray-900 dark:text-white">
+                                                {technique.technique_name}
                                             </h3>
                                         </div>
-                                        <Dropdown className="z-[9999]">
+                                        <Dropdown>
                                             <Dropdown.Trigger>
-                                                <button>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                                <button className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 dark:text-gray-500" viewBox="0 0 20 20" fill="currentColor">
                                                         <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
                                                     </svg>
                                                 </button>
                                             </Dropdown.Trigger>
                                             <Dropdown.Content>
                                                 <Link
-                                                    href={route('techniques.edit', techniques.technique_id)}
-                                                    className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
+                                                    href={route('techniques.edit', technique.technique_id)}
+                                                    className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-500 focus:bg-gray-100 dark:focus:bg-gray-700"
                                                 >
                                                     Edit
                                                 </Link>
@@ -183,40 +158,35 @@ export default function Index({ techniques }) {
                                                     onClick={(e) => {
                                                         e.preventDefault();
                                                         e.stopPropagation();
-                                                        confirmDelete(techniques);
+                                                        confirmDelete(technique);
                                                     }}
+                                                    className="text-red-600 dark:text-red-400 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-500 focus:bg-gray-100 dark:focus:bg-gray-700"
                                                 >
                                                     Delete
                                                 </Dropdown.Link>
                                             </Dropdown.Content>
                                         </Dropdown>
                                     </div>
-
-                                    <div className="grid grid-cols-1 gap-3 mt-4">
-                                        <div className="flex flex-col">
-                                            <span className="text-sm text-gray-500">Description</span>
-                                            <span className="text-sm font-medium text-gray-900">{techniques.technique_description}</span>
-                                        </div>
-                                        <div className="grid grid-cols-2 gap-3 mt-4">
-                                            <div className="flex flex-col">
-                                                <span className="text-sm text-gray-500">Category</span>
-                                                <span className="text-sm font-medium text-gray-900">{techniques.category_name}</span>
-                                            </div>
-                                            <div className="flex flex-col">
-                                                <span className="text-sm text-gray-500">Session</span>
-                                                <span className="text-sm font-medium text-gray-900">{techniques.location}</span>
-                                            </div>
-                                            <div className="flex flex-col">
-                                                <span className="text-sm text-gray-500">Position</span>
-                                                <span className="text-sm font-medium text-gray-900">{techniques.position_name}</span>
-                                            </div>
-                                        </div>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                                        {technique.technique_description || 'No description provided'}
+                                    </p>
+                                    <div className="mt-4 flex flex-wrap gap-2">
+                                        {technique.category && (
+                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                                {technique.category.category_name}
+                                            </span>
+                                        )}
+                                        {technique.position && (
+                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                                {technique.position.position_name}
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                             ))
                         ) : (
-                            <div className="col-span-full text-center py-12 bg-white rounded-lg">
-                                <p className="text-gray-500">No techniques found. Create one to get started.</p>
+                            <div className="col-span-full text-center py-12 bg-white dark:bg-gray-800 rounded-lg">
+                                <p className="text-gray-500 dark:text-gray-400">No techniques found. Create one to get started.</p>
                             </div>
                         )}
                     </div>
@@ -238,10 +208,9 @@ export default function Index({ techniques }) {
 
             <ErrorPopup
                 isVisible={showErrorPopup}
-                onClose={() => setShowErrorPopup(false)}
-                message={errorMessage || "An error occurred while deleting the technique"}
+                onClose={closeErrorPopup}
+                message={errorMessage || "An error occurred while deleting the technique."}
             />
-
         </AuthenticatedLayout>
-    )
+    );
 }

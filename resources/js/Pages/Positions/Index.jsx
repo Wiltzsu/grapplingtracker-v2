@@ -1,6 +1,6 @@
 // Core Inertia and Layout imports
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, router } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
 // UI Components
@@ -23,6 +23,9 @@ export default function Index({ positions }) {
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
     const [showErrorPopup, setShowErrorPopup] = useState(false);
     const [positionToDelete, setPositionToDelete] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const { flash } = usePage().props;
 
     // Handler function for position deletion
     const confirmDelete = (position) => {
@@ -33,18 +36,19 @@ export default function Index({ positions }) {
     // Executes the delete operation via Inertia router
     const handleDelete = () => {
         router.delete(route('positions.destroy', positionToDelete.position_id), {
+            preserveScroll: true,
             onSuccess: (page) => {
-                if (page.props.errors && page.props.errors.error) {
-                    setShowConfirmation(false);
-                    setPositionToDelete(null);
+                setShowConfirmation(false);
+                setPositionToDelete(null);
+
+                if (page.props.flash && page.props.flash.error) {
+                    setErrorMessage(page.props.flash.error);
                     setShowErrorPopup(true);
                 } else {
-                    setShowConfirmation(false);
-                    setPositionToDelete(null);
                     setShowSuccessPopup(true);
                 }
             },
-            onError: () => {
+            onError: (errors) => {
                 setShowConfirmation(false);
                 setPositionToDelete(null);
                 setShowErrorPopup(true);
@@ -64,18 +68,24 @@ export default function Index({ positions }) {
         router.visit(route('positions.index'));
     };
 
+    // Called when the user closes the error popup
+    const closeErrorPopup = () => {
+        setShowErrorPopup(false);
+        setErrorMessage('');
+    };
+
     return (
         <AuthenticatedLayout
             header={
                 <div className="flex items-center gap-4">
                     <Link
                         href={route('view')}
-                        className="text-gray-600 hover:text-gray-900"
+                        className="text-gray-600 hover:text-gray-900 dark:text-white"
                     >
                         View
                     </Link>
-                    <span className="text-red-900">|</span>
-                    <span>Position</span>
+                    <span className="text-red-900 dark:text-gray-400">|</span>
+                    <span className="dark:text-white">Position</span>
                     <img
                         src={CancelIcon}
                         alt="Cancel"
@@ -87,17 +97,17 @@ export default function Index({ positions }) {
         >
             <Head title="Positions" />
 
-            <div className="py-0 sm:py-6 pr-2 pl-2">
+            <div className="py-6 sm:py-12 pl-2 pr-2 dark:bg-gray-700">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="mb-5 mt-5 flex justify-between items-center">
-                        <h2 className="text-xl font-semibold leading-tight text-gray-800 pl-3 sm:pl-0">
+                    <div className="mb-5 flex justify-between items-center">
+                        <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-white pl-3 sm:pl-0">
                             Positions
                         </h2>
                         <Link
                             href={route('positions.create')}
                             className="inline-flex items-center rounded-md border border-transparent bg-indigo-600
                             px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2
-                            focus:ring-indigo-500 focus:ring-offset-2 mr-3 sm:mr-0"
+                            focus:ring-indigo-500 focus:ring-offset-2 mr-3 sm:mr-0 dark:bg-indigo-500 dark:hover:bg-indigo-600"
                         >
                             Add New Position
                         </Link>
@@ -108,20 +118,23 @@ export default function Index({ positions }) {
                             positions.map((position) => (
                                 <div
                                     key={position.position_id}
-                                    className="bg-white rounded-lg shadow-sm p-6 hover:bg-gray-50 transition-colors duration-200"
+                                    className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-200"
                                 >
                                     <div className="flex justify-between items-start mb-4">
                                         <div className="flex items-center gap-4">
-                                            <div className="p-2 bg-indigo-100 rounded-lg">
+                                            <div className="p-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg">
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-indigo-600 dark:text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.25 4.5h13.5M5.25 9h13.5m-13.5 4.5h13.5M5.25 19.5h13.5" />
+                                                </svg>
                                             </div>
-                                            <h3 className="text-lg font-medium text-gray-900">
+                                            <h3 className="text-lg font-medium text-gray-900 dark:text-white">
                                                 {position.position_name}
                                             </h3>
                                         </div>
                                         <Dropdown>
                                             <Dropdown.Trigger>
-                                                <button className="p-1 hover:bg-gray-100 rounded">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                                <button className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 dark:text-gray-500" viewBox="0 0 20 20" fill="currentColor">
                                                         <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
                                                     </svg>
                                                 </button>
@@ -129,7 +142,7 @@ export default function Index({ positions }) {
                                             <Dropdown.Content>
                                                 <Link
                                                     href={route('positions.edit', position.position_id)}
-                                                    className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100"
+                                                    className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-500 focus:bg-gray-100 dark:focus:bg-gray-700"
                                                 >
                                                     Edit
                                                 </Link>
@@ -140,20 +153,21 @@ export default function Index({ positions }) {
                                                         e.stopPropagation();
                                                         confirmDelete(position);
                                                     }}
+                                                    className="text-red-600 dark:text-red-400 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-500 focus:bg-gray-100 dark:focus:bg-gray-700"
                                                 >
                                                     Delete
                                                 </Dropdown.Link>
                                             </Dropdown.Content>
                                         </Dropdown>
                                     </div>
-                                    <p className="text-sm text-gray-500">
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">
                                         {position.position_description || 'No description provided'}
                                     </p>
                                 </div>
                             ))
                         ) : (
-                            <div className="col-span-full text-center py-12 bg-white rounded-lg">
-                                <p className="text-gray-500">No positions found. Create one to get started.</p>
+                            <div className="col-span-full text-center py-12 bg-white dark:bg-gray-800 rounded-lg">
+                                <p className="text-gray-500 dark:text-gray-400">No positions found. Create one to get started.</p>
                             </div>
                         )}
                     </div>
@@ -175,8 +189,8 @@ export default function Index({ positions }) {
 
             <ErrorPopup
                 isVisible={showErrorPopup}
-                onClose={() => setShowErrorPopup(false)}
-                message="Cannot delete position because it is being used by one or more techniques."
+                onClose={closeErrorPopup}
+                message={errorMessage || "An error occurred while deleting the position."}
             />
         </AuthenticatedLayout>
     );

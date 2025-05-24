@@ -37,7 +37,7 @@ export default function View() {
                 <div className="flex items-center gap-4">
                     <Link
                         href={route('view')}
-                        className="text-gray-600 hover:text-gray-900"
+                        className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                     >
                         View
                     </Link>
@@ -49,7 +49,7 @@ export default function View() {
             <div className="py-0 sm:py-6 pr-2 pl-2">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="mb-5 mt-5">
-                        <h2 className="text-xl font-semibold leading-tight text-gray-800 sr-only">
+                        <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-white sr-only">
                             View items
                         </h2>
                     </div>
@@ -59,12 +59,12 @@ export default function View() {
                             <Link
                                 key={option.name}
                                 href={route(option.route)}
-                                className="flex flex-col p-6 bg-white rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-200"
+                                className="flex flex-col p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-200"
                             >
                                 <div className="flex items-center gap-4 mb-4">
-                                    <div className="p-2 bg-indigo-100 rounded-lg">
+                                    <div className="p-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg">
                                         <svg
-                                            className="w-6 h-6 text-indigo-600"
+                                            className="w-6 h-6 text-indigo-600 dark:text-indigo-400"
                                             fill="none"
                                             viewBox="0 0 24 24"
                                             stroke="currentColor"
@@ -77,11 +77,11 @@ export default function View() {
                                             />
                                         </svg>
                                     </div>
-                                    <span className="text-lg font-medium text-gray-900">
+                                    <span className="text-lg font-medium text-gray-900 dark:text-white">
                                         {option.name}
                                     </span>
                                 </div>
-                                <p className="text-sm text-gray-500">
+                                <p className="text-sm text-gray-500 dark:text-gray-400">
                                     {option.description}
                                 </p>
                             </Link>
