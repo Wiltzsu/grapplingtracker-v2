@@ -319,19 +319,19 @@ export default function Index({ training_classes }) {
                 isVisible={showConfirmation}
                 onConfirm={handleDelete}
                 onCancel={cancelDelete}
-                message="Are you sure you want to delete this class? This action cannot be undone."
+                message="Are you sure you want to delete this session? This action cannot be undone."
             />
 
             <SuccessPopup
                 isVisible={showSuccessPopup}
                 onClose={closeSuccessPopup}
-                message="Class deleted successfully!"
+                message="Session deleted successfully!"
             />
 
             <ErrorPopup
                 isVisible={showErrorPopup}
                 onClose={closeErrorPopup}
-                message={errorMessage || "An error occurred while deleting the class"}
+                message={errorMessage || "An error occurred while deleting the session"}
             />
         </AuthenticatedLayout>
     );
