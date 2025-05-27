@@ -160,7 +160,7 @@ export default function Create({ categories, positions }) {
 
                                         {/* Session description */}
                                         <div>
-                                            <InputLabel htmlFor="class_description" value="Session description" className="dark:text-white"/>
+                                            <InputLabel htmlFor="class_description" value="Session notes" className="dark:text-white"/>
                                             <textarea
                                                 id="class_description"
                                                 name="class_description"
