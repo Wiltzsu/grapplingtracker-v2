@@ -89,14 +89,12 @@ export const DynamicList = ({ categories, positions, initialTechniques, onTechni
                                 <div key={index} className="mb-8 p-4 border rounded-lg bg-white dark:bg-gray-800 shadow-sm dark:border-gray-700">
                                     <div className="flex justify-between items-center mb-4">
                                         <h3 className="text-lg font-medium">Technique #{index + 1}</h3>
-                                        {data.techniques.length > 1 && (
                                             <button
                                                 onClick={() => removeTechnique(index)}
                                                 className="text-red-500 hover:text-red-700"
                                             >
                                                 Remove
                                             </button>
-                                        )}
                                     </div>
 
                                     {/* Name field */}

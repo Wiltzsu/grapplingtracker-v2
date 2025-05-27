@@ -128,13 +128,14 @@ export default function EditTrainingClass({ training_class, categories, position
                                         </div>
 
                                         <div>
-                                            <InputLabel htmlFor="class_description" value="Session description" className="dark:text-white" />
-                                            <TextInput
+                                            <InputLabel htmlFor="class_description" value="Session notes" className="dark:text-white" />
+                                            <textarea
                                                 id="class_description"
                                                 type="text"
                                                 name="class_description"
                                                 value={data.class_description}
-                                                className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
+                                                className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                                rows={4}
                                                 onChange={(e) => setData('class_description', e.target.value)}
                                             />
                                             <InputError message={errors.class_description} className="mt-2" />
@@ -163,43 +164,32 @@ export default function EditTrainingClass({ training_class, categories, position
                                             <InputError message={errors.class_duration} className="mt-2" />
                                         </div>
 
-                                        <div>
-                                            <InputLabel htmlFor="rounds" value={<>Rounds</>} className="dark:text-white" />
-                                            <TextInput
-                                                id="rounds"
-                                                type="number"
-                                                name="rounds"
-                                                value={data.rounds}
-                                                className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
-                                                onChange={(e) => setData('rounds', e.target.value)}
-                                            />
-                                            <InputError message={errors.rounds} className="mt-2" />
-                                        </div>
+                                        <div className="flex gap-4">
+                                            <div className="flex-1">
+                                                <InputLabel htmlFor="rounds" value={<>Rounds</>} className="dark:text-white" />
+                                                <TextInput
+                                                    id="rounds"
+                                                    type="number"
+                                                    name="rounds"
+                                                    value={data.rounds}
+                                                    className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
+                                                    onChange={(e) => setData('rounds', e.target.value)}
+                                                />
+                                                <InputError message={errors.rounds} className="mt-2" />
+                                            </div>
 
-                                        <div>
-                                            <InputLabel htmlFor="round_duration" value="Round duration" className="dark:text-white" />
-                                            <TextInput
-                                                id="round_duration"
-                                                type="number"
-                                                name="round_duration"
-                                                value={data.round_duration}
-                                                className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
-                                                onChange={(e) => setData('round_duration', e.target.value)}
-                                            />
-                                            <InputError message={errors.round_duration} className="mt-2" />
-                                        </div>
-
-                                        <div>
-                                            <InputLabel htmlFor="session_notes" value="Session notes" className="dark:text-white" />
-                                            <textarea
-                                                id="session_notes"
-                                                name="session_notes"
-                                                value={data.session_notes}
-                                                className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                                rows={4}
-                                                onChange={(e) => setData('session_notes', e.target.value)}
-                                            />
-                                            <InputError message={errors.session_notes} className="mt-2" />
+                                            <div className="flex-1">
+                                                <InputLabel htmlFor="round_duration" value="Round duration" className="dark:text-white" />
+                                                <TextInput
+                                                    id="round_duration"
+                                                    type="number"
+                                                    name="round_duration"
+                                                    value={data.round_duration}
+                                                    className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
+                                                    onChange={(e) => setData('round_duration', e.target.value)}
+                                                />
+                                                <InputError message={errors.round_duration} className="mt-2" />
+                                            </div>
                                         </div>
 
                                         <div className="flex items-center gap-4">

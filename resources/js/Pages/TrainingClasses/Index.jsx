@@ -190,7 +190,7 @@ export default function Index({ training_classes }) {
                                             <Dropdown.Content>
                                                 <Link
                                                     href={route('trainingclasses.edit', training_class.class_id)}
-                                                    className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:bg-gray-100 dark:focus:bg-gray-700"
+                                                    className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-500 focus:bg-gray-100 dark:focus:bg-gray-700"
                                                 >
                                                     Edit
                                                 </Link>
@@ -260,7 +260,7 @@ export default function Index({ training_classes }) {
 
                                     <div className="mt-4">
                                         <span className="text-sm text-gray-500 dark:text-gray-400">Session notes</span>
-                                        <p className="text-sm text-gray-900 dark:text-white mt-1">
+                                        <p className="text-sm text-gray-900 dark:text-white mt-1 whitespace-pre-line">
                                             {training_class.class_description || 'No notes provided'}
                                         </p>
                                     </div>

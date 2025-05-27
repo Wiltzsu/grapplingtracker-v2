@@ -152,7 +152,7 @@ class TrainingClassController extends Controller
                 'max:255',
             ],
             'location' => [
-                'required',
+                'nullable',
                 'string',
                 'max:255',
             ],

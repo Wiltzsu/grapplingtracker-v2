@@ -2,6 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { useState } from 'react';
+import axios from 'axios';
 
 // UI Components
 import CancelIcon from '@/../../resources/svg/cancel.svg';
@@ -60,7 +61,14 @@ export default function Create({ categories, positions }) {
                 setShowSuccessPopup(true);
             },
             onError: (errors) => {
-                console.log('Submission errors:', errors);
+                // Log to Laravel
+                axios.post(route('log.error'), {
+                    errors: errors,
+                    formData: data,
+                    component: 'CreateTrainingClass'
+                });
+
+                // Errors are still handled by InputError components
             }
         });
     };
@@ -165,7 +173,7 @@ export default function Create({ categories, positions }) {
                                                 id="class_description"
                                                 name="class_description"
                                                 value={data.class_description}
-                                                className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600"
+                                                className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                                 rows={4}
                                                 onChange={(e) => setData('class_description', e.target.value)}
                                             />

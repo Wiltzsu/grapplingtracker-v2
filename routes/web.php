@@ -76,6 +76,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //         'methods' => $route->methods
     //     ]);
     // });
+
+    // Add this inside the authenticated routes group
+    Route::post('/log-error', function (\Illuminate\Http\Request $request) {
+        \Illuminate\Support\Facades\Log::info('Frontend Error:', [
+            'errors' => $request->all(),
+            'url' => $request->header('referer'),
+            'user' => auth()->user()?->id,
+            'timestamp' => now()->toIso8601String()
+        ]);
+        return response()->json(['status' => 'logged']);
+    })->name('log.error');
 });
 
 require __DIR__ . '/auth.php';
