@@ -25,7 +25,8 @@ use App\Http\Controllers\{
     TechniqueController,
     TrainingClassController,
     ViewController,
-    WelcomeController
+    WelcomeController,
+    LegalController,
 };
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Log;
@@ -34,7 +35,8 @@ use Illuminate\Support\Facades\Log;
  * Public routes.
  */
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
-
+Route::get('/policy', [LegalController::class, 'Policy'])->name('policy');
+Route::get('/terms-of-service', [LegalController::class, 'TermsOfService'])->name('terms-of-service');
 
 // All authenticated routes
 Route::middleware(['auth', 'verified'])->group(function () {

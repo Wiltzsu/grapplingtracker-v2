@@ -10,8 +10,10 @@ use Inertia\Response;
 class WelcomeController extends Controller
 {
     /**
-     * Defines a route that responds to GET requests at the root URL.
-     * The Inertia render method connects the backend with the frontend.
+     * Display the welcome page.
+     * Renders the welcome view using Inertia.js.
+     *
+     * @return The rendered welcome page.
      */
     public function index(): Response
     {

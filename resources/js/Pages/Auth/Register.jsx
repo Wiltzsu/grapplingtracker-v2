@@ -4,6 +4,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import Checkbox from '@/Components/Checkbox';
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -11,6 +12,7 @@ export default function Register() {
         email: '',
         password: '',
         password_confirmation: '',
+        terms: false,
     });
 
     const submit = (e) => {
@@ -128,7 +130,33 @@ export default function Register() {
                     <InputError message={errors.password_confirmation} className="mt-2" />
                 </div>
 
-                <div className="flex items-center justify-end">
+                <div className="mt-6">
+                    <label className="flex items-start">
+                        <div className="ms-2 text-sm">
+                            <span className="text-gray-600 dark:text-gray-400">
+                                By registering, I agree to the{' '}
+                                <Link
+                                    href="/terms-of-service"
+                                    className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 underline"
+                                    target="_blank"
+                                >
+                                    Terms of Service
+                                </Link>{' '}
+                                and{' '}
+                                <Link
+                                    href="/policy"
+                                    className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 underline"
+                                    target="_blank"
+                                >
+                                    Privacy Policy
+                                </Link>
+                            </span>
+                        </div>
+                    </label>
+                    <InputError message={errors.terms} className="mt-2" />
+                </div>
+
+                <div className="flex items-center justify-end mt-6">
                     <Link
                         href={route('login')}
                         className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors"

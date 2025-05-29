@@ -130,6 +130,28 @@ export default function Login({ status, canResetPassword }) {
                         Log in
                     </PrimaryButton>
                 </div>
+
+                <div className="ms-2 text-sm">
+                    <span className="text-gray-600 dark:text-gray-400">
+                        By logging in, I agree to the{' '}
+                        <Link
+                            href="/terms-of-service"
+                            className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 underline"
+                            target="_blank"
+                        >
+                            Terms of Service
+                        </Link>{' '}
+                        and{' '}
+                        <Link
+                            href="/policy"
+                            className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 underline"
+                            target="_blank"
+                        >
+                            Privacy Policy
+                        </Link>
+                    </span>
+                </div>
+
             </form>
         </GuestLayout>
     );
