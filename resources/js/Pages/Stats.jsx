@@ -197,15 +197,15 @@ export default function Stats({ auth,
                             </div>
                             <div className="p-6 dark:bg-gray-800">
                                 <div className="grid gap-4">
-                                    <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
+                                    <div className="rounded-lg bg-white p-4 shadow-sm hover:shadow-md transition-shadow duration-200 dark:bg-gray-800 border border-gray-100 dark:border-gray-700">
                                         <p className="text-sm text-gray-500 dark:text-white">Total sessions</p>
                                         <p className="text-2xl text-gray-900 dark:text-white">{totalClasses}</p>
                                     </div>
-                                    <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
+                                    <div className="rounded-lg bg-white p-4 shadow-sm hover:shadow-md transition-shadow duration-200 dark:bg-gray-800 border border-gray-100 dark:border-gray-700">
                                         <p className="text-sm text-gray-500 dark:text-white">Total training time</p>
                                         <p className="text-2xl text-gray-900 dark:text-white">{formatDuration(totalClassDuration)}</p>
                                     </div>
-                                    <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
+                                    <div className="rounded-lg bg-white p-4 shadow-sm hover:shadow-md transition-shadow duration-200 dark:bg-gray-800 border border-gray-100 dark:border-gray-700">
                                         <p className="text-sm text-gray-500 dark:text-white">Average class duration</p>
                                         <p className="text-2xl text-gray-900 dark:text-white">{formatDuration(averageClassDuration)}</p>
                                     </div>
@@ -220,20 +220,20 @@ export default function Stats({ auth,
                             </div>
                             <div className="p-6 dark:bg-gray-800">
                                 <div className="grid gap-4">
-                                    <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
+                                    <div className="rounded-lg bg-white p-4 shadow-sm hover:shadow-md transition-shadow duration-200 dark:bg-gray-800 border border-gray-100 dark:border-gray-700">
                                         <p className="text-sm text-gray-500 dark:text-white">Total rounds</p>
                                         <p className="text-2xl text-gray-900 dark:text-white">{totalRollingRounds}</p>
                                     </div>
-                                    <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
+                                    <div className="rounded-lg bg-white p-4 shadow-sm hover:shadow-md transition-shadow duration-200 dark:bg-gray-800 border border-gray-100 dark:border-gray-700">
                                         <p className="text-sm text-gray-500 dark:text-white">Total sparring time</p>
                                         <p className="text-2xl text-gray-900 dark:text-white">{formatDuration(totalRoundDuration)}</p>
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
-                                        <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
+                                        <div className="rounded-lg bg-white p-4 shadow-sm hover:shadow-md transition-shadow duration-200 dark:bg-gray-800 border border-gray-100 dark:border-gray-700">
                                             <p className="text-sm text-gray-500 dark:text-white">Average round duration</p>
                                             <p className="text-2xl text-gray-900 dark:text-white">{formatDuration(averageRoundDuration)}</p>
                                         </div>
-                                        <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
+                                        <div className="rounded-lg bg-white p-4 shadow-sm hover:shadow-md transition-shadow duration-200 dark:bg-gray-800 border border-gray-100 dark:border-gray-700">
                                             <p className="text-sm text-gray-500 dark:text-white">Sparring ratio</p>
                                             <p className="text-2xl text-gray-900 dark:text-white">{sparringRelativeToTraining}%</p>
                                         </div>
@@ -265,10 +265,10 @@ export default function Stats({ auth,
                                             {
                                                 label: 'Classes per Month',
                                                 data: trainingFrequency.map(item => item.count),
-                                                borderColor: 'rgb(230, 83, 190)',
-                                                backgroundColor: 'rgba(79, 70, 229, 0.1)',
-                                                tension: 0.1,
-                                                fill: false,
+                                                borderColor: 'rgb(99, 102, 241)',
+                                                backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                                                tension: 0.4,
+                                                fill: true,
                                             },
                                         ],
                                     }}
