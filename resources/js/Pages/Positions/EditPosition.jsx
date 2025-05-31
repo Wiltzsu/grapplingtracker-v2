@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, router } from '@inertiajs/react';
 import { useState } from 'react';
 
 // UI Components
@@ -51,12 +51,19 @@ export default function EditPosition({ position }) {
                         View
                     </Link>
                     <span className="text-red-900 dark:text-gray-400">|</span>
-                    <span className="dark:text-white">Position</span>
+                    <Link
+                        href={route('positions.index')}
+                        className="text-gray-600 hover:text-gray-900 dark:text-white"
+                    >
+                        Positions
+                    </Link>
+                    <span className="text-red-900 dark:text-gray-400">|</span>
+                    <span className="dark:text-white">{data.position_name}</span>
                     <img
                         src={CancelIcon}
                         alt="Cancel"
                         className="h-5 w-5 cursor-pointer"
-                        onClick={() => window.history.back()}
+                        onClick={() => router.visit(route('positions.index'))}
                     />
                 </div>
             }

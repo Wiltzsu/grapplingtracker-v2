@@ -1,6 +1,6 @@
 // Core Inertia and Layout imports
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage, router } from '@inertiajs/react';
 import { useState } from 'react';
 import dayjs from 'dayjs';
 
@@ -67,6 +67,20 @@ export default function Create({ categories, training_classes, positions }) {
         window.location = route('add');
     };
 
+    /**
+     * Handles redirection back to the previous page depending on where user came from.
+     */
+    const { url } = usePage();
+    const handleBack = () => {
+        if (url.includes('/dashboard')) {
+            router.visit(route('dashboard'));
+        } else if (url.includes('/add')) {
+            router.visit(route('add'));
+        } else {
+            window.history.back();
+        }
+    };
+
     return (
         <AuthenticatedLayout
             header={
@@ -83,7 +97,7 @@ export default function Create({ categories, training_classes, positions }) {
                         src={CancelIcon}
                         alt="Cancel"
                         className="h-5 w-5 cursor-pointer"
-                        onClick={() => window.history.back()}
+                        onClick={handleBack}
                     />
                 </div>
             }

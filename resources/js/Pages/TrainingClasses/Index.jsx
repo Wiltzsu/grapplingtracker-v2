@@ -105,12 +105,12 @@ export default function Index({ training_classes }) {
                         View
                     </Link>
                     <span className="text-red-900 dark:text-gray-400">|</span>
-                    <span className="dark:text-white">Session</span>
+                    <span className="dark:text-white">Sessions</span>
                     <img
                         src={CancelIcon}
                         alt="Cancel"
                         className="h-5 w-5 cursor-pointer"
-                        onClick={() => window.history.back()}
+                        onClick={() => router.visit(route('view'))}
                     />
                 </div>
             }

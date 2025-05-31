@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import dayjs from 'dayjs';
 
@@ -27,6 +27,8 @@ export default function EditTechnique({ technique, categories, positions, traini
         position_id: technique.position_id,
         class_id: technique.class_id
     });
+
+    const { url } = usePage();
 
     const submit = (e) => {
         e.preventDefault();
@@ -62,7 +64,14 @@ export default function EditTechnique({ technique, categories, positions, traini
                         View
                     </Link>
                     <span className="text-red-900 dark:text-gray-400">|</span>
-                    <span className="dark:text-white">Technique</span>
+                    <Link
+                        href={route(from === 'trainingclasses' ? 'trainingclasses.index' : 'techniques.index')}
+                        className="text-gray-600 hover:text-gray-900 dark:text-white"
+                    >
+                        {from === 'trainingclasses' ? 'Sessions' : 'Techniques'}
+                    </Link>
+                    <span className="text-red-900 dark:text-gray-400">|</span>
+                    <span className="dark:text-white">{data.technique_name}</span>
                     <img
                         src={CancelIcon}
                         alt="Cancel"

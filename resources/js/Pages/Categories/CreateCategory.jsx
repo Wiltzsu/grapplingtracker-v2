@@ -1,6 +1,6 @@
 // Core Inertia and Layout imports
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, router } from '@inertiajs/react';
 import { useState } from 'react';
 
 // UI Components
@@ -77,7 +77,7 @@ export default function Create() {
                         src={CancelIcon}
                         alt="Cancel"
                         className="h-5 w-5 cursor-pointer"
-                        onClick={() => window.history.back()}
+                        onClick={() => router.visit(route('add'))}
                     />
                 </div>
             }

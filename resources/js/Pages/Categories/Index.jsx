@@ -90,7 +90,7 @@ export default function Index({ categories }) {
                         src={CancelIcon}
                         alt="Cancel"
                         className="h-5 w-5 cursor-pointer"
-                        onClick={() => window.history.back()}
+                        onClick={() => router.visit(route('view'))}
                     />
                 </div>
             }
