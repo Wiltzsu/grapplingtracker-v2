@@ -17,7 +17,7 @@ export default function SuccessPopup({ isVisible, onClose, message }) {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-96 relative">
+            <div className="bg-white p-6 rounded-lg shadow-lg w-96 relative dark:bg-gray-700 border dark:border-gray-600">
                 {/* Close button (X) in top right */}
                 <button
                     onClick={onClose}
@@ -35,7 +35,7 @@ export default function SuccessPopup({ isVisible, onClose, message }) {
                         alt="Success"
                         className="mx-auto h-12 w-12 text-green-500"
                     />
-                    <p className="mt-4 text-lg font-semibold text-gray-700">{message}</p>
+                    <p className="mt-4 text-lg font-semibold text-gray-700 dark:text-white">{message}</p>
                 </div>
 
                 {/* OK button */}

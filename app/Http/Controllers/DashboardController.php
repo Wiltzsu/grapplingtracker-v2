@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\TrainingClass;
+use App\Models\Category;
+use App\Models\Technique;
+use App\Models\Position;
 
 class DashboardController extends Controller
 {
@@ -16,12 +19,27 @@ class DashboardController extends Controller
      */
     public function index(): Response
     {
+        $recentActivity = [
+            'categories' => Category::where('user_id', auth()->id())
+                ->latest()
+                ->take(3)
+                ->get(['category_name', 'created_at']),
+            'training_classes' => TrainingClass::where('user_id', auth()->id())
+                ->latest()
+                ->take(3)
+                ->get(['instructor', 'created_at']),
+            'techniques' => Technique::where('user_id', auth()->id())
+                ->latest()
+                ->take(3)
+                ->get(['technique_name', 'created_at']),
+            'positions' => Position::where('user_id', auth()->id())
+                ->latest()
+                ->take(3)
+                ->get(['position_name', 'created_at']),
+        ];
+
         return Inertia::render('Dashboard', [
-            'recent_classes' => TrainingClass::where('user_id', auth()->id())
-                ->with('techniques')
-                ->orderBy('class_date', 'desc')
-                ->take(5)
-                ->get()
+            'recentActivity' => $recentActivity
         ]);
     }
 

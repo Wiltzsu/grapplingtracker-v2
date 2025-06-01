@@ -45,25 +45,19 @@ export default function Add() {
         >
             <Head title="Add New Entry" />
 
-            <div className="py-0 sm:py-6 pl-2 pr-2">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="mb-5 mt-5">
-                        <h2 className="text-xl font-semibold leading-tight text-gray-800 sr-only">
-                            Add new entry
-                        </h2>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-5">
+            <div className="py-6 sm:py-12 pr-2 pl-2 dark:bg-gray-700">
+                <div className="mx-auto max-w-7xl">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
                         {options.map((option) => (
                             <Link
                                 key={option.name}
                                 href={route(option.route)}
-                                className="flex flex-col p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-200"
+                                className="group flex flex-col p-8 bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md border border-gray-100 dark:border-gray-700 hover:border-indigo-200 dark:hover:border-indigo-700 hover:-translate-y-1 transition-all duration-200"
                             >
-                                <div className="flex items-center gap-4 mb-4">
-                                    <div className="p-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg">
+                                <div className="flex items-center gap-5 mb-4">
+                                    <div className="p-3 bg-indigo-50 dark:bg-indigo-900/50 rounded-xl group-hover:bg-indigo-100 dark:group-hover:bg-indigo-900 transition-colors duration-200">
                                         <svg
-                                            className="w-6 h-6 text-indigo-600 dark:text-indigo-400"
+                                            className="w-8 h-8 text-indigo-600 dark:text-indigo-400"
                                             fill="none"
                                             viewBox="0 0 24 24"
                                             stroke="currentColor"
@@ -76,13 +70,28 @@ export default function Add() {
                                             />
                                         </svg>
                                     </div>
-                                    <span className="text-lg font-medium text-gray-900 dark:text-white">
-                                        {option.name}
-                                    </span>
+                                    <div className="flex-1">
+                                        <span className="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-200">
+                                            {option.name}
+                                        </span>
+                                        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                                            {option.description}
+                                        </p>
+                                    </div>
+                                    <svg
+                                        className="w-5 h-5 text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-200"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M9 5l7 7-7 7"
+                                        />
+                                    </svg>
                                 </div>
-                                <p className="text-sm text-gray-500 dark:text-gray-400">
-                                    {option.description}
-                                </p>
                             </Link>
                         ))}
                     </div>

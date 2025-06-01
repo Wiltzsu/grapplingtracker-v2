@@ -1,8 +1,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { Link } from '@inertiajs/react';
+import { formatDistanceToNow } from 'date-fns';
 
-export default function Dashboard({ recent_classes }) {
+export default function Dashboard({ recent_classes, recentActivity }) {
     const options = [
         {
             name: 'Add session',
@@ -17,6 +18,32 @@ export default function Dashboard({ recent_classes }) {
             icon: 'M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z'
         },
     ];
+
+
+    // Function to format the activity message
+    const formatActivityMessage = (item, type) => {
+        switch(type) {
+            case 'categories':
+                return `Added new category: ${item.category_name}`;
+            case 'training_classes':
+                return `Created new session: ${item.instructor ? `${item.instructor}'s class` : 'No instructor'}`;
+            case 'techniques':
+                return `Added new technique: ${item.technique_name}`;
+            case 'positions':
+                return `Added new position: ${item.position_name}`;
+            default:
+                return '';
+        }
+    };
+
+    // Combine and sort all activities
+    const allActivities = Object.entries(recentActivity).flatMap(([type, items]) =>
+        items.map(item => ({
+            message: formatActivityMessage(item, type),
+            timestamp: new Date(item.created_at),
+            type
+        }))
+    ).sort((a, b) => b.timestamp - a.timestamp).slice(0, 5);
 
     return (
         <AuthenticatedLayout
@@ -68,51 +95,32 @@ export default function Dashboard({ recent_classes }) {
             </div>
 
             {/* Recent Classes Section */}
-            <div className="pb-12 pr-2 pl-2">
+            <div className="pb-8 pr-2 pl-2">
+
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm rounded-lg dark:bg-gray-800">
-                        <div className="p-6">
-                            <h2 className="text-xl font-semibold mb-4 dark:text-white">Recent sessions</h2>
-                            {recent_classes.length > 0 ? (
-                                <div className="space-y-4">
-                                    {recent_classes.map((training_class) => (
-                                        <div
-                                            key={training_class.class_id}
-                                            className="border rounded-lg p-4 hover:bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
-                                        >
-                                            <div className="flex justify-between items-start">
-                                                <div>
-                                                    <h3 className="font-medium dark:text-white">{training_class.location || 'No location'}</h3>
-                                                    <p className="text-sm text-gray-600 dark:text-gray-300">
-                                                        {training_class.class_date} - {training_class.instructor || 'No instructor'}
-                                                    </p>
-                                                </div>
-                                                <div className="text-sm text-gray-600 dark:text-white">
-                                                    {training_class.class_duration} min
-                                                </div>
-                                            </div>
-                                            {training_class.techniques?.length > 0 && (
-                                                <div className="mt-2">
-                                                    <p className="text-sm text-gray-600 dark:text-white">Techniques:</p>
-                                                    <div className="flex flex-wrap gap-2 mt-1">
-                                                        {training_class.techniques.map((technique) => (
-                                                            <span
-                                                                key={technique.technique_id}
-                                                                className="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded dark:bg-indigo-800 dark:text-indigo-100"
-                                                            >
-                                                                {technique.technique_name}
-                                                            </span>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <p className="text-gray-600">No recent sessions found.</p>
-                            )}
-                        </div>
+
+                    {/* Recent Activity Section */}
+                    <div className="">
+                        <h3 className="text-lg font-semibold dark:text-white mb-4">Recent Activity</h3>
+                        {allActivities.length > 0 ? (
+                            <ul className="space-y-3">
+                                {allActivities.map((activity, index) => (
+                                    <li
+                                        key={`${activity.type}-${index}`}
+                                        className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow flex justify-between items-center"
+                                    >
+                                        <span className="text-gray-700 dark:text-gray-200">
+                                            {activity.message}
+                                        </span>
+                                        <span className="text-xs text-gray-400">
+                                            {formatDistanceToNow(activity.timestamp, { addSuffix: true })}
+                                        </span>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p className="text-gray-600 dark:text-gray-400">No recent activity found.</p>
+                        )}
                     </div>
                 </div>
             </div>

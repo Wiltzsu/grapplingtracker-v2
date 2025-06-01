@@ -121,6 +121,7 @@ export default function AuthenticatedLayout({ header, children }) {
                         </div>
 
                         <div className="-me-2 flex items-center sm:hidden">
+                            <DarkModeToggle />
                             <button
                                 onClick={() =>
                                     setShowingNavigationDropdown(
