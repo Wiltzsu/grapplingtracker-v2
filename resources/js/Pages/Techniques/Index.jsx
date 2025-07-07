@@ -31,6 +31,7 @@ export default function Index({ techniques }) {
     const [showErrorPopup, setShowErrorPopup] = useState(false);
     const [techniqueToDelete, setTechniqueToDelete] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
+    const [search, setSearch] = useState('');
 
     const { flash } = usePage().props;
 
@@ -110,6 +111,23 @@ export default function Index({ techniques }) {
                         <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-white pl-3 sm:pl-0">
                             Techniques
                         </h2>
+                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+                        <div className="relative">
+                                <input
+                                    type="text"
+                                    value={search}
+                                    onChange={(e) => {
+                                        setSearch(e.target.value);
+                                        router.get(
+                                            route('techniques.index'),
+                                            { search: e.target.value },
+                                            { preserveState: true, preserveScroll: true }
+                                        );
+                                    }}
+                                    placeholder="Search techniques..."
+                                    className="w-full sm:w-64 px-4 py-2 border border-gray-300 dark:border-gray-500 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                />
+                            </div>
                         <Link
                             href={route('techniques.create')}
                             className="inline-flex items-center rounded-md border border-transparent bg-indigo-600
@@ -118,6 +136,7 @@ export default function Index({ techniques }) {
                         >
                             Add New Technique
                         </Link>
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
@@ -167,18 +186,23 @@ export default function Index({ techniques }) {
                                             </Dropdown.Content>
                                         </Dropdown>
                                     </div>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                                    <p className="text-sm text-gray-500 dark:text-gray-400 whitespace-pre-line">
                                         {technique.technique_description || 'No description provided'}
                                     </p>
                                     <div className="mt-4 flex flex-wrap gap-2">
-                                        {technique.category && (
-                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                                                {technique.category.category_name}
+                                        {technique.position_name && (
+                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                                {technique.position_name}
                                             </span>
                                         )}
-                                        {technique.position && (
-                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
-                                                {technique.position.position_name}
+                                        {technique.category_name && (
+                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                                {technique.category_name}
+                                            </span>
+                                        )}
+                                        {technique.location && (
+                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-purple-900 dark:text-green-200">
+                                                {technique.location}
                                             </span>
                                         )}
                                     </div>

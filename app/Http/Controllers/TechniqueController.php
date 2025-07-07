@@ -8,15 +8,31 @@ use App\Models\Position;
 use App\Models\TrainingClass;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Inertia\Response;
 
+/**
+ * TechniqueController
+ *
+ * Handles all HTTP requests related to techniques, including CRUD operations
+ * and search functionality. Uses Inertia.js for server-side rendering.
+ */
 class TechniqueController extends Controller
 {
     /**
      * Display a listing of the techniques.
+     *
+     * @param Request $request The incoming HTTP request
+     * @return \Inertia\Response
+     *
+     * This method:
+     * - Handles search functionality using Laravel Scout
+     * - Filters techniques by the authenticated user
+     * - Joins related tables (categories, positions, training classes)
+     * - Orders results by creation date
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
+
         /**
          * Display a listin of techniques
          *
@@ -26,26 +42,34 @@ class TechniqueController extends Controller
          * get() executes the query and retrieves all records
          */
         return Inertia::render('Techniques/Index', [
-            'techniques' => Technique::where('techniques.user_id', auth()->id())
-                ->join('categories', 'techniques.category_id', '=', 'categories.category_id')
-                ->join('positions', 'techniques.position_id', '=', 'positions.position_id')
-                ->join('training_classes', 'techniques.class_id', '=', 'training_classes.class_id')
-                ->select(
-                    'techniques.*',
-                    'categories.category_name',
-                    'positions.position_name',
-                    'training_classes.instructor',
-                    'training_classes.location',
-                )
-                ->latest('techniques.created_at')
+            'techniques' => Technique::search($search)
+                ->where('user_id', auth()->id())
+                ->query(function ($query) {
+                    $query->join('categories', 'techniques.category_id', '=', 'categories.category_id')
+                        ->join('positions', 'techniques.position_id', '=', 'positions.position_id')
+                        ->join('training_classes', 'techniques.class_id', '=', 'training_classes.class_id')
+                        ->select(
+                            'techniques.*',
+                            'categories.category_name',
+                            'positions.position_name',
+                            'training_classes.instructor',
+                            'training_classes.location',
+                        );
+                })
+                ->latest('created_at')
                 ->get()
         ]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     * Category, position and training class data is passed to the CreateTechnique
-     * React component.
+     * Show the form for creating a new technique.
+     *
+     * @return \Inertia\Response
+     *
+     * This method:
+     * - Loads all categories, positions, and training classes for the authenticated user
+     * - Passes this data to the CreateTechnique React component
+     * - Training classes are ordered by date in descending order
      */
     public function create()
     {
@@ -57,7 +81,16 @@ class TechniqueController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created technique in storage.
+     *
+     * @param Request $request The incoming HTTP request
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     * This method:
+     * - Validates the incoming request data
+     * - Adds the authenticated user's ID to the data
+     * - Creates a new technique record
+     * - Returns to the previous page with a success message
      */
     public function store(Request $request)
     {
@@ -96,7 +129,10 @@ class TechniqueController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified technique.
+     *
+     * @param Technique $technique The technique to display
+     * @return void
      */
     public function show(Technique $technique)
     {
@@ -105,6 +141,15 @@ class TechniqueController extends Controller
 
     /**
      * Show the form for editing a technique.
+     *
+     * @param Technique $technique The technique to edit
+     * @return \Inertia\Response
+     *
+     * This method:
+     * - Loads the technique with its related category, position, and training class
+     * - Loads all categories, positions, and training classes for the authenticated user
+     * - Passes this data to the EditTechnique React component
+     * - Includes a 'from' parameter to track navigation source
      */
     public function edit(Technique $technique)
     {
@@ -118,7 +163,16 @@ class TechniqueController extends Controller
     }
 
     /**
-     * Update the specified technique.
+     * Update the specified technique in storage.
+     *
+     * @param Request $request The incoming HTTP request
+     * @param Technique $technique The technique to update
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     * This method:
+     * - Validates the incoming request data
+     * - Updates the technique record
+     * - Returns to the previous page with a success message
      */
     public function update(Request $request, Technique $technique)
     {
@@ -157,6 +211,13 @@ class TechniqueController extends Controller
 
     /**
      * Remove the specified technique from storage.
+     *
+     * @param Technique $technique The technique to delete
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     * This method:
+     * - Deletes the specified technique
+     * - Redirects to the techniques index page
      */
     public function destroy(Technique $technique)
     {

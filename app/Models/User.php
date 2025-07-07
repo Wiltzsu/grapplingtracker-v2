@@ -107,6 +107,9 @@ class User extends Authenticatable implements MustVerifyEmail
             ['category_name' => 'Escapes', 'category_description' => 'Techniques used to escape from a disadvantaged position, such as escaping from mount or guard.', 'user_id' => $this->id],
             ['category_name' => 'Control', 'category_description' => 'Techniques focused on maintaining and controlling a position to set up submissions or strikes.', 'user_id' => $this->id],
             ['category_name' => 'Takedowns', 'category_description' => 'Techniques used to bring an opponent from standing to the ground, such as single leg, double leg takedowns, or judo throws.', 'user_id' => $this->id],
+            ['category_name' => 'Backtake', 'category_description' => 'Techniques for taking the opponent\'s back, including entries, control methods, and finishing submissions from back control.', 'user_id' => $this->id],
+            ['category_name' => 'Entries', 'category_description' => 'Techniques and movements used to enter into various positions or submissions, such as guard passes, takedowns, or submission setups.', 'user_id' => $this->id],
+            ['category_name' => 'Passing', 'category_description' => 'Techniques used to pass an opponent\'s guard, moving from a neutral or disadvantaged position to a more dominant position like side control or mount.', 'user_id' => $this->id],
         ];
 
         // Create the default positions

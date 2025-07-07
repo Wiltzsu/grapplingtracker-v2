@@ -18,6 +18,7 @@ import ErrorPopup from '@/Components/ErrorPopup';
  * {{ training_classes }} is a prop from TrainingClassController's index method
  */
 export default function Index({ training_classes }) {
+    console.log(training_classes);
     // State management for delete confirmation and success popup
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
@@ -137,7 +138,7 @@ export default function Index({ training_classes }) {
                                         );
                                     }}
                                     placeholder="Search sessions..."
-                                    className="w-full sm:w-64 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                    className="w-full sm:w-64 px-4 py-2 border border-gray-300 dark:border-gray-500 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                 />
                             </div>
                             <Link

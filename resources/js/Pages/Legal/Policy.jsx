@@ -2,10 +2,10 @@ import { Head } from '@inertiajs/react';
 import Footer from '@/Components/Footer';
 import GuestHeader from '@/Components/GuestHeader';
 
-export default function Policy() {
+export default function Policy({ auth }) {
     return (
         <>
-        <GuestHeader showExtraNav={true} />
+        <GuestHeader auth={auth} showExtraNav={true} />
 
             <Head title="Privacy Policy" />
 
