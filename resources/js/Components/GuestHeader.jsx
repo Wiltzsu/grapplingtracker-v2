@@ -3,7 +3,7 @@ import DarkModeToggle from '@/Components/DarkModeToggle';
 
 export default function GuestHeader({ auth, showExtraNav = true }) {
     return (
-        <nav className={`w-full z-10 ${showExtraNav ? 'fixed top-0' : ''}`}>
+        <nav className={`w-full z-50 ${showExtraNav ? 'fixed top-0' : ''}`}>
             <div className="bg-indigo-600 dark:bg-indigo-900">
                 <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8">
                     <div className="text-center text-sm font-medium text-white">

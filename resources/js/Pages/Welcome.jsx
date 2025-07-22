@@ -32,16 +32,24 @@ export default function Welcome({ auth, canLogin, canRegister }) {
 
                 {/* Hero Section */}
                 <div className="relative px-6 pt-28 lg:px-8 bg-gradient-to-b from-indigo-50 to-white dark:from-gray-800 dark:to-gray-900 overflow-hidden">
+                    {/* Background Image */}
+                    <img
+                        src="/images/grapplingtracker-hero.jpg"
+                        alt="Grappling"
+                        className="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none z-0"
+                    />
+                    {/* Overlays */}
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 1 }}
-                        className="absolute inset-0"
+                        className="absolute inset-0 z-10"
                     >
                         <div className="absolute inset-0 bg-[linear-gradient(30deg,#f0f7ff_0%,#ffffff_100%)] dark:bg-[linear-gradient(30deg,#1a1a1a_0%,#2d3748_100%)] opacity-50" />
                         <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,transparent)] dark:bg-grid-slate-700/25" />
                     </motion.div>
-                    <div className="mx-auto max-w-3xl py-16 sm:py-20 lg:py-24 relative">
+                    {/* Content */}
+                    <div className="mx-auto max-w-3xl py-16 sm:py-20 lg:py-24 relative z-20">
                         <motion.div
                             className="text-center"
                             initial="initial"
