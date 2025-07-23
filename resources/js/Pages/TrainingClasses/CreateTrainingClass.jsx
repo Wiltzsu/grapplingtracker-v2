@@ -95,8 +95,6 @@ export default function Create({ categories, positions }) {
     const handleBack = () => {
         if (url.includes('/dashboard')) {
             router.visit(route('dashboard'));
-        } else if (url.includes('/add')) {
-            router.visit(route('add'));
         } else {
             window.history.back();
         }
@@ -107,10 +105,10 @@ export default function Create({ categories, positions }) {
             header={
                 <div className="flex items-center gap-4">
                     <Link
-                        href={route('add')}
+                        href={route('dashboard')}
                         className="text-gray-600 hover:text-gray-900 dark:text-white"
                     >
-                        Add
+                        Dashboard
                     </Link>
                     <span className="text-red-900 dark:text-gray-400">|</span>
                     <span className="dark:text-white">Session</span>

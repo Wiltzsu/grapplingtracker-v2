@@ -1,6 +1,6 @@
 // Core Inertia and Layout imports
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm, router } from '@inertiajs/react';
+import { Head, Link, useForm, usePage, router } from '@inertiajs/react';
 import { useState } from 'react';
 
 // UI Components
@@ -60,16 +60,29 @@ export default function Create() {
         window.location = route('add');
     };
 
+    /**
+     * Handles redirection back to the previous page depending on where user came from.
+     */
+    const { url } = usePage();
+    const handleBack = () => {
+        if (url.includes('/dashboard')) {
+            router.visit(route('dashboard'));
+        } else {
+            window.history.back();
+        }
+    };
+
+
     return (
         <AuthenticatedLayout
             header={
                 // Navigation breadcrumb
                 <div className="flex items-center gap-4">
                     <Link
-                        href={route('add')}
+                        href={route('dashboard')}
                         className="text-gray-600 hover:text-gray-900 dark:text-white"
                     >
-                        Add
+                        Dashboard
                     </Link>
                     <span className="text-red-900 dark:text-gray-400">|</span>
                     <span className="dark:text-white">Category</span>
@@ -77,7 +90,7 @@ export default function Create() {
                         src={CancelIcon}
                         alt="Cancel"
                         className="h-5 w-5 cursor-pointer"
-                        onClick={() => router.visit(route('add'))}
+                        onClick={handleBack}
                     />
                 </div>
             }

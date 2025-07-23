@@ -45,13 +45,6 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Dashboard
                                 </NavLink>
-                                { /* Add new entry nav link */ }
-                                <NavLink
-                                    href={route('add')}
-                                    active={route().current('add')}
-                                >
-                                    Add
-                                </NavLink>
                                 { /* View entries nav link */ }
                                 <NavLink
                                     href={route('view')}
@@ -176,12 +169,6 @@ export default function AuthenticatedLayout({ header, children }) {
                             active={route().current('dashboard')}
                         >
                             Dashboard
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            href={route('add')}
-                            active={route().current('add')}
-                        >
-                            Add
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             href={route('view')}

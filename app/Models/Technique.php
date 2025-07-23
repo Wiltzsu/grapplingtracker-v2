@@ -81,7 +81,7 @@ class Technique extends Model
             'technique_description' => $this->technique_description,
             'category_name' => $this->category->category_name,
             'position_name' => $this->position->position_name,
-            'location' => $this->trainingClass->location,
+            'location' => $this->trainingClass?->location,
         ];
     }
 

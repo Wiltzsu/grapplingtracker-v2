@@ -66,7 +66,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function notes()
     {
-        return $this->hasMany(Note::class);
+        return $this->hasMany(Chirp::class);
     }
 
     public function trainingClasses(): HasMany

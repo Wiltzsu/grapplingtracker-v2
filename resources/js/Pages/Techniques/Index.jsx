@@ -25,6 +25,7 @@ import ErrorPopup from '@/Components/ErrorPopup';
  * {{ techniques }} is a prop from TechniqueController's index method
  */
 export default function Index({ techniques }) {
+    console.log(techniques);
     // State management for delete confirmation and success/error popups
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);

@@ -47,7 +47,7 @@ class TechniqueController extends Controller
                 ->query(function ($query) {
                     $query->join('categories', 'techniques.category_id', '=', 'categories.category_id')
                         ->join('positions', 'techniques.position_id', '=', 'positions.position_id')
-                        ->join('training_classes', 'techniques.class_id', '=', 'training_classes.class_id')
+                        ->leftJoin('training_classes', 'techniques.class_id', '=', 'training_classes.class_id')
                         ->select(
                             'techniques.*',
                             'categories.category_name',
@@ -102,7 +102,7 @@ class TechniqueController extends Controller
                 'max:255',
             ],
             'technique_description' => [
-                'required',
+                'nullable',
                 'string',
             ],
             'category_id' => [
@@ -110,7 +110,7 @@ class TechniqueController extends Controller
                 'integer'
             ],
             'class_id' => [
-                'required',
+                'nullable',
                 'integer'
             ],
             'position_id' => [
@@ -184,7 +184,7 @@ class TechniqueController extends Controller
                 'max:255',
             ],
             'technique_description' => [
-                'required',
+                'nullable',
                 'string',
             ],
             'category_id' => [
@@ -198,7 +198,7 @@ class TechniqueController extends Controller
                 'exists:positions,position_id'
             ],
             'class_id' => [
-                'required',
+                'nullable',
                 'integer',
                 'exists:training_classes,class_id'
             ],

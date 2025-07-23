@@ -49,9 +49,6 @@ export default function Create({ categories, training_classes, positions }) {
             onSuccess: () => {
                 reset();
                 setShowSuccessPopup(true);
-            },
-            onError: (errors) => {
-                console.log('Submission errors:', errors);
             }
         });
     };
@@ -74,8 +71,6 @@ export default function Create({ categories, training_classes, positions }) {
     const handleBack = () => {
         if (url.includes('/dashboard')) {
             router.visit(route('dashboard'));
-        } else if (url.includes('/add')) {
-            router.visit(route('add'));
         } else {
             window.history.back();
         }
@@ -86,10 +81,10 @@ export default function Create({ categories, training_classes, positions }) {
             header={
                 <div className="flex items-center gap-4">
                     <Link
-                        href={route('add')}
+                        href={route('dashboard')}
                         className="text-gray-600 hover:text-gray-900 dark:text-white"
                     >
-                        Add
+                        Dashboard
                     </Link>
                     <span className="text-red-900 dark:text-gray-400">|</span>
                     <span className="dark:text-white">Technique</span>
@@ -197,14 +192,13 @@ export default function Create({ categories, training_classes, positions }) {
 
                                         {/* Session selection field */}
                                         <div>
-                                            <InputLabel htmlFor="class_id" value={<>Class <span className="text-red-500">*</span></>} className="dark:text-white" />
+                                            <InputLabel htmlFor="class_id" value={<>Session</>} className="dark:text-white" />
                                             <select
                                                 id="class_id"
                                                 name="class_id"
                                                 value={data.class_id}
                                                 className="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                                 onChange={(e) => setData('class_id', e.target.value)}
-                                                required
                                             >
                                                 <option value="">Select a session</option>
                                                 {training_classes && training_classes.length > 0 ? (

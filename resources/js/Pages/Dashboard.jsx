@@ -17,6 +17,18 @@ export default function Dashboard({ recent_classes, recentActivity }) {
             description: 'Add a new technique',
             icon: 'M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z'
         },
+        {
+            name: 'Add position',
+            route: 'positions.create',
+            description: 'Add a new position',
+            icon: 'M5.25 4.5h13.5M5.25 9h13.5m-13.5 4.5h13.5M5.25 19.5h13.5'
+        },
+        {
+            name: 'Add category',
+            route: 'categories.create',
+            description: 'Add a new category',
+            icon: 'M6 6.878V6a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 004.5 9v.878m13.5-3A2.25 2.25 0 0119.5 9v.878m0 0a2.246 2.246 0 00-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0121 12v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6c0-.98.626-1.813 1.5-2.122'
+        },
     ];
 
 
@@ -24,13 +36,29 @@ export default function Dashboard({ recent_classes, recentActivity }) {
     const formatActivityMessage = (item, type) => {
         switch(type) {
             case 'categories':
-                return `Added new category: ${item.category_name}`;
+                return (
+                    <>
+                        <span className="font-bold">Added new category:</span> {item.category_name}
+                    </>
+                );
             case 'training_classes':
-                return `Created new session: ${item.instructor ? `${item.instructor}'s class` : 'No instructor'}`;
+                return (
+                    <>
+                        <span className="font-bold">Created new session:</span> {item.instructor ? `${item.instructor}'s class` : 'No instructor'}
+                    </>
+                );
             case 'techniques':
-                return `Added new technique: ${item.technique_name}`;
+                return (
+                    <>
+                        <span className="font-bold">Added new technique:</span> {item.technique_name}
+                    </>
+                );
             case 'positions':
-                return `Added new position: ${item.position_name}`;
+                return (
+                    <>
+                        <span className="font-bold">Added new position:</span> {item.position_name}
+                    </>
+                );
             default:
                 return '';
         }
@@ -122,7 +150,9 @@ export default function Dashboard({ recent_classes, recentActivity }) {
                             <p className="text-gray-600 dark:text-gray-400">No recent activity found.</p>
                         )}
                     </div>
+
                 </div>
+
             </div>
         </AuthenticatedLayout>
     );
