@@ -81,7 +81,7 @@ export default function Create({ categories, positions }) {
      */
     const closePopup = () => {
         setShowSuccessPopup(false);
-        window.location = route('add');
+        window.location = route('dashboard');
     };
 
     const handleTechniquesChange = (techniques) => {

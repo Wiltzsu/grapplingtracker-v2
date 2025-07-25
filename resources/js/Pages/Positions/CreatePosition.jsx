@@ -60,7 +60,7 @@ export default function Create() {
      */
     const closePopup = () => {
         setShowSuccessPopup(false);
-        window.location = route('add');
+        window.location = route('dashboard');
     };
 
     /**

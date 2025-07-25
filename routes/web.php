@@ -41,7 +41,6 @@ Route::get('/terms-of-service', [LegalController::class, 'TermsOfService'])->nam
 // All authenticated routes
 Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard, Add, View, Stats routes
-    Route::get('/add', [AddController::class, 'index'])->name('add');
     Route::get('/view', [ViewController::class, 'index'])->name('view');
     Route::get('/stats', [StatsController::class, 'index'])->name('stats');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

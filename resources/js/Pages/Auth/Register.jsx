@@ -4,7 +4,6 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import Checkbox from '@/Components/Checkbox';
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({

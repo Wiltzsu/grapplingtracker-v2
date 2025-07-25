@@ -61,7 +61,7 @@ export default function Create({ categories, training_classes, positions }) {
      */
     const closePopup = () => {
         setShowSuccessPopup(false);
-        window.location = route('add');
+        window.location = route('dashboard');
     };
 
     /**
