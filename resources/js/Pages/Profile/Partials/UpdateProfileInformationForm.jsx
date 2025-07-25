@@ -8,6 +8,7 @@ import { Link, useForm, usePage } from '@inertiajs/react';
 export default function UpdateProfileInformation({
     mustVerifyEmail,
     status,
+    isOAuthUser,
     className = '',
 }) {
     const user = usePage().props.auth.user;
@@ -76,7 +77,7 @@ export default function UpdateProfileInformation({
                     <InputError className="mt-2" message={errors.email} />
                 </div>
 
-                {mustVerifyEmail && !user.email_verified_at && (
+                {mustVerifyEmail && !user.email_verified_at && !isOAuthUser && (
                     <div className="mb-4 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700">
                         <p>Your email address is unverified.</p>
                         <form onSubmit={resendVerification}>

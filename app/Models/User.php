@@ -126,7 +126,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isOAuthUser(): bool
     {
         // OAuth users have their password set to a random string during creation
-        return strlen($this->password) === 60 &&
-               $this->created_at !== null;
+        return strlen($this->password) === 60 && $this->created_at !== null;
     }
 }

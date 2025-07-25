@@ -21,6 +21,7 @@ export default function Edit({ mustVerifyEmail, status, isOAuthUser }) {
                         <UpdateProfileInformationForm
                             mustVerifyEmail={mustVerifyEmail}
                             status={status}
+                            isOAuthUser={isOAuthUser}
                             className="max-w-xl"
                         />
                     </div>
