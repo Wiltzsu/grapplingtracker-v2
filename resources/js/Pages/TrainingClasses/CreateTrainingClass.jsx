@@ -2,7 +2,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm, usePage, router } from '@inertiajs/react';
 import { useState } from 'react';
-import axios from 'axios';
 
 // UI Components
 import CancelIcon from '@/../../resources/svg/cancel.svg';
@@ -17,7 +16,8 @@ export default function Create({ categories, positions }) {
     // Helper function to get today's date in YYYY-MM-DD format
     const getTodayDate = () => {
         const today = new Date();
-        return today.toISOString().split('T')[0];
+        // Use local timezone
+        return today.toLocaleDateString('en-CA');
     };
 
     // State to manage form submit success popup visibility (true = shown, false = hidden)
@@ -60,6 +60,9 @@ export default function Create({ categories, positions }) {
                 reset();
                 setShowSuccessPopup(true);
             },
+            onError: () => {
+                alert('Please fix the errors in the form. Remove any empty techniques if present.');
+            }
         });
     };
 
@@ -83,11 +86,8 @@ export default function Create({ categories, positions }) {
      */
     const { url } = usePage();
     const handleBack = () => {
-        if (url.includes('/dashboard')) {
-            router.visit(route('dashboard'));
-        } else {
-            window.history.back();
-        }
+        // Use router.visit instead of window.location for better UX
+        router.visit(route('dashboard'));
     };
 
     return (
@@ -235,7 +235,9 @@ export default function Create({ categories, positions }) {
 
                                         {/* Submit button */}
                                         <div className="flex items-center gap-4">
-                                            <PrimaryButton disabled={processing}>Save session</PrimaryButton>
+                                            <PrimaryButton disabled={processing}>
+                                                {processing ? 'Saving...' : 'Save session'}
+                                            </PrimaryButton>
                                         </div>
                                     </form>
                                 </div>
@@ -254,7 +256,7 @@ export default function Create({ categories, positions }) {
             <SuccessPopup
                 isVisible={showSuccessPopup}
                 onClose={closePopup}
-                message="Session added succesfully!"
+                message="Session added successfully!"
             />
         </AuthenticatedLayout>
     );
