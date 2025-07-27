@@ -60,16 +60,6 @@ export default function Create({ categories, positions }) {
                 reset();
                 setShowSuccessPopup(true);
             },
-            onError: (errors) => {
-                // Log to Laravel
-                axios.post(route('log.error'), {
-                    errors: errors,
-                    formData: data,
-                    component: 'CreateTrainingClass'
-                });
-
-                // Errors are still handled by InputError components
-            }
         });
     };
 

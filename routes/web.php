@@ -15,10 +15,10 @@
  */
 
 use App\Http\Controllers\{
-    AddController,
     CategoryController,
     ChirpController,
     DashboardController,
+    LegalController,
     PositionController,
     ProfileController,
     StatsController,
@@ -26,19 +26,17 @@ use App\Http\Controllers\{
     TrainingClassController,
     ViewController,
     WelcomeController,
-    LegalController,
 };
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Public routes.
  */
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 Route::get('/policy', [LegalController::class, 'Policy'])->name('policy');
-Route::get('/terms-of-service', [LegalController::class, 'TermsOfService'])->name('terms-of-service');
+Route::get('/terms-of-service', [LegalController::class, 'termsOfService'])->name('terms-of-service');
 
-// All authenticated routes
+// Authenticated routes
 Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard, Add, View, Stats routes
     Route::get('/view', [ViewController::class, 'index'])->name('view');
@@ -60,34 +58,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'trainingclasses' => TrainingClassController::class,
         'chirps' => ChirpController::class,
     ], ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
-
-    // Instead of using Route::resource, let's explicitly define the destroy route
-    // Route::delete('/trainingclasses/{trainingclass}', [TrainingClassController::class, 'destroy'])
-    //     ->name('trainingclasses.destroy');
-
-    // // Keep other resource routes
-    // Route::resource('trainingclasses', TrainingClassController::class);
-
-    // Add this temporary debug route to verify the route definition
-    // Route::get('/debug/training-class-route', function() {
-    //     $route = Route::getRoutes()->getByName('trainingclasses.destroy');
-    //     Log::info('Training class destroy route:', [
-    //         'uri' => $route->uri,
-    //         'parameters' => $route->parameterNames,
-    //         'methods' => $route->methods
-    //     ]);
-    // });
-
-    // Add this inside the authenticated routes group
-    Route::post('/log-error', function (\Illuminate\Http\Request $request) {
-        \Illuminate\Support\Facades\Log::info('Frontend Error:', [
-            'errors' => $request->all(),
-            'url' => $request->header('referer'),
-            'user' => auth()->user()?->id,
-            'timestamp' => now()->toIso8601String()
-        ]);
-        return response()->json(['status' => 'logged']);
-    })->name('log.error');
 });
 
 require __DIR__ . '/auth.php';
