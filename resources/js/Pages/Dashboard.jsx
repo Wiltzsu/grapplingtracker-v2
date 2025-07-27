@@ -44,7 +44,7 @@ export default function Dashboard({ recent_classes, recentActivity }) {
             case 'training_classes':
                 return (
                     <>
-                        <span className="font-bold">Created new session:</span> {item.instructor ? `${item.instructor}'s class` : 'No instructor'}
+                        <span className="font-bold">Created new session:</span> {item.instructor ? `${item.instructor}'s session` : 'No instructor'}
                     </>
                 );
             case 'techniques':

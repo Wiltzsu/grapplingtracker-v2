@@ -201,7 +201,7 @@ export default function Create({ categories, positions }) {
 
                                         {/* Session duration */}
                                         <div>
-                                            <InputLabel htmlFor="class_duration" value={<>Session duration (min.) <span className="text-red-500">*</span></>} className="dark:text-white" />
+                                            <InputLabel htmlFor="class_duration" value={<>Session duration in minutes <span className="text-red-500">*</span></>} className="dark:text-white" />
                                             <TextInput
                                                 id="class_duration"
                                                 type="number"
@@ -230,7 +230,7 @@ export default function Create({ categories, positions }) {
                                             </div>
 
                                             <div className="flex-1">
-                                                <InputLabel htmlFor="round_duration" value="Round duration (min.)" className="dark:text-white"/>
+                                                <InputLabel htmlFor="round_duration" value="Round duration in minutes" className="dark:text-white"/>
                                                 <TextInput
                                                     id="round_duration"
                                                     type="number"

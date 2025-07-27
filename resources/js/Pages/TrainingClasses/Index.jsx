@@ -230,7 +230,7 @@ export default function Index({ training_classes }) {
                                         <div className="flex flex-col">
                                             <span className="text-sm text-gray-500 dark:text-gray-400">Rounds</span>
                                             {training_class.rounds && training_class.rounds > 0 ? (
-                                                <span className="text-sm font-medium text-gray-900 dark:text-white">{training_class.rounds} × {training_class.round_duration}</span>
+                                                <span className="text-sm font-medium text-gray-900 dark:text-white">{training_class.rounds} × {training_class.round_duration} min</span>
                                             ) : (
                                                 <span className="text-sm text-gray-500 dark:text-gray-400">No rounds added</span>
                                             )}

@@ -69,7 +69,7 @@ export const DynamicList = ({ categories, positions, initialTechniques, onTechni
     };
 
     return (
-        <div className="w-full max-w-md mx-auto">
+        <div className="w-full mx-auto">
             <Disclosure>
                 {({ open }) => (
                     <>
