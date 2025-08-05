@@ -11,20 +11,23 @@ import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import PrimaryButton from '@/Components/PrimaryButton';
 import SuccessPopup from '@/Components/SuccessPopup';
+import PageHeader from '@/Components/PageHeader';
 
 export default function Create({ categories, training_classes, positions }) {
+    const { pageHeader } = usePage().props;
+
     // State to manage form submit success popup visibility
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
     /**
      * useForm is an Inertia hook that manages form state
      *
-     * - data:          contains form field values
-     * - setData:       function to update form fields
-     * - post:          function to submit the form
-     * - processing:    boolean indicating if form is being submitted
-     * - errors:        validation errors from the server
-     * - reset:         function to clear form fields
+     * data:          contains form field values
+     * setData:       function to update form fields
+     * post:          function to submit the form
+     * processing:    boolean indicating if form is being submitted
+     * errors:        validation errors from the server
+     * reset:         function to clear form fields
      */
     const { data, setData, post, processing, errors, reset } = useForm({
         technique_name: '',
@@ -44,6 +47,7 @@ export default function Create({ categories, training_classes, positions }) {
      *      - Shows success popup
      */
     const submit = (e) => {
+        // Prevents default form submission (full page reload).
         e.preventDefault();
         post(route('techniques.store'), {
             onSuccess: () => {
@@ -64,37 +68,18 @@ export default function Create({ categories, training_classes, positions }) {
         window.location = route('dashboard');
     };
 
-    /**
-     * Handles redirection back to the previous page depending on where user came from.
-     */
-    const { url } = usePage();
-    const handleBack = () => {
-        if (url.includes('/dashboard')) {
-            router.visit(route('dashboard'));
-        } else {
-            window.history.back();
-        }
-    };
-
     return (
         <AuthenticatedLayout
             header={
-                <div className="flex items-center gap-4">
-                    <Link
-                        href={route('dashboard')}
-                        className="text-gray-600 hover:text-gray-900 dark:text-white"
-                    >
-                        Dashboard
-                    </Link>
-                    <span className="text-red-900 dark:text-gray-400">|</span>
-                    <span className="dark:text-white">Technique</span>
-                    <img
-                        src={CancelIcon}
-                        alt="Cancel"
-                        className="h-5 w-5 cursor-pointer"
-                        onClick={handleBack}
-                    />
-                </div>
+                <PageHeader
+                    backRoute={pageHeader.backRoute}
+                    backLabel={pageHeader.backLabel}
+                    sectionRoute={pageHeader.sectionRoute}
+                    sectionLabel={pageHeader.sectionLabel}
+                    childRoute={pageHeader.childRoute}
+                    childLabel={pageHeader.childLabel}
+                    cancelRoute={pageHeader.cancelRoute}
+                />
             }
         >
             <Head title="Add technique" />

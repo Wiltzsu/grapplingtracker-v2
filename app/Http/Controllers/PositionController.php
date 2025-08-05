@@ -23,8 +23,16 @@ class PositionController extends Controller
     {
         return Inertia::render('Positions/Index', [
             'positions' => Position::where('user_id', auth()->id())
-                ->latest()
-                ->get()
+                ->orderBy('position_name', 'asc')
+                ->get(),
+                // Page header props for breadcrumb.
+                'pageHeader' => [
+                    'backRoute' => route('view'),
+                    'backLabel' => 'View',
+                    'sectionRoute' => route('positions.index'),
+                    'sectionLabel' => 'Positions',
+                    'childRoute' => null,
+                ],
         ]);
     }
 
@@ -33,7 +41,18 @@ class PositionController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Positions/CreatePosition');
+        return Inertia::render('Positions/CreatePosition', [
+            // Page header props for breadcrumb.
+            'pageHeader' => [
+                'backRoute' => route('dashboard'),
+                'backLabel' => 'Dashboard',
+                'sectionRoute' => route('positions.index'),
+                'sectionLabel' => 'Positions',
+                'childRoute' => null,
+                'childLabel' => 'Add position',
+                'cancelRoute' => route('positions.index'),
+            ],
+        ]);
     }
 
     /**

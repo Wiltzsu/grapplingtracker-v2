@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\TrainingClass;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\Log;
 use App\Models\Category;
 use App\Models\Position;
 use App\Models\Technique;
@@ -33,7 +31,15 @@ class TrainingClassController extends Controller
                 ->query(function ($query) {
                     $query->with('techniques');
                 })
-                ->paginate($perPage)
+                ->paginate($perPage),
+                // Page header props for breadcrumb.
+                'pageHeader' => [
+                    'backRoute' => route('view'),
+                    'backLabel' => 'View',
+                    'sectionRoute' => route('trainingclasses.index'),
+                    'sectionLabel' => 'Training sessions',
+                    'childRoute' => null,
+                ],
         ]);
     }
 
@@ -46,6 +52,17 @@ class TrainingClassController extends Controller
             'categories' => Category::where('user_id', auth()->id())->get(),
             'positions' => Position::where('user_id', auth()->id())->get(),
             'training_classes' => TrainingClass::where('user_id', auth()->id())->get(),
+
+            // Page header props for breadcrumb.
+            'pageHeader' => [
+                'backRoute' => route('dashboard'),
+                'backLabel' => 'Dashboard',
+                'sectionRoute' => route('trainingclasses.index'),
+                'sectionLabel' => 'Training sessions',
+                'childRoute' => null,
+                'childLabel' => 'Add a training session',
+                'cancelRoute' => route('trainingclasses.index'),
+            ],
         ]);
     }
 

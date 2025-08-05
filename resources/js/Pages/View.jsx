@@ -1,82 +1,64 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { Link } from '@inertiajs/react';
+import { CalendarDaysIcon, SparklesIcon, FolderIcon, Squares2X2Icon } from '@heroicons/react/24/outline';
 
 export default function View({ stats }) {
     const options = [
         {
-            name: 'Category',
-            route: 'categories.index',
-            description: 'View all categories',
-            icon: 'M6 6.878V6a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 004.5 9v.878m13.5-3A2.25 2.25 0 0119.5 9v.878m0 0a2.246 2.246 0 00-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0121 12v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6c0-.98.626-1.813 1.5-2.122'
-        },
-        {
-            name: 'Session',
+            name: 'Training sessions',
             route: 'trainingclasses.index',
             description: 'View all sessions',
-            icon: 'M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z'
+            icon: <CalendarDaysIcon className="w-8 h-8 text-indigo-600 dark:text-indigo-400" />
         },
         {
-            name: 'Technique',
+            name: 'Techniques',
             route: 'techniques.index',
             description: 'View all techniques',
-            icon: 'M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z'
+            icon: <SparklesIcon className="w-8 h-8 text-indigo-600 dark:text-indigo-400" />
         },
         {
-            name: 'Position',
+            name: 'Positions',
             route: 'positions.index',
             description: 'View all positions',
-            icon: 'M5.25 4.5h13.5M5.25 9h13.5m-13.5 4.5h13.5M5.25 19.5h13.5'
+            icon: <Squares2X2Icon className="w-8 h-8 text-indigo-600 dark:text-indigo-400" />
+        },
+        {
+            name: 'Categories',
+            route: 'categories.index',
+            description: 'View all categories',
+            icon: <FolderIcon className="w-8 h-8 text-indigo-600 dark:text-indigo-400" />
         },
     ];
 
     return (
         <AuthenticatedLayout
             header={
-                <div className="flex items-center gap-4">
-                    <Link
-                        href={route('view')}
-                        className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-                    >
-                        View
-                    </Link>
-                </div>
+                <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-white">
+                    View
+                </h2>
             }
         >
             <Head title="View items" />
 
             <div className="py-6 sm:py-12 pr-2 pl-2 dark:bg-gray-700">
-                <div className="mx-auto max-w-7xl">
+                <div className="mx-auto max-w-7xl  sm:px-6 lg:px-8">
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
                         {options.map((option) => (
                             <Link
                                 key={option.name}
                                 href={route(option.route)}
-                                className="group flex flex-col p-8 bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md border border-gray-100 dark:border-gray-700 hover:border-indigo-200 dark:hover:border-indigo-700 hover:-translate-y-1 transition-all duration-200"
+                                className="group flex flex-col p-8 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md border border-gray-100 dark:border-gray-700 hover:border-indigo-200 dark:hover:border-indigo-700 hover:-translate-y-1 transition-all duration-200"
                             >
                                 <div className="flex items-center gap-5 mb-4">
-                                    <div className="p-3 bg-indigo-50 dark:bg-indigo-900/50 rounded-xl group-hover:bg-indigo-100 dark:group-hover:bg-indigo-900 transition-colors duration-200">
-                                        <svg
-                                            className="w-8 h-8 text-indigo-600 dark:text-indigo-400"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                            strokeWidth={1.5}
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d={option.icon}
-                                            />
-                                        </svg>
+                                    <div className="p-2 bg-indigo-50 dark:bg-indigo-900/50 rounded-xl group-hover:bg-indigo-100 dark:group-hover:bg-indigo-900 transition-colors duration-200">
+                                        {option.icon}
                                     </div>
                                     <div className="flex-1">
-                                        <span className="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-200">
+                                        <span className="text-lg font-medium text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-200">
                                             {option.name}
                                         </span>
-                                        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                                            {option.description}
-                                        </p>
                                     </div>
                                     <svg
                                         className="w-5 h-5 text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-200"

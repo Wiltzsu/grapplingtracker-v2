@@ -1,18 +1,20 @@
 // Core Inertia and Layout imports
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm, usePage, router } from '@inertiajs/react';
+import { Head, useForm, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
 // UI Components
-import CancelIcon from '@/../../resources/svg/cancel.svg';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import PrimaryButton from '@/Components/PrimaryButton';
 import SuccessPopup from '@/Components/SuccessPopup';
 import { DynamicList } from '@/Components/DynamicList';
+import PageHeader from '@/Components/PageHeader';
 
 export default function Create({ categories, positions }) {
+    const { pageHeader } = usePage().props;
+
     // Helper function to get today's date in YYYY-MM-DD format
     const getTodayDate = () => {
         const today = new Date();
@@ -26,12 +28,12 @@ export default function Create({ categories, positions }) {
     /**
      * useForm is an Inertia hook that manages form state
      *
-     * - data:          contains form field values
-     * - setData:       function to update form fields
-     * - post:          function to submit the form
-     * - processing:    boolean indicating if form is being submitted
-     * - errors:        validation errors from the server
-     * - reset:         function to clear form fields
+     * data:          contains form field values
+     * setData:       function to update form fields
+     * post:          function to submit the form
+     * processing:    boolean indicating if form is being submitted
+     * errors:        validation errors from the server
+     * reset:         function to clear form fields
      */
     const { data, setData, post, processing, errors, reset } = useForm({
         instructor: '',
@@ -54,23 +56,27 @@ export default function Create({ categories, positions }) {
      *      - Shows success popup
      */
     const submit = (e) => {
+        // Prevents default form submission (full page reload).
         e.preventDefault();
+
         post(route('trainingclasses.store'), {
-            onSuccess: () => {
-                reset();
-                setShowSuccessPopup(true);
+            onSuccess: (page) => {
+                // Only reset and show popup if there are NO v alidation erros.
+                if (!page.props.errors || Object.keys(page.props.errors).length === 0) {
+                    reset();
+                    setShowSuccessPopup(true);
+                }
             },
             onError: () => {
-                alert('Please fix the errors in the form. Remove any empty techniques if present.');
+                setErrorMessage("A network or server error occurred. Please try again.");
+                setShowErrorPopup(true);
             }
         });
     };
 
     /**
-     * Popup close handler
-     *
-     * 1. Hides the success popup
-     * 2. Redirects user back to the add page
+     * Popup close handler.
+     * Hides the success popup and redirects user back to dashboard.
      */
     const closePopup = () => {
         setShowSuccessPopup(false);
@@ -81,34 +87,18 @@ export default function Create({ categories, positions }) {
         setData('techniques', techniques);
     };
 
-    /**
-     * Handles redirection back to the previous page depending on where user came from.
-     */
-    const { url } = usePage();
-    const handleBack = () => {
-        // Use router.visit instead of window.location for better UX
-        router.visit(route('dashboard'));
-    };
-
     return (
         <AuthenticatedLayout
             header={
-                <div className="flex items-center gap-4">
-                    <Link
-                        href={route('dashboard')}
-                        className="text-gray-600 hover:text-gray-900 dark:text-white"
-                    >
-                        Dashboard
-                    </Link>
-                    <span className="text-red-900 dark:text-gray-400">|</span>
-                    <span className="dark:text-white">Session</span>
-                    <img
-                        src={CancelIcon}
-                        alt="Cancel"
-                        className="h-5 w-5 cursor-pointer"
-                        onClick={handleBack}
-                    />
-                </div>
+                <PageHeader
+                    backRoute={pageHeader.backRoute}
+                    backLabel={pageHeader.backLabel}
+                    sectionRoute={pageHeader.sectionRoute}
+                    sectionLabel={pageHeader.sectionLabel}
+                    childRoute={pageHeader.childRoute}
+                    childLabel={pageHeader.childLabel}
+                    cancelRoute={pageHeader.cancelRoute}
+                />
             }
         >
             <Head title="Add session" />

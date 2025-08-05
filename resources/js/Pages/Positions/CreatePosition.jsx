@@ -1,29 +1,31 @@
 // Core Inertia and Layout imports
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm, usePage, router } from '@inertiajs/react';
+import { Head, useForm, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
 // UI Components
-import CancelIcon from '@/../../resources/svg/cancel.svg';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import PrimaryButton from '@/Components/PrimaryButton';
 import SuccessPopup from '@/Components/SuccessPopup';
+import PageHeader from '@/Components/PageHeader';
 
 export default function Create() {
+    const { pageHeader } = usePage().props;
+
     // State to manage success popup visibility (true = shown, false = hidden)
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
     /**
      * useForm is an Inertia hook that manages form state
      *
-     * - data:          contains form field values
-     * - setData:       function to update form fields
-     * - post:          function to submit the form
-     * - processing:    boolean indicating if form is being submitted
-     * - errors:        validation errors from the server
-     * - reset:         function to clear form fields
+     * data:          contains form field values
+     * setData:       function to update form fields
+     * post:          function to submit the form
+     * processing:    boolean indicating if form is being submitted
+     * errors:        validation errors from the server
+     * reset:         function to clear form fields
      */
     const { data, setData, post, processing, errors, reset } = useForm({
         position_name: '',
@@ -31,72 +33,53 @@ export default function Create() {
     });
 
     /**
-     * Form submission handler
-     *
-     * 1. Prevents default form submission (full page reload)
-     * 2. Posts data to the positions.store route
-     * 3. On success:
-     *      - Clears form fields
-     *      - Shows success popup
+     * Form submission handler.
      */
     const submit = (e) => {
+        // Prevents default form submission (full page reload).
         e.preventDefault();
-        console.log('Form data being submitted:', data);
+
         post(route('positions.store'), {
-            onSuccess: () => {
-                reset();
-                setShowSuccessPopup(true);
+            onSuccess: (page) => {
+                // Only reset and show popup if there are NO validation errors.
+                if (!page.props.errors || Object.keys(page.props.errors).length === 0) {
+                    // Clear form fields.
+                    reset();
+                    setShowSuccessPopup(true);
+                }
             },
-            onError: (errors) => {
-                console.log('Submission errors:', errors);
+            onError: () => {
+                setErrorMessage("A network or server error occurred. Please try again.");
+                setShowErrorPopup(true);
             }
         });
     };
 
     /**
-     * Popup close handler
-     * 1. Hides the success popup
-     * 2. Redirects user back to the add page
+     * Popup close handler.
+     * Hides the success popup and redirects user back to dashboard.
      */
     const closePopup = () => {
         setShowSuccessPopup(false);
         window.location = route('dashboard');
     };
 
-    /**
-     * Handles redirection back to the previous page depending on where user came from.
-     */
-    const { url } = usePage();
-    const handleBack = () => {
-        if (url.includes('/dashboard')) {
-            router.visit(route('dashboard'));
-        } else {
-            window.history.back();
-        }
-    };
-
     return (
         <AuthenticatedLayout
             header={
-                <div className="flex items-center gap-4">
-                    <Link
-                        href={route('dashboard')}
-                        className="text-gray-600 hover:text-gray-900 dark:text-white"
-                    >
-                        Dashboard
-                    </Link>
-                    <span className="text-red-900 dark:text-gray-400">|</span>
-                    <span className="dark:text-white">Position</span>
-                    <img
-                        src={CancelIcon}
-                        alt="Cancel"
-                        className="h-5 w-5 cursor-pointer"
-                        onClick={handleBack}
-                    />
-                </div>
+                <PageHeader
+                    backRoute={pageHeader.backRoute}
+                    backLabel={pageHeader.backLabel}
+                    sectionRoute={pageHeader.sectionRoute}
+                    sectionLabel={pageHeader.sectionLabel}
+                    childRoute={pageHeader.childRoute}
+                    childLabel={pageHeader.childLabel}
+                    cancelRoute={pageHeader.cancelRoute}
+                />
             }
         >
-            <Head title="Add position" />
+
+        <Head title="Add position" />
 
             <div className="py-6 sm:py-12 pl-2 pr-2 dark:bg-gray-700">
                 <div className="mx-auto max-w-3xl sm:px-6 lg:px-8">

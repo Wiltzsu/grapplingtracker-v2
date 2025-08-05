@@ -33,7 +33,18 @@ class CategoryController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Categories/CreateCategory');
+        return Inertia::render('Categories/CreateCategory', [
+            // Page header props for breadcrumb.
+            'pageHeader' => [
+                'backRoute' => route('dashboard'),
+                'backLabel' => 'Dashboard',
+                'sectionRoute' => route('categories.index'),
+                'sectionLabel' => 'Categories',
+                'childRoute' => null,
+                'childLabel' => 'Add category',
+                'cancelRoute' => route('categories.index'),
+            ],
+        ]);
     }
 
     /**

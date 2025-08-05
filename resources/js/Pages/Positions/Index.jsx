@@ -4,11 +4,11 @@ import { Head, Link, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
 // UI Components
-import CancelIcon from '@/../../resources/svg/cancel.svg';
 import Dropdown from '@/Components/Dropdown';
 import ConfirmationPopup from '@/Components/ConfirmationPopup';
 import SuccessPopup from '@/Components/SuccessPopup';
 import ErrorPopup from '@/Components/ErrorPopup';
+import PageHeader from '@/Components/PageHeader';
 
 /**
  * Index Component - Displays and manages the positions list
@@ -18,14 +18,14 @@ import ErrorPopup from '@/Components/ErrorPopup';
  * {{ positions }} is a prop from PositionController's index method
  */
 export default function Index({ positions }) {
+    const { pageHeader } = usePage().props;
+
     // State management for delete confirmation and success/error popups
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
     const [showErrorPopup, setShowErrorPopup] = useState(false);
     const [positionToDelete, setPositionToDelete] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
-
-    const { flash } = usePage().props;
 
     // Handler function for position deletion
     const confirmDelete = (position) => {
@@ -41,14 +41,15 @@ export default function Index({ positions }) {
                 setShowConfirmation(false);
                 setPositionToDelete(null);
 
-                if (page.props.flash && page.props.flash.error) {
+                // Show error popup if there's a flash error, otherwise show success
+                if (page.props.flash?.error) {
                     setErrorMessage(page.props.flash.error);
                     setShowErrorPopup(true);
                 } else {
                     setShowSuccessPopup(true);
                 }
             },
-            onError: (errors) => {
+            onError: () => {
                 setShowConfirmation(false);
                 setPositionToDelete(null);
                 setShowErrorPopup(true);
@@ -77,22 +78,13 @@ export default function Index({ positions }) {
     return (
         <AuthenticatedLayout
             header={
-                <div className="flex items-center gap-4">
-                    <Link
-                        href={route('view')}
-                        className="text-gray-600 hover:text-gray-900 dark:text-white"
-                    >
-                        View
-                    </Link>
-                    <span className="text-red-900 dark:text-gray-400">|</span>
-                    <span className="dark:text-white">Position</span>
-                    <img
-                        src={CancelIcon}
-                        alt="Cancel"
-                        className="h-5 w-5 cursor-pointer"
-                        onClick={() => router.visit(route('view'))}
-                    />
-                </div>
+                <PageHeader
+                    backRoute={pageHeader.backRoute}
+                    backLabel={pageHeader.backLabel}
+                    sectionRoute={pageHeader.sectionRoute}
+                    sectionLabel={pageHeader.sectionLabel}
+                    childRoute={pageHeader.childRoute}
+                />
             }
         >
             <Head title="Positions" />
@@ -109,7 +101,7 @@ export default function Index({ positions }) {
                             px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2
                             focus:ring-indigo-500 focus:ring-offset-2 mr-3 sm:mr-0 dark:bg-indigo-500 dark:hover:bg-indigo-600"
                         >
-                            Add New Position
+                            Add new position
                         </Link>
                     </div>
 
@@ -122,11 +114,6 @@ export default function Index({ positions }) {
                                 >
                                     <div className="flex justify-between items-start mb-4">
                                         <div className="flex items-center gap-4">
-                                            <div className="p-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg">
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-indigo-600 dark:text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.25 4.5h13.5M5.25 9h13.5m-13.5 4.5h13.5M5.25 19.5h13.5" />
-                                                </svg>
-                                            </div>
                                             <h3 className="text-lg font-medium text-gray-900 dark:text-white">
                                                 {position.position_name}
                                             </h3>

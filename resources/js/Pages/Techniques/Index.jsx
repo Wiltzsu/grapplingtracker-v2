@@ -11,11 +11,11 @@ import { Head, Link, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
 // UI Components
-import CancelIcon from '@/../../resources/svg/cancel.svg';
 import Dropdown from '@/Components/Dropdown';
 import ConfirmationPopup from '@/Components/ConfirmationPopup';
 import SuccessPopup from '@/Components/SuccessPopup';
 import ErrorPopup from '@/Components/ErrorPopup';
+import PageHeader from '@/Components/PageHeader';
 
 /**
  * Index Component - Displays and manages the techniques list
@@ -25,7 +25,8 @@ import ErrorPopup from '@/Components/ErrorPopup';
  * {{ techniques }} is a prop from TechniqueController's index method
  */
 export default function Index({ techniques }) {
-    console.log(techniques);
+    const { pageHeader } = usePage().props;
+
     // State management for delete confirmation and success/error popups
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
@@ -86,22 +87,13 @@ export default function Index({ techniques }) {
     return (
         <AuthenticatedLayout
             header={
-                <div className="flex items-center gap-4">
-                    <Link
-                        href={route('view')}
-                        className="text-gray-600 hover:text-gray-900 dark:text-white"
-                    >
-                        View
-                    </Link>
-                    <span className="text-red-900 dark:text-gray-400">|</span>
-                    <span className="dark:text-white">Techniques</span>
-                    <img
-                        src={CancelIcon}
-                        alt="Cancel"
-                        className="h-5 w-5 cursor-pointer"
-                        onClick={() => router.visit(route('view'))}
-                    />
-                </div>
+                <PageHeader
+                    backRoute={pageHeader.backRoute}
+                    backLabel={pageHeader.backLabel}
+                    sectionRoute={pageHeader.sectionRoute}
+                    sectionLabel={pageHeader.sectionLabel}
+                    childRoute={pageHeader.childRoute}
+                />
             }
         >
             <Head title="Techniques" />

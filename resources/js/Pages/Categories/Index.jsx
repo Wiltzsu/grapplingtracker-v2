@@ -4,11 +4,11 @@ import { Head, Link, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
 // UI Components
-import CancelIcon from '@/../../resources/svg/cancel.svg';
 import Dropdown from '@/Components/Dropdown';
 import ConfirmationPopup from '@/Components/ConfirmationPopup';
 import SuccessPopup from '@/Components/SuccessPopup';
 import ErrorPopup from '@/Components/ErrorPopup';
+import PageHeader from '@/Components/PageHeader';
 
 /**
  * Index Component - Displays and manages the categories list
@@ -41,14 +41,15 @@ export default function Index({ categories }) {
                 setShowConfirmation(false);
                 setCategoryToDelete(null);
 
-                if (page.props.flash && page.props.flash.error) {
+                // Show error popup if there's a flash error, otherwise show success
+                if (page.props.flash?.error) {
                     setErrorMessage(page.props.flash.error);
                     setShowErrorPopup(true);
                 } else {
                     setShowSuccessPopup(true);
                 }
             },
-            onError: (errors) => {
+            onError: () => {
                 setShowConfirmation(false);
                 setCategoryToDelete(null);
                 setShowErrorPopup(true);
@@ -77,22 +78,12 @@ export default function Index({ categories }) {
     return (
         <AuthenticatedLayout
             header={
-                <div className="flex items-center gap-4">
-                    <Link
-                        href={route('view')}
-                        className="text-gray-600 hover:text-gray-900 dark:text-white"
-                    >
-                        View
-                    </Link>
-                    <span className="text-red-900 dark:text-gray-400">|</span>
-                    <span className="dark:text-white">Category</span>
-                    <img
-                        src={CancelIcon}
-                        alt="Cancel"
-                        className="h-5 w-5 cursor-pointer"
-                        onClick={() => router.visit(route('view'))}
-                    />
-                </div>
+                <PageHeader
+                    backRoute={route('view')}
+                    backLabel="View"
+                    sectionLabel="Categories"
+                    cancelRoute={route('view')}
+                />
             }
         >
             <Head title="Categories" />
@@ -110,7 +101,7 @@ export default function Index({ categories }) {
                                     focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
                                     mr-3 sm:mr-0 dark:bg-indigo-500 dark:hover:bg-indigo-600"
                         >
-                            Add New Category
+                            Add new category
                         </Link>
                     </div>
 
@@ -123,11 +114,6 @@ export default function Index({ categories }) {
                                 >
                                     <div className="flex justify-between items-start mb-4">
                                         <div className="flex items-center gap-4">
-                                            <div className="p-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg">
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-indigo-600 dark:text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                                                </svg>
-                                            </div>
                                             <h3 className="text-lg font-medium text-gray-900 dark:text-white">
                                                 {category.category_name}
                                             </h3>
