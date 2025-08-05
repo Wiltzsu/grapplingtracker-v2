@@ -95,9 +95,6 @@ export default function Create({ categories, positions }) {
                     backLabel={pageHeader.backLabel}
                     sectionRoute={pageHeader.sectionRoute}
                     sectionLabel={pageHeader.sectionLabel}
-                    childRoute={pageHeader.childRoute}
-                    childLabel={pageHeader.childLabel}
-                    cancelRoute={pageHeader.cancelRoute}
                 />
             }
         >

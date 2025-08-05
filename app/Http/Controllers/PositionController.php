@@ -29,9 +29,8 @@ class PositionController extends Controller
                 'pageHeader' => [
                     'backRoute' => route('view'),
                     'backLabel' => 'View',
-                    'sectionRoute' => route('positions.index'),
+                    'sectionRoute' => null,
                     'sectionLabel' => 'Positions',
-                    'childRoute' => null,
                 ],
         ]);
     }
@@ -46,11 +45,8 @@ class PositionController extends Controller
             'pageHeader' => [
                 'backRoute' => route('dashboard'),
                 'backLabel' => 'Dashboard',
-                'sectionRoute' => route('positions.index'),
-                'sectionLabel' => 'Positions',
-                'childRoute' => null,
-                'childLabel' => 'Add position',
-                'cancelRoute' => route('positions.index'),
+                'sectionRoute' => null,
+                'sectionLabel' => 'Add position',
             ],
         ]);
     }

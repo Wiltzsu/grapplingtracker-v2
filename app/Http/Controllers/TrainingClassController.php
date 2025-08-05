@@ -36,9 +36,8 @@ class TrainingClassController extends Controller
                 'pageHeader' => [
                     'backRoute' => route('view'),
                     'backLabel' => 'View',
-                    'sectionRoute' => route('trainingclasses.index'),
+                    'sectionRoute' => null,
                     'sectionLabel' => 'Training sessions',
-                    'childRoute' => null,
                 ],
         ]);
     }
@@ -57,11 +56,8 @@ class TrainingClassController extends Controller
             'pageHeader' => [
                 'backRoute' => route('dashboard'),
                 'backLabel' => 'Dashboard',
-                'sectionRoute' => route('trainingclasses.index'),
-                'sectionLabel' => 'Training sessions',
-                'childRoute' => null,
-                'childLabel' => 'Add a training session',
-                'cancelRoute' => route('trainingclasses.index'),
+                'sectionRoute' => null,
+                'sectionLabel' => 'Add training session',
             ],
         ]);
     }

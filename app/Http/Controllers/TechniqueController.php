@@ -62,9 +62,8 @@ class TechniqueController extends Controller
                 'pageHeader' => [
                     'backRoute' => route('view'),
                     'backLabel' => 'View',
-                    'sectionRoute' => route('techniques.index'),
-                    'sectionLabel' => 'Techniques',
-                    'childRoute' => null,
+                    'sectionRoute' => null,
+                    'sectionLabel' => 'View techniques',
                 ],
         ]);
     }
@@ -90,11 +89,8 @@ class TechniqueController extends Controller
             'pageHeader' => [
                 'backRoute' => route('dashboard'),
                 'backLabel' => 'Dashboard',
-                'sectionRoute' => route('techniques.index'),
-                'sectionLabel' => 'Techniques',
-                'childRoute' => null,
-                'childLabel' => 'Add technique',
-                'cancelRoute' => route('techniques.index'),
+                'sectionRoute' => null,
+                'sectionLabel' => 'Add technique',
             ],
         ]);
     }

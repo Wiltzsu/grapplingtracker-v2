@@ -24,19 +24,9 @@ export default function PageHeader({
 
             <span className="text-gray-400">»</span>
 
-            <Link
-                href={sectionRoute}
-                className="text-indigo-600 hover:text-indigo-800 transition-colors duration-200"
-            >
+            <span className="text-gray-600 hover:text-indigo-800 transition-colors duration-200 dark:text-white dark:transition-colors dark:duration-200 dark:hover:text-indigo-700">
                 {sectionLabel}
-            </Link>
-
-            {childLabel && (
-                <>
-                    <span className="text-gray-400">»</span>
-                    <span className="text-gray-700">{childLabel}</span>
-                </>
-            )}
+            </span>
         </nav>
     );
 }

@@ -103,7 +103,6 @@ export default function Index({ training_classes }) {
                     backLabel={pageHeader.backLabel}
                     sectionRoute={pageHeader.sectionRoute}
                     sectionLabel={pageHeader.sectionLabel}
-                    childRoute={pageHeader.childRoute}
                 />
             }
         >

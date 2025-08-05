@@ -24,7 +24,14 @@ class CategoryController extends Controller
         return Inertia::render('Categories/Index', [
             'categories' => Category::where('user_id', auth()->id())
                 ->latest()
-                ->get()
+                ->get(),
+                // Page header props for breadcrumb.
+                'pageHeader' => [
+                    'backRoute' => route('view'),
+                    'backLabel' => 'View',
+                    'sectionRoute' => null,
+                    'sectionLabel' => 'Categories',
+                ],
         ]);
     }
 
@@ -38,11 +45,8 @@ class CategoryController extends Controller
             'pageHeader' => [
                 'backRoute' => route('dashboard'),
                 'backLabel' => 'Dashboard',
-                'sectionRoute' => route('categories.index'),
-                'sectionLabel' => 'Categories',
-                'childRoute' => null,
-                'childLabel' => 'Add category',
-                'cancelRoute' => route('categories.index'),
+                'sectionRoute' => null,
+                'sectionLabel' => 'Add category',
             ],
         ]);
     }
