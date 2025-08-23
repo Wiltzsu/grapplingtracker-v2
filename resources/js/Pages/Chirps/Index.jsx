@@ -16,7 +16,13 @@ export default function Index({ auth, chirps }) {
     };
 
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout
+            header={
+                <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-white">
+                    Notes
+                </h2>
+            }
+        >
             <Head title="Chirps" />
 
             <div className="max-w-2xl mx-auto pl-2 pr-2 py-6 sm:py-12 lg:p-8">
@@ -24,7 +30,7 @@ export default function Index({ auth, chirps }) {
                     <textarea
                         value={data.message}
                         placeholder="What's on your mind?"
-                        className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-900 dark:text-white dark:border-gray-600"
+                        className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-800 dark:text-white dark:border-gray-600"
                         onChange={e => setData('message', e.target.value)}
                     ></textarea>
                     <InputError message={errors.message} className="mt-2" />

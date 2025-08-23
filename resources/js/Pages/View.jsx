@@ -49,9 +49,9 @@ export default function View({ stats }) {
                             <Link
                                 key={option.name}
                                 href={route(option.route)}
-                                className="group flex flex-col p-8 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md border border-gray-100 dark:border-gray-700 hover:border-indigo-200 dark:hover:border-indigo-700 hover:-translate-y-1 transition-all duration-200"
+                                className="group flex flex-col p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md border border-gray-100 dark:border-gray-700 hover:border-indigo-200 dark:hover:border-indigo-700 hover:-translate-y-1 transition-all duration-200"
                             >
-                                <div className="flex items-center gap-5 mb-4">
+                                <div className="flex items-center gap-5">
                                     <div className="p-2 bg-indigo-50 dark:bg-indigo-900/50 rounded-xl group-hover:bg-indigo-100 dark:group-hover:bg-indigo-900 transition-colors duration-200">
                                         {option.icon}
                                     </div>

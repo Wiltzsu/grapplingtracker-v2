@@ -100,12 +100,13 @@ export default function Index({ techniques }) {
 
             <div className="py-6 sm:py-12 pl-2 pr-2 dark:bg-gray-700">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="mb-5 flex justify-between items-center">
+                    <div className="mb-5 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                         <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-white pl-3 sm:pl-0">
                             Techniques
                         </h2>
+
                         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
-                        <div className="relative">
+                            <div className="relative w-full sm:w-64">
                                 <input
                                     type="text"
                                     value={search}
@@ -118,17 +119,20 @@ export default function Index({ techniques }) {
                                         );
                                     }}
                                     placeholder="Search techniques..."
-                                    className="w-full sm:w-64 px-4 py-2 border border-gray-300 dark:border-gray-500 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-500 rounded-md shadow-sm
+                                            focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                 />
                             </div>
-                        <Link
-                            href={route('techniques.create')}
-                            className="inline-flex items-center rounded-md border border-transparent bg-indigo-600
-                            px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2
-                            focus:ring-indigo-500 focus:ring-offset-2 mr-3 sm:mr-0 dark:bg-indigo-500 dark:hover:bg-indigo-600"
-                        >
-                            Add New Technique
-                        </Link>
+
+                            <Link
+                                href={route('techniques.create')}
+                                className="inline-flex items-center rounded-md border border-transparent bg-indigo-600
+                                        px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none
+                                        focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
+                                        dark:bg-indigo-500 dark:hover:bg-indigo-600"
+                            >
+                                Add new technique
+                            </Link>
                         </div>
                     </div>
 
