@@ -2,6 +2,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { Link } from '@inertiajs/react';
 import { formatDistanceToNow } from 'date-fns';
+import { PlusIcon } from '@heroicons/react/24/outline';
 
 export default function Dashboard({ recent_classes, recentActivity }) {
     const options = [
@@ -9,26 +10,26 @@ export default function Dashboard({ recent_classes, recentActivity }) {
             name: 'Add training session',
             route: 'trainingclasses.create',
             description: 'Add a new session',
-            icon: 'M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z'
+            icon: <PlusIcon className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
         },
         {
             name: 'Add technique',
             route: 'techniques.create',
             description: 'Add a new technique',
-            icon: 'M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z'
+            icon: <PlusIcon className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
         },
         {
             name: 'Add position',
             route: 'positions.create',
             from: 'dashboard',
             description: 'Add a new position',
-            icon: 'M5.25 4.5h13.5M5.25 9h13.5m-13.5 4.5h13.5M5.25 19.5h13.5'
+            icon: <PlusIcon className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
         },
         {
             name: 'Add category',
             route: 'categories.create',
             description: 'Add a new category',
-            icon: 'M6 6.878V6a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 004.5 9v.878m13.5-3A2.25 2.25 0 0119.5 9v.878m0 0a2.246 2.246 0 00-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0121 12v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6c0-.98.626-1.813 1.5-2.122'
+            icon: <PlusIcon className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
         },
     ];
 
@@ -87,75 +88,99 @@ export default function Dashboard({ recent_classes, recentActivity }) {
             <div className="py-6 sm:py-12 pr-2 pl-2">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
-                        {options.map((option) => (
-                            <Link
-                                key={option.name}
-                                href={route(option.route)}
-                                method="get"
-                                data={option.from ? { from: option.from } : {}}
-                                className="flex flex-col p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-200"
-                            >
-                                <div className="flex items-center gap-4 mb-4">
-                                    <div className="p-2 bg-indigo-100 rounded-lg dark:bg-indigo-900">
+                    {/* Add a welcome section */}
+                    <div className="mb-8">
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                            Welcome back!
+                        </h1>
+                        <p className="text-gray-600 dark:text-gray-400">
+                            What would you like to add to your training log today?
+                        </p>
+                    </div>
+
+                    {/* Quick Actions Section */}
+                    <div className="mb-8">
+                        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                            Quick Actions
+                        </h2>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+                            {options.map((option) => (
+                                <Link
+                                    key={option.name}
+                                    href={route(option.route)}
+                                    method="get"
+                                    data={option.from ? { from: option.from } : {}}
+                                    className="group flex flex-col p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md hover:bg-gray-50 dark:hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200 border border-gray-100 dark:border-gray-700"
+                                >
+                                    <div className="flex items-center gap-5">
+                                        <div className="p-2 bg-indigo-100 rounded-lg dark:bg-indigo-900 group-hover:bg-indigo-200 dark:group-hover:bg-indigo-800 transition-colors duration-200">
+                                            {option.icon}
+                                        </div>
+                                        <div className="flex-1">
+                                            <span className="text-lg font-medium text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-200">
+                                                {option.name}
+                                            </span>
+                                            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                                                {option.description}
+                                            </p>
+                                        </div>
                                         <svg
-                                            className="w-6 h-6 text-indigo-600 dark:text-indigo-400"
+                                            className="w-5 h-5 text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-200"
                                             fill="none"
                                             viewBox="0 0 24 24"
                                             stroke="currentColor"
-                                            strokeWidth={1.5}
                                         >
                                             <path
                                                 strokeLinecap="round"
                                                 strokeLinejoin="round"
-                                                d={option.icon}
+                                                strokeWidth={2}
+                                                d="M9 5l7 7-7 7"
                                             />
                                         </svg>
                                     </div>
-                                    <span className="text-lg font-medium text-gray-900 dark:text-white">
-                                        {option.name}
-                                    </span>
-                                </div>
-                                <p className="text-sm text-gray-500 dark:text-gray-400">
-                                    {option.description}
-                                </p>
-                            </Link>
-                        ))}
+                                </Link>
+                            ))}
+                        </div>
                     </div>
-                </div>
-            </div>
-
-            {/* Recent Classes Section */}
-            <div className="pb-8 pr-2 pl-2">
-
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
                     {/* Recent Activity Section */}
-                    <div className="">
-                        <h3 className="text-lg font-semibold dark:text-white mb-4">Recent Activity</h3>
+                    <div>
+                        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                            Recent Activity
+                        </h2>
                         {allActivities.length > 0 ? (
-                            <ul className="space-y-3">
-                                {allActivities.map((activity, index) => (
-                                    <li
-                                        key={`${activity.type}-${index}`}
-                                        className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow flex justify-between items-center"
-                                    >
-                                        <span className="text-gray-700 dark:text-gray-200">
-                                            {activity.message}
-                                        </span>
-                                        <span className="text-xs text-gray-400">
-                                            {formatDistanceToNow(activity.timestamp, { addSuffix: true })}
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
+                            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
+                                <ul className="divide-y divide-gray-100 dark:divide-gray-700">
+                                    {allActivities.map((activity, index) => (
+                                        <li
+                                            key={`${activity.type}-${index}`}
+                                            className="p-4 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-200"
+                                        >
+                                            <div className="flex justify-between items-start">
+                                                <span className="text-gray-700 dark:text-gray-200">
+                                                    {activity.message}
+                                                </span>
+                                                <span className="text-xs text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full">
+                                                    {formatDistanceToNow(activity.timestamp, { addSuffix: true })}
+                                                </span>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
                         ) : (
-                            <p className="text-gray-600 dark:text-gray-400">No recent activity found.</p>
+                            <div className="bg-white dark:bg-gray-800 rounded-lg p-8 text-center border border-gray-100 dark:border-gray-700">
+                                <div className="text-gray-400 dark:text-gray-500 mb-2">
+                                    <svg className="w-12 h-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                    </svg>
+                                </div>
+                                <p className="text-gray-600 dark:text-gray-400">No recent activity found.</p>
+                                <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">Start adding content to see your activity here.</p>
+                            </div>
                         )}
                     </div>
-
                 </div>
-
             </div>
         </AuthenticatedLayout>
     );

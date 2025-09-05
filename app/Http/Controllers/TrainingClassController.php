@@ -149,6 +149,12 @@ class TrainingClassController extends Controller
             'training_class' => $trainingclass->load('techniques'),
             'categories' => Category::where('user_id', auth()->id())->get(),
             'positions' => Position::where('user_id', auth()->id())->get(),
+            'pageHeader' => [
+                'backRoute' => route('trainingclasses.index'),
+                'backLabel' => 'Training sessions',
+                'sectionRoute' => null,
+                'sectionLabel' => ! empty( $trainingclass->instructor ) ? ( $trainingclass->instructor ) . "'s class" : 'No instructor',
+            ],
         ]);
     }
 

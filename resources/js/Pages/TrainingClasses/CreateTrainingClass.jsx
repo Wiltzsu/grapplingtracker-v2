@@ -100,49 +100,76 @@ export default function Create({ categories, positions }) {
         >
             <Head title="Add session" />
 
-            <div className="py-6 sm:py-12 pr-2 pl-2 dark:bg-gray-700">
-                <div className="mx-auto max-w-3xl sm:px-6 lg:px-8">
-                    <div className="border-b border-gray-200 rounded-t-lg bg-gray-50 px-6 py-4 dark:bg-gray-900 dark:border-gray-500">
-                        <h3 className="text-lg font-medium text-gray-900 dark:text-white">Add session</h3>
+            <div className="py-6 sm:py-12 pr-2 pl-2">
+                <div className="mx-auto max-w-4xl sm:px-6 lg:px-8">
+
+                    {/* Welcome Section */}
+                    <div className="mb-8">
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                            Add training session
+                        </h1>
+                        <p className="text-gray-600 dark:text-gray-400">
+                            Log your training session details, techniques practiced, and sparring rounds.
+                        </p>
                     </div>
-                    <div className="overflow-hidden bg-white shadow-sm dark:bg-gray-800 rounded-b-lg">
-                        <div className="p-6 text-gray-900">
-                            <div className="mb-8 flex justify-center">
-                                <div className="w-[600px]">
-                                    {/* Session creation form */}
-                                    <form onSubmit={submit} className="mt-6 space-y-6">
-                                        {/* Session instructor field */}
-                                        <div>
-                                            <InputLabel htmlFor="instructor" value="Instructor name" className="dark:text-white" />
-                                            <TextInput
-                                                id="instructor"
-                                                type="text"
-                                                name="instructor"
-                                                value={data.instructor}
-                                                className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
-                                                isFocused={true}
-                                                onChange={(e) => setData('instructor', e.target.value)}
-                                            />
-                                            <InputError message={errors.instructor} className="mt-2" />
+
+                    {/* Form Card */}
+                    <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700">
+                        <div className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-6 py-4">
+                            <div className="flex items-center gap-3">
+                                <div className="p-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg">
+                                    <svg className="w-5 h-5 text-indigo-600 dark:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                    </svg>
+                                </div>
+                                <h3 className="text-lg font-medium text-gray-900 dark:text-white">Session Details</h3>
+                            </div>
+                        </div>
+
+                        <div className="p-6">
+                            <form onSubmit={submit} className="space-y-6">
+
+                                {/* Basic Information Section */}
+                                <div className="space-y-6">
+                                    <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                                        <h4 className="text-md font-medium text-gray-900 dark:text-white mb-4">Basic Information</h4>
+
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            {/* Instructor */}
+                                            <div>
+                                                <InputLabel htmlFor="instructor" value="Instructor name" className="dark:text-white" />
+                                                <TextInput
+                                                    id="instructor"
+                                                    type="text"
+                                                    name="instructor"
+                                                    value={data.instructor}
+                                                    className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
+                                                    placeholder="Who led the session?"
+                                                    isFocused={true}
+                                                    onChange={(e) => setData('instructor', e.target.value)}
+                                                />
+                                                <InputError message={errors.instructor} className="mt-2" />
+                                            </div>
+
+                                            {/* Location */}
+                                            <div>
+                                                <InputLabel htmlFor="location" value="Location" className="dark:text-white" />
+                                                <TextInput
+                                                    id="location"
+                                                    type="text"
+                                                    name="location"
+                                                    value={data.location}
+                                                    className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
+                                                    placeholder="Where did you train?"
+                                                    onChange={(e) => setData('location', e.target.value)}
+                                                />
+                                                <InputError message={errors.location} className="mt-2" />
+                                            </div>
                                         </div>
 
-                                        {/* Session location */}
-                                        <div>
-                                            <InputLabel htmlFor="location" value={<>Location</>} className="dark:text-white" />
-                                            <TextInput
-                                                id="location"
-                                                type="text"
-                                                name="location"
-                                                value={data.location}
-                                                className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
-                                                onChange={(e) => setData('location', e.target.value)}
-                                            />
-                                            <InputError message={errors.location} className="mt-2" />
-                                        </div>
-
-                                        {/* Session date */}
-                                        <div>
-                                            <InputLabel htmlFor="class_date" value={<>Date <span className="text-red-500">*</span></>} className="dark:text-white" />
+                                        {/* Date */}
+                                        <div className="mt-6">
+                                            <InputLabel htmlFor="class_date" value="Session date" className="dark:text-white" />
                                             <TextInput
                                                 id="class_date"
                                                 type="date"
@@ -154,8 +181,34 @@ export default function Create({ categories, positions }) {
                                             />
                                             <InputError message={errors.class_date} className="mt-2" />
                                         </div>
+                                    </div>
 
-                                        {/* Session description */}
+                                    {/* Session Details Section */}
+                                    <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                                        <h4 className="text-md font-medium text-gray-900 dark:text-white mb-4">Session Details</h4>
+
+                                        {/* Duration */}
+                                        <div className="mb-6">
+                                            <InputLabel htmlFor="class_duration" value={<>Session duration (minutes) <span className="text-red-500">*</span></>} className="dark:text-white" />
+                                            <div className="mt-1 relative">
+                                                <TextInput
+                                                    id="class_duration"
+                                                    type="number"
+                                                    name="class_duration"
+                                                    value={data.class_duration}
+                                                    className="block w-full dark:bg-gray-700 dark:border-gray-600 pr-12"
+                                                    placeholder="90"
+                                                    onChange={(e) => setData('class_duration', e.target.value)}
+                                                    required
+                                                />
+                                                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                                                    <span className="text-gray-500 dark:text-gray-400 text-sm">min</span>
+                                                </div>
+                                            </div>
+                                            <InputError message={errors.class_duration} className="mt-2" />
+                                        </div>
+
+                                        {/* Description */}
                                         <div>
                                             <InputLabel htmlFor="class_description" value="Session notes" className="dark:text-white"/>
                                             <textarea
@@ -164,82 +217,109 @@ export default function Create({ categories, positions }) {
                                                 value={data.class_description}
                                                 className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                                 rows={4}
+                                                placeholder="What did you work on? Any key takeaways or notes from the session?"
                                                 onChange={(e) => setData('class_description', e.target.value)}
                                             />
                                             <InputError message={errors.class_description} className="mt-2" />
                                         </div>
+                                    </div>
 
-                                        <DynamicList
-                                            categories={categories}
-                                            positions={positions}
-                                            onTechniquesChange={handleTechniquesChange}
-                                            isEdit={false}
-                                        />
+                                    {/* Sparring Section */}
+                                    <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                                        <h4 className="text-md font-medium text-gray-900 dark:text-white mb-4">Sparring Information (Optional)</h4>
 
-                                        {/* Session duration */}
-                                        <div>
-                                            <InputLabel htmlFor="class_duration" value={<>Session duration in minutes <span className="text-red-500">*</span></>} className="dark:text-white" />
-                                            <TextInput
-                                                id="class_duration"
-                                                type="number"
-                                                name="class_duration"
-                                                value={data.class_duration}
-                                                className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
-                                                onChange={(e) => setData('class_duration', e.target.value)}
-                                                required
-                                            />
-                                            <InputError message={errors.class_duration} className="mt-2" />
-                                        </div>
-
-                                        {/* Session round amount and duration*/}
-                                        <div className="flex gap-4">
-                                            <div className="flex-1">
-                                                <InputLabel htmlFor="rounds" value="Rounds" className="dark:text-white"/>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            {/* Rounds */}
+                                            <div>
+                                                <InputLabel htmlFor="rounds" value="Number of rounds" className="dark:text-white"/>
                                                 <TextInput
                                                     id="rounds"
                                                     type="number"
                                                     name="rounds"
                                                     value={data.rounds}
                                                     className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
+                                                    placeholder="5"
                                                     onChange={(e) => setData('rounds', e.target.value)}
                                                 />
                                                 <InputError message={errors.rounds} className="mt-2" />
                                             </div>
 
-                                            <div className="flex-1">
-                                                <InputLabel htmlFor="round_duration" value="Round duration in minutes" className="dark:text-white"/>
-                                                <TextInput
-                                                    id="round_duration"
-                                                    type="number"
-                                                    name="round_duration"
-                                                    value={data.round_duration}
-                                                    className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
-                                                    onChange={(e) => setData('round_duration', e.target.value)}
-                                                />
+                                            {/* Round Duration */}
+                                            <div>
+                                                <InputLabel htmlFor="round_duration" value="Round duration (minutes)" className="dark:text-white"/>
+                                                <div className="mt-1 relative">
+                                                    <TextInput
+                                                        id="round_duration"
+                                                        type="number"
+                                                        name="round_duration"
+                                                        value={data.round_duration}
+                                                        className="block w-full dark:bg-gray-700 dark:border-gray-600 pr-12"
+                                                        placeholder="5"
+                                                        onChange={(e) => setData('round_duration', e.target.value)}
+                                                    />
+                                                    <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                                                        <span className="text-gray-500 dark:text-gray-400 text-sm">min</span>
+                                                    </div>
+                                                </div>
                                                 <InputError message={errors.round_duration} className="mt-2" />
                                             </div>
                                         </div>
+                                    </div>
 
-                                        {/* Submit button */}
-                                        <div className="flex items-center gap-4">
-                                            <PrimaryButton disabled={processing}>
-                                                {processing ? 'Saving...' : 'Save session'}
-                                            </PrimaryButton>
-                                        </div>
-                                    </form>
+                                    {/* Techniques Section */}
+                                    <div>
+                                        <h4 className="text-md font-medium text-gray-900 dark:text-white mb-4">Techniques Practiced</h4>
+                                        <DynamicList
+                                            categories={categories}
+                                            positions={positions}
+                                            onTechniquesChange={handleTechniquesChange}
+                                            isEdit={false}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
+
+                                {/* Submit Section */}
+                                <div className="flex items-center justify-between pt-6 border-t border-gray-200 dark:border-gray-700">
+                                    <div className="text-sm text-gray-500 dark:text-gray-400">
+                                        All fields marked with <span className="text-red-500">*</span> are required
+                                    </div>
+                                    <div className="flex items-center gap-4">
+                                        <button
+                                            type="button"
+                                            onClick={() => reset()}
+                                            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-600 transition-colors"
+                                        >
+                                            Clear form
+                                        </button>
+                                        <PrimaryButton
+                                            disabled={processing}
+                                            className="flex items-center gap-2"
+                                        >
+                                            {processing ? (
+                                                <>
+                                                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                    </svg>
+                                                    Saving...
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                                    </svg>
+                                                    Save session
+                                                </>
+                                            )}
+                                        </PrimaryButton>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/*
-                SuccessPopup component with props:
-                - isVisible: boolean - Controls whether the popup is shown or hidden
-                - onClose: function - Handler that hides the popup and redirects to add-page
-                - message: String - Success message to display to the user
-            */}
             <SuccessPopup
                 isVisible={showSuccessPopup}
                 onClose={closePopup}

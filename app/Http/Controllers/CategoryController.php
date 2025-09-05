@@ -110,7 +110,14 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         return Inertia::render('Categories/EditCategory', [
-            'category' => $category
+            'category' => $category,
+            // Page header props for breadcrumb.
+            'pageHeader' => [
+                'backRoute' => route('categories.index'),
+                'backLabel' => 'View',
+                'sectionRoute' => null,
+                'sectionLabel' => $category->category_name,
+            ],
         ]);
     }
 

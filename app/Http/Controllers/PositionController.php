@@ -114,7 +114,14 @@ class PositionController extends Controller
     public function edit(Position $position)
     {
         return Inertia::render('Positions/EditPosition', [
-            'position' => $position
+            'position' => $position,
+            // Page header props for breadcrumb.
+            'pageHeader' => [
+                'backRoute' => route('positions.index'),
+                'backLabel' => 'View',
+                'sectionRoute' => null,
+                'sectionLabel' => $position->position_name,
+            ],
         ]);
     }
 

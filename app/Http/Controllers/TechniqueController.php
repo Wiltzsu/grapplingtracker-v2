@@ -56,7 +56,7 @@ class TechniqueController extends Controller
                             'training_classes.location'
                         );
                 })
-                ->latest('created_at')
+                ->orderBy('created_at', 'asc')
                 ->get(),
                 // Page header props for breadcrumb.
                 'pageHeader' => [
@@ -173,7 +173,14 @@ class TechniqueController extends Controller
             'categories' => Category::where('user_id', auth()->id())->get(),
             'positions' => Position::where('user_id', auth()->id())->get(),
             'training_classes' => TrainingClass::where('user_id', auth()->id())->orderby('class_date', 'DESC')->get(),
-            'from' => request()->query('from', 'techniques')
+            'from' => request()->query('from', 'techniques'),
+            // Page header props for breadcrumb.
+            'pageHeader' => [
+                'backRoute' => route('techniques.index'),
+                'backLabel' => 'View',
+                'sectionRoute' => null,
+                'sectionLabel' => $technique->technique_name,
+            ],
         ]);
     }
 

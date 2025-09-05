@@ -84,31 +84,58 @@ export default function Create({ categories, training_classes, positions }) {
         >
             <Head title="Add technique" />
 
-            <div className="py-6 sm:py-12 pl-2 pr-2 dark:bg-gray-700">
-                <div className="mx-auto max-w-3xl sm:px-6 lg:px-8">
-                    <div className="border-b border-gray-200 rounded-t-lg bg-gray-50 px-6 py-4 dark:bg-gray-900 dark:border-gray-500">
-                        <h3 className="text-lg font-medium text-gray-900 dark:text-white">Add technique</h3>
+            <div className="py-6 sm:py-12 pl-2 pr-2">
+                <div className="mx-auto max-w-4xl sm:px-6 lg:px-8">
+
+                    {/* Welcome Section */}
+                    <div className="mb-8">
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                            Add technique
+                        </h1>
+                        <p className="text-gray-600 dark:text-gray-400">
+                            Create a new technique and organize it by category and position for better training management.
+                        </p>
                     </div>
-                    <div className="overflow-hidden bg-white shadow-sm dark:bg-gray-800 rounded-b-lg">
-                        <div className="p-6 text-gray-900">
-                            <div className="mb-8 flex justify-center">
-                                <div className="w-[600px]">
-                                    {/* Technique creation form */}
-                                    <form onSubmit={submit} className="mt-6 space-y-6">
+
+                    {/* Form Card */}
+                    <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700">
+                        <div className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-6 py-4">
+                            <div className="flex items-center gap-3">
+                                <div className="p-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg">
+                                    <svg className="w-5 h-5 text-indigo-600 dark:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                    </svg>
+                                </div>
+                                <h3 className="text-lg font-medium text-gray-900 dark:text-white">Technique Details</h3>
+                            </div>
+                        </div>
+
+                        <div className="p-6">
+                            <form onSubmit={submit} className="space-y-6">
+
+                                {/* Basic Information Section */}
+                                <div className="space-y-6">
+                                    <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                                        <h4 className="text-md font-medium text-gray-900 dark:text-white mb-4">Basic Information</h4>
+
                                         {/* Technique name field */}
-                                        <div>
-                                            <InputLabel htmlFor="technique_name" value={<>Name <span className="text-red-500">*</span></>} className="dark:text-white" />
+                                        <div className="mb-6">
+                                            <InputLabel htmlFor="technique_name" value={<>Technique name <span className="text-red-500">*</span></>} className="dark:text-white" />
                                             <TextInput
                                                 id="technique_name"
                                                 type="text"
                                                 name="technique_name"
                                                 value={data.technique_name}
                                                 className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
+                                                placeholder="e.g., Triangle Choke, Armbar, Kimura"
                                                 isFocused={true}
                                                 onChange={(e) => setData('technique_name', e.target.value)}
                                                 required
                                             />
                                             <InputError message={errors.technique_name} className="mt-2" />
+                                            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                                                Choose a clear, descriptive name for this technique.
+                                            </p>
                                         </div>
 
                                         {/* Technique description field */}
@@ -120,64 +147,86 @@ export default function Create({ categories, training_classes, positions }) {
                                                 value={data.technique_description}
                                                 className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                                 rows={4}
+                                                placeholder="Describe the technique, key details, setup, or any notes that would be helpful..."
                                                 onChange={(e) => setData('technique_description', e.target.value)}
                                             />
                                             <InputError message={errors.technique_description} className="mt-2" />
+                                            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                                                Optional: Add details about the technique to help with learning and reference.
+                                            </p>
                                         </div>
+                                    </div>
 
-                                        {/* Category selection field */}
-                                        <div>
-                                            <InputLabel htmlFor="category_id" value={<>Category <span className="text-red-500">*</span></>} className="dark:text-white" />
-                                            <select
-                                                id="category_id"
-                                                name="category_id"
-                                                value={data.category_id}
-                                                className="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                                onChange={(e) => setData('category_id', e.target.value)}
-                                                required
-                                            >
-                                                <option value="">Select a category</option>
-                                                {categories && categories.length > 0 ? (
-                                                    categories.map((category) => (
-                                                        <option key={category.category_id} value={category.category_id}>
-                                                            {category.category_name}
-                                                        </option>
-                                                    ))
-                                                ) : (
-                                                    <option value="">No categories available</option>
-                                                )}
-                                            </select>
-                                            <InputError message={errors.category_id} className="mt-2" />
-                                        </div>
+                                    {/* Classification Section */}
+                                    <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                                        <h4 className="text-md font-medium text-gray-900 dark:text-white mb-4">Classification</h4>
 
-                                        {/* Position selection field */}
-                                        <div>
-                                            <InputLabel htmlFor="position_id" value={<>Position <span className="text-red-500">*</span></>} className="dark:text-white" />
-                                            <select
-                                                id="position_id"
-                                                name="position_id"
-                                                value={data.position_id}
-                                                className="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                                onChange={(e) => setData('position_id', e.target.value)}
-                                                required
-                                            >
-                                                <option value="">Select a position</option>
-                                                {positions && positions.length > 0 ? (
-                                                    positions.map((position) => (
-                                                        <option key={position.position_id} value={position.position_id}>
-                                                            {position.position_name}
-                                                        </option>
-                                                    ))
-                                                ) : (
-                                                    <option value="">No positions available</option>
-                                                )}
-                                            </select>
-                                            <InputError message={errors.position_id} className="mt-2" />
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            {/* Category selection field */}
+                                            <div>
+                                                <InputLabel htmlFor="category_id" value={<>Category <span className="text-red-500">*</span></>} className="dark:text-white" />
+                                                <select
+                                                    id="category_id"
+                                                    name="category_id"
+                                                    value={data.category_id}
+                                                    className="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                                    onChange={(e) => setData('category_id', e.target.value)}
+                                                    required
+                                                >
+                                                    <option value="">Select a category</option>
+                                                    {categories && categories.length > 0 ? (
+                                                        categories.map((category) => (
+                                                            <option key={category.category_id} value={category.category_id}>
+                                                                {category.category_name}
+                                                            </option>
+                                                        ))
+                                                    ) : (
+                                                        <option value="">No categories available</option>
+                                                    )}
+                                                </select>
+                                                <InputError message={errors.category_id} className="mt-2" />
+                                                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                                                    Choose the category this technique belongs to.
+                                                </p>
+                                            </div>
+
+                                            {/* Position selection field */}
+                                            <div>
+                                                <InputLabel htmlFor="position_id" value={<>Position <span className="text-red-500">*</span></>} className="dark:text-white" />
+                                                <select
+                                                    id="position_id"
+                                                    name="position_id"
+                                                    value={data.position_id}
+                                                    className="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                                    onChange={(e) => setData('position_id', e.target.value)}
+                                                    required
+                                                >
+                                                    <option value="">Select a position</option>
+                                                    {positions && positions.length > 0 ? (
+                                                        positions.map((position) => (
+                                                            <option key={position.position_id} value={position.position_id}>
+                                                                {position.position_name}
+                                                            </option>
+                                                        ))
+                                                    ) : (
+                                                        <option value="">No positions available</option>
+                                                    )}
+                                                </select>
+                                                <InputError message={errors.position_id} className="mt-2" />
+                                                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                                                    Choose the position this technique is performed from.
+                                                </p>
+                                            </div>
                                         </div>
+                                    </div>
+
+                                    {/* Session Association Section */}
+                                    <div>
+                                        <h4 className="text-md font-medium text-gray-900 dark:text-white mb-4">Session Association (Optional)</h4>
 
                                         {/* Session selection field */}
                                         <div>
-                                            <InputLabel htmlFor="class_id" value={<>Session</>} className="dark:text-white" />
+                                            <InputLabel htmlFor="class_id" value="Training session" className="dark:text-white" />
                                             <select
                                                 id="class_id"
                                                 name="class_id"
@@ -185,7 +234,7 @@ export default function Create({ categories, training_classes, positions }) {
                                                 className="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                                 onChange={(e) => setData('class_id', e.target.value)}
                                             >
-                                                <option value="">Select a session</option>
+                                                <option value="">Select a session (optional)</option>
                                                 {training_classes && training_classes.length > 0 ? (
                                                     training_classes.map((training_class) => (
                                                         <option key={training_class.class_id} value={training_class.class_id}>
@@ -193,19 +242,54 @@ export default function Create({ categories, training_classes, positions }) {
                                                         </option>
                                                     ))
                                                 ) : (
-                                                    <option value="">No session available</option>
+                                                    <option value="">No sessions available</option>
                                                 )}
                                             </select>
                                             <InputError message={errors.class_id} className="mt-2" />
+                                            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                                                Optionally link this technique to a specific training session.
+                                            </p>
                                         </div>
-
-                                        {/* Submit button */}
-                                        <div className="flex items-center gap-4">
-                                            <PrimaryButton disabled={processing}>Save Technique</PrimaryButton>
-                                        </div>
-                                    </form>
+                                    </div>
                                 </div>
-                            </div>
+
+                                {/* Submit Section */}
+                                <div className="flex items-center justify-between pt-6 border-t border-gray-200 dark:border-gray-700">
+                                    <div className="text-sm text-gray-500 dark:text-gray-400">
+                                        All fields marked with <span className="text-red-500">*</span> are required
+                                    </div>
+                                    <div className="flex items-center gap-4">
+                                        <button
+                                            type="button"
+                                            onClick={() => reset()}
+                                            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-600 transition-colors"
+                                        >
+                                            Clear form
+                                        </button>
+                                        <PrimaryButton
+                                            disabled={processing}
+                                            className="flex items-center gap-2"
+                                        >
+                                            {processing ? (
+                                                <>
+                                                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                    </svg>
+                                                    Saving...
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                                    </svg>
+                                                    Save technique
+                                                </>
+                                            )}
+                                        </PrimaryButton>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

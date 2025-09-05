@@ -3,6 +3,8 @@ import { Head } from '@inertiajs/react';
 import Footer from '@/Components/Footer';
 import GuestHeader from '@/Components/GuestHeader';
 import { motion, useReducedMotion } from 'framer-motion';
+import logoUrlLight from '../../images/grapplingtracker-03cropped.png';
+import logoUrlDark from '../../images/grapplingtracker-02cropped.png';
 
 export default function Welcome({ auth, canLogin, canRegister }) {
     const prefersReducedMotion = useReducedMotion();
@@ -93,7 +95,7 @@ export default function Welcome({ auth, canLogin, canRegister }) {
 
                 {/* Features Section */}
                 <motion.div
-                    className="pt-12 pb-24 sm:pt-16 sm:pb-32 bg-white dark:bg-gray-900 relative"
+                    className="pt-24 pb-24 sm:pt-24 sm:pb-24 bg-white dark:bg-gray-800 relative"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}

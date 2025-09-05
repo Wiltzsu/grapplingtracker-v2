@@ -35,11 +35,11 @@ class StatsController extends Controller
 
         // Total classes
         switch ($request->range) {
+            case 'month':
+                $queryTotalClasses->where('class_date', '>=', now()->subMonth(1));
+                break;
             case '6months':
                 $queryTotalClasses->where('class_date', '>=', now()->subMonths(6));
-                break;
-            case 'year':
-                $queryTotalClasses->where('class_date', '>=', now()->subYear());
                 break;
             case 'custom':
                 if ($request->startDate && $request->endDate) {
@@ -52,8 +52,8 @@ class StatsController extends Controller
             case 'all':
                 // No date filtering needed
                 break;
-            default: // month
-                $queryTotalClasses->where('class_date', '>=', now()->subMonth(1));
+            default: // year
+                $queryTotalClasses->where('class_date', '>=', now()->subYear());
                 break;
         }
 
@@ -61,11 +61,11 @@ class StatsController extends Controller
 
         // Total class duration
         switch ($request->range) {
+            case 'month':
+                $queryTotalClassDuration->where('class_date', '>=', now()->subMonth(1));
+                break;
             case '6months':
                 $queryTotalClassDuration->where('class_date', '>=', now()->subMonths(6));
-                break;
-            case 'year':
-                $queryTotalClassDuration->where('class_date', '>=', now()->subYear());
                 break;
             case 'custom':
                 if ($request->startDate && $request->endDate) {
@@ -78,8 +78,8 @@ class StatsController extends Controller
             case 'all':
                 // No date filtering needed
                 break;
-            default: // month
-                $queryTotalClassDuration->where('class_date', '>=', now()->subMonth(1));
+            default: // year
+                $queryTotalClassDuration->where('class_date', '>=', now()->subYear());
                 break;
         }
 
@@ -87,11 +87,11 @@ class StatsController extends Controller
 
         // Total rounds
         switch ($request->range) {
+            case 'month':
+                $queryTotalRounds->where('class_date', '>=', now()->subMonth(1));
+                break;
             case '6months':
                 $queryTotalRounds->where('class_date', '>=', now()->subMonths(6));
-                break;
-            case 'year':
-                $queryTotalRounds->where('class_date', '>=', now()->subYear());
                 break;
             case 'custom':
                 if ($request->startDate && $request->endDate) {
@@ -105,7 +105,7 @@ class StatsController extends Controller
                 // No date filtering needed
                 break;
             default: // month
-                $queryTotalRounds->where('class_date', '>=', now()->subMonth(1));
+                $queryTotalRounds->where('class_date', '>=', now()->subYear());
                 break;
         }
 
@@ -138,11 +138,11 @@ class StatsController extends Controller
 
         // Average round duration
         switch($request->range) {
+            case 'month':
+                $queryAverageRoundDuration->where('class_date', '>=', now()->subMonth(1));
+                break;
             case '6months':
                 $queryAverageRoundDuration->where('class_date', '>=', now()->subMonths(6));
-                break;
-            case 'year':
-                $queryAverageRoundDuration->where('class_date', '>=', now()->subYear());
                 break;
             case 'custom':
                 if ($request->startDate && $request->endDate) {
@@ -154,8 +154,8 @@ class StatsController extends Controller
                 break;
             case 'all':
                 break;
-            default: // month
-            $queryAverageRoundDuration->where('class_date', '>=', now()->subMonth(1));
+            default: // year
+                $queryAverageRoundDuration->where('class_date', '>=', now()->subYear());
                 break;
         }
 
@@ -165,11 +165,11 @@ class StatsController extends Controller
 
         // Classes per week
         switch($request->range) {
+            case 'month':
+                $queryAverageClassDuration->where('class_date', '>=', now()->subMonth(1));
+                break;
             case '6months':
                 $queryAverageClassDuration->where('class_date', '>=', now()->subMonths(6));
-                break;
-            case 'year':
-                $queryAverageClassDuration->where('class_date', '>=', now()->subYear());
                 break;
             case 'custom':
                 if ($request->starDate && $request->endDate) {
@@ -181,8 +181,8 @@ class StatsController extends Controller
                 break;
             case 'all':
                 break;
-            default:
-            $queryAverageClassDuration->where('class_date', '>=', now()->subMonth(1));
+            default: // year
+                $queryAverageClassDuration->where('class_date', '>=', now()->subYear());
                 break;
         }
 
@@ -191,11 +191,11 @@ class StatsController extends Controller
 
         // Sparring relative to training
         switch($request->range) {
+            case 'month':
+                $querySparringRelativeToTraining->where('class_date', '>=', now()->subMonth(1));
+                break;
             case '6months':
                 $querySparringRelativeToTraining->where('class_date', '>=', now()->subMonths(6));
-                break;
-            case 'year':
-                $querySparringRelativeToTraining->where('class_date', '>=', now()->subYear());
                 break;
             case 'custom':
                 if ($request->startDate && $request->endDate) {
@@ -207,8 +207,8 @@ class StatsController extends Controller
                 break;
             case 'all':
                 break;
-            default:
-            $querySparringRelativeToTraining->where('class_date', '>=', now()->subMonth(1));
+            default: // year
+                $querySparringRelativeToTraining->where('class_date', '>=', now()->subYear());
                 break;
         }
 
@@ -224,11 +224,11 @@ class StatsController extends Controller
 
         // Chart training frequency
         switch($request->range) {
+            case 'month':
+                $queryTrainingFrequency->where('class_date', '>=', now()->subMonth(1));
+                break;
             case '6months':
                 $queryTrainingFrequency->where('class_date', '>=', now()->subMonths(6));
-                break;
-            case 'year':
-                $queryTrainingFrequency->where('class_date', '>=', now()->subYear());
                 break;
             case 'custom':
                 if ($request->startDate && $request->endDate) {
@@ -240,24 +240,55 @@ class StatsController extends Controller
                 break;
             case 'all':
                 break;
-            default: // month
-                $queryTrainingFrequency->where('class_date', '>=', now()->subMonth(1));
+            default: // year
+                $queryTrainingFrequency->where('class_date', '>=', now()->subYear());
                 break;
         }
 
-        $trainingFrequency = $queryTrainingFrequency
-            ->selectRaw('DATE_FORMAT(class_date, "%Y-%m") as month, COUNT(*) as count')
-            ->groupBy('month')
-            ->orderBy('month')
-            ->get();
+        // Clone the query to avoid modifying the original
+        $queryForDates = clone $queryTrainingFrequency;
+        $startDate = $queryForDates->min('class_date');
+        $endDate = $queryForDates->max('class_date');
+
+        if ($startDate && $endDate) {
+            $months = collect();
+            $currentDate = Carbon::parse($startDate)->startOfMonth();
+            $endMonth = Carbon::parse($endDate)->startOfMonth();
+
+            while ($currentDate->lte($endMonth)) {
+                $months->push($currentDate->format('Y-m'));
+                $currentDate->addMonth();
+            }
+
+            // Get training frequency with months that have 0 classes
+            $trainingFrequency = $months->map(function ($month) use ($queryTrainingFrequency) {
+                // Clone the query for this specific month to avoid query builder state issues
+                $monthQuery = clone $queryTrainingFrequency;
+                $count = $monthQuery
+                    ->whereRaw('DATE_FORMAT(class_date, "%Y-%m") = ?', [$month])
+                    ->count();
+
+                return [
+                    'month' => $month,
+                    'count' => $count
+                ];
+            });
+        } else {
+            // Fallback to original logic if no dates found
+            $trainingFrequency = $queryTrainingFrequency
+                ->selectRaw('DATE_FORMAT(class_date, "%Y-%m") as month, COUNT(*) as count')
+                ->groupBy('month')
+                ->orderBy('month')
+                ->get();
+        }
 
         // Chart positions trained relative to each other
         switch($request->range) {
+            case 'month':
+                $queryPositionsRelative->where('class_date', '>=', now()->subMonth(1));
+                break;
             case '6months':
                 $queryPositionsRelative->where('class_date', '>=', now()->subMonths(6));
-                break;
-            case 'year':
-                $queryPositionsRelative->where('class_date', '>=', now()->subYear());
                 break;
             case 'custom':
                 if ($request->startDate && $request->endDate) {
@@ -269,8 +300,8 @@ class StatsController extends Controller
                 break;
             case 'all':
                 break;
-            default:
-             $queryPositionsRelative->where('class_date', '>=', now()->subMonth(1));
+            default: // year
+                $queryPositionsRelative->where('class_date', '>=', now()->subYear());
                 break;
         }
 
