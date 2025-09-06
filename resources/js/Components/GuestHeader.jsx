@@ -18,7 +18,7 @@ export default function GuestHeader({ auth, showExtraNav = true }) {
             </div>
             <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm shadow-sm">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="flex h-16 items-center justify-between">
+                    <div className="flex h-20 items-center justify-between">
                         <div className="flex-shrink-0">
                             <Link href="/" className="text-xl font-bold text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                                 Grappling Tracker
