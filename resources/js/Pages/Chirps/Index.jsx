@@ -47,8 +47,8 @@ export default function Index({ auth, chirps }) {
                                 <DocumentTextIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                             </div>
                             <div className="ml-3">
-                                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Total notes</p>
-                                <p className="text-2xl font-bold text-gray-900 dark:text-white">{chirps.length}</p>
+                                <p className="text-m font-medium text-gray-800 dark:text-gray-400">Total notes</p>
+                                <p className="text-xl text-gray-900 dark:text-white">{chirps.length}</p>
                             </div>
                         </div>
                     </div>
@@ -56,13 +56,13 @@ export default function Index({ auth, chirps }) {
                     <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-700">
                         <div className="flex items-center">
                             <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
-                                <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg className="w-5 h-5 text-green-800 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                             </div>
                             <div className="ml-3">
-                                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Latest note</p>
-                                <p className="text-sm text-gray-900 dark:text-white">
+                                <p className="text-m font-medium text-gray-800 dark:text-gray-400">Latest note</p>
+                                <p className="text-m text-gray-900 dark:text-white">
                                     {chirps.length > 0 ? new Date(chirps[0].created_at).toLocaleDateString() : 'No notes yet'}
                                 </p>
                             </div>
@@ -72,13 +72,13 @@ export default function Index({ auth, chirps }) {
                     <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-700">
                         <div className="flex items-center">
                             <div className="p-2 bg-purple-100 dark:bg-purple-900 rounded-lg">
-                                <svg className="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg className="w-5 h-5 text-purple-800 dark:text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                 </svg>
                             </div>
                             <div className="ml-3">
-                                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Average length</p>
-                                <p className="text-sm text-gray-900 dark:text-white">
+                                <p className="text-m font-medium text-gray-800 dark:text-gray-400">Average length</p>
+                                <p className="text-m text-gray-900 dark:text-white">
                                     {chirps.length > 0
                                         ? Math.round(chirps.reduce((acc, chirp) => acc + chirp.message.length, 0) / chirps.length) + ' chars'
                                         : '0 chars'
