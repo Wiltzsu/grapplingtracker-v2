@@ -34,7 +34,7 @@ export default function View({ stats }) {
     return (
         <AuthenticatedLayout
             header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-white">
+                <h2 className="text-lg font-semibold leading-tight text-gray-800 dark:text-white">
                     View
                 </h2>
             }

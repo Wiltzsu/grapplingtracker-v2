@@ -141,7 +141,7 @@ export default function Stats({ auth,
         <AuthenticatedLayout
             user={auth.user}
             header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-white">
+                <h2 className="text-lg font-semibold leading-tight text-gray-800 dark:text-white">
                     Statistics and data
                 </h2>
             }

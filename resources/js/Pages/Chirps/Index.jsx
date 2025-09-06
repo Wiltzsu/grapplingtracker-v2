@@ -20,7 +20,7 @@ export default function Index({ auth, chirps }) {
     return (
         <AuthenticatedLayout
             header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-white">
+                <h2 className="text-lg font-semibold leading-tight text-gray-800 dark:text-white">
                     Notes
                 </h2>
             }
