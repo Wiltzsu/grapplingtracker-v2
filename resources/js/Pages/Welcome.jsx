@@ -64,7 +64,7 @@ export default function Welcome({ auth, canLogin, canRegister }) {
                     <img
                         src="/images/grapplingtracker-hero.jpg"
                         alt="Grappling"
-                        className="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none z-0"
+                        className="absolute inset-0 w-full h-full object-cover opacity-60 dark:opacity-30 pointer-events-none z-0"
                     />
 
                     {/* Enhanced Overlays */}
@@ -292,7 +292,7 @@ export default function Welcome({ auth, canLogin, canRegister }) {
                                 transition={{ delay: 0.1 }}
                                 className="mt-6 text-xl text-indigo-100 max-w-2xl mx-auto"
                             >
-                                Join thousands of practitioners who are already tracking their progress and improving their skills.
+                                Be part of a growing community of dedicated grapplers who are serious about improvement.
                             </motion.p>
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
