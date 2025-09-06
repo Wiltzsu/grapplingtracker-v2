@@ -32,39 +32,35 @@ class TechniqueController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
+        $perPage = $request->input('perPage', 15);
 
-        /**
-         * Display a listin of techniques
-         *
-         * 'techniques' is a prop that is passed to the Techniques Index component
-         * 'where' gets only the techniques belonging to the currently logged in user id
-         * latest() orders the results by creation date
-         * get() executes the query and retrieves all records
-         */
+        $query = Technique::where('techniques.user_id', auth()->id())
+            ->join('categories', 'techniques.category_id', '=', 'categories.category_id')
+            ->join('positions', 'techniques.position_id', '=', 'positions.position_id')
+            ->leftJoin('training_classes', 'techniques.class_id', '=', 'training_classes.class_id')
+            ->select(
+                'techniques.*',
+                'categories.category_name',
+                'positions.position_name',
+                'training_classes.instructor',
+                'training_classes.location'
+            )
+            ->orderBy('techniques.created_at', 'desc');
+
+        // Simple LIKE search instead of Scout
+        if ($search) {
+            $query->where('techniques.technique_name', 'like', "%{$search}%");
+        }
+
         return Inertia::render('Techniques/Index', [
-            'techniques' => Technique::search($search)
-                ->where('user_id', auth()->id())
-                ->query(function ($query) {
-                    $query->join('categories', 'techniques.category_id', '=', 'categories.category_id')
-                        ->join('positions', 'techniques.position_id', '=', 'positions.position_id')
-                        ->leftJoin('training_classes', 'techniques.class_id', '=', 'training_classes.class_id')
-                        ->select(
-                            'techniques.*',
-                            'categories.category_name',
-                            'positions.position_name',
-                            'training_classes.instructor',
-                            'training_classes.location'
-                        );
-                })
-                ->orderBy('created_at', 'asc')
-                ->get(),
-                // Page header props for breadcrumb.
-                'pageHeader' => [
-                    'backRoute' => route('view'),
-                    'backLabel' => 'View',
-                    'sectionRoute' => null,
-                    'sectionLabel' => 'View techniques',
-                ],
+            'techniques' => $query->paginate($perPage),
+            // Page header props for breadcrumb.
+            'pageHeader' => [
+                'backRoute' => route('view'),
+                'backLabel' => 'View',
+                'sectionRoute' => null,
+                'sectionLabel' => 'View techniques',
+            ],
         ]);
     }
 

@@ -33,6 +33,10 @@ export default function Index({ techniques }) {
     const [showErrorPopup, setShowErrorPopup] = useState(false);
     const [techniqueToDelete, setTechniqueToDelete] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
+    const [perPage, setPerPage] = useState(() => {
+        const params = new URLSearchParams(window.location.search);
+        return parseInt(params.get('perPage') || '15', 10);
+    });
     const [search, setSearch] = useState('');
 
     const { flash } = usePage().props;
@@ -114,7 +118,7 @@ export default function Index({ techniques }) {
                                         setSearch(e.target.value);
                                         router.get(
                                             route('techniques.index'),
-                                            { search: e.target.value },
+                                            { search: e.target.value, perPage },
                                             { preserveState: true, preserveScroll: true }
                                         );
                                     }}
@@ -137,8 +141,8 @@ export default function Index({ techniques }) {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
-                        {techniques && techniques.length > 0 ? (
-                            techniques.map((technique) => (
+                        {techniques.data && techniques.data.length > 0 ? (
+                            techniques.data.map((technique) => (
                                 <div
                                     key={technique.technique_id}
                                     className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-200"
@@ -211,6 +215,47 @@ export default function Index({ techniques }) {
                             </div>
                         )}
                     </div>
+
+                    {/* Per page */}
+                    <div className="flex justify-end pt-3">
+                        <div className="relative">
+                            <select
+                                value={perPage}
+                                className="w-full sm:w-auto appearance-none bg-white dark:bg-gray-700 pl-3 pr-10 py-2 text-sm font-medium text-gray-700 dark:text-white border border-gray-300 dark:border-gray-600 rounded-md shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                onChange={(e) => {
+                                    setPerPage(e.target.value);
+                                    router.get(
+                                        route('techniques.index', { perPage: e.target.value }),
+                                        {},
+                                        { preserveScroll: true }
+                                    );
+                                }}
+                            >
+                                <option value="15">15 per page</option>
+                                <option value="30">30 per page</option>
+                                <option value="50">50 per page</option>
+                                <option value="100">100 per page</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    {/* Simple pagination links */}
+                    <div className="mt-6 flex flex-wrap justify-center gap-2 mb-5">
+                        {techniques.links.map((link, i) => (
+                            <Link
+                                key={i}
+                                href={link.url}
+                                className={`px-3 py-1 text-sm rounded ${
+                                    link.active
+                                        ? 'bg-indigo-600 text-white'
+                                        : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-600'
+                                } ${!link.url && 'opacity-50 cursor-not-allowed'}`}
+                                preserveScroll
+                                dangerouslySetInnerHTML={{ __html: link.label }}
+                            />
+                        ))}
+                    </div>
+
                 </div>
             </div>
 
