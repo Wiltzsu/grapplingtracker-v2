@@ -9,9 +9,16 @@ export default function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {/* Company Info */}
                     <div className="col-span-1">
-                        <Link href="/" className="text-white text-xl font-bold mb-4 block">
-                            Grappling Tracker
-                        </Link>
+                        <div className="flex items-center mb-4">
+                            <img
+                                src="/grapplingtracker-01.svg"
+                                alt="Grappling Tracker Logo"
+                                className="h-20 w-20 mr-3"
+                            />
+                            <Link href="/" className="text-white text-xl font-bold">
+                                Grappling Tracker
+                            </Link>
+                        </div>
                         <p className="text-gray-300 text-sm">
                             Track your progress, log your training, and improve your grappling journey.
                         </p>

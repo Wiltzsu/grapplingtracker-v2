@@ -104,7 +104,7 @@ class StatsController extends Controller
             case 'all':
                 // No date filtering needed
                 break;
-            default: // month
+            default: // year
                 $queryTotalRounds->where('class_date', '>=', now()->subYear());
                 break;
         }
@@ -129,8 +129,8 @@ class StatsController extends Controller
                 break;
             case 'all':
                 break;
-            default: // month
-            $queryTotalRoundDuration->where('class_date', '>=', now()->subMonth(1));
+            default: // year
+            $queryTotalRoundDuration->where('class_date', '>=', now()->subYear());
                 break;
         }
 

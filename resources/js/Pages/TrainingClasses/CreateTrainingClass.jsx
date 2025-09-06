@@ -144,11 +144,13 @@ export default function Create({ categories, positions }) {
                                                     name="instructor"
                                                     value={data.instructor}
                                                     className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
-                                                    placeholder="Who led the session?"
                                                     isFocused={true}
                                                     onChange={(e) => setData('instructor', e.target.value)}
                                                 />
                                                 <InputError message={errors.instructor} className="mt-2" />
+                                                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                                                    Who led the session?
+                                                </p>
                                             </div>
 
                                             {/* Location */}
@@ -160,10 +162,12 @@ export default function Create({ categories, positions }) {
                                                     name="location"
                                                     value={data.location}
                                                     className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
-                                                    placeholder="Where did you train?"
                                                     onChange={(e) => setData('location', e.target.value)}
                                                 />
                                                 <InputError message={errors.location} className="mt-2" />
+                                                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                                                    Where did you train?
+                                                </p>
                                             </div>
                                         </div>
 
@@ -217,10 +221,12 @@ export default function Create({ categories, positions }) {
                                                 value={data.class_description}
                                                 className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                                 rows={4}
-                                                placeholder="What did you work on? Any key takeaways or notes from the session?"
                                                 onChange={(e) => setData('class_description', e.target.value)}
                                             />
                                             <InputError message={errors.class_description} className="mt-2" />
+                                            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                                                Any key takeaways or notes from the session?
+                                            </p>
                                         </div>
                                     </div>
 
@@ -283,7 +289,7 @@ export default function Create({ categories, positions }) {
                                     <div className="text-sm text-gray-500 dark:text-gray-400">
                                         All fields marked with <span className="text-red-500">*</span> are required
                                     </div>
-                                    <div className="flex items-center gap-4">
+                                    <div className="flex flex-col sm:flex-row items-center gap-4">
                                         <button
                                             type="button"
                                             onClick={() => reset()}

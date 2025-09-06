@@ -157,10 +157,10 @@ export default function Dashboard({ recent_classes, recentActivity }) {
                                             className="p-4 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-200"
                                         >
                                             <div className="flex justify-between items-start">
-                                                <span className="text-gray-700 dark:text-gray-200">
+                                                <span className="text-gray-700 dark:text-gray-200 px-2">
                                                     {activity.message}
                                                 </span>
-                                                <span className="text-xs text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full">
+                                                <span className="text-xs text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full text-center">
                                                     {formatDistanceToNow(activity.timestamp, { addSuffix: true })}
                                                 </span>
                                             </div>

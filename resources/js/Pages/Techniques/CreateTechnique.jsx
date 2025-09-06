@@ -127,7 +127,6 @@ export default function Create({ categories, training_classes, positions }) {
                                                 name="technique_name"
                                                 value={data.technique_name}
                                                 className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
-                                                placeholder="e.g., Triangle Choke, Armbar, Kimura"
                                                 isFocused={true}
                                                 onChange={(e) => setData('technique_name', e.target.value)}
                                                 required
@@ -147,7 +146,6 @@ export default function Create({ categories, training_classes, positions }) {
                                                 value={data.technique_description}
                                                 className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                                 rows={4}
-                                                placeholder="Describe the technique, key details, setup, or any notes that would be helpful..."
                                                 onChange={(e) => setData('technique_description', e.target.value)}
                                             />
                                             <InputError message={errors.technique_description} className="mt-2" />
@@ -258,7 +256,7 @@ export default function Create({ categories, training_classes, positions }) {
                                     <div className="text-sm text-gray-500 dark:text-gray-400">
                                         All fields marked with <span className="text-red-500">*</span> are required
                                     </div>
-                                    <div className="flex items-center gap-4">
+                                    <div className="flex flex-col sm:flex-row items-center gap-4">
                                         <button
                                             type="button"
                                             onClick={() => reset()}

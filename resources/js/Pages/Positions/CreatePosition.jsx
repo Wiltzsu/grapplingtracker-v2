@@ -120,14 +120,13 @@ export default function Create() {
                                             name="position_name"
                                             value={data.position_name}
                                             className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
-                                            placeholder="e.g., Guard, Mount, Side Control"
                                             isFocused={true}
                                             onChange={(e) => setData('position_name', e.target.value)}
                                             required
                                         />
                                         <InputError message={errors.position_name} className="mt-2" />
                                         <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                                            Choose a clear, descriptive name for this position.
+                                            Choose a clear, descriptive name for this position. Positions are for example mount, half-guard, 50-50.
                                         </p>
                                     </div>
 
@@ -140,7 +139,6 @@ export default function Create() {
                                             value={data.position_description}
                                             className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                             rows={4}
-                                            placeholder="Describe this position, common techniques from here, or any notes that would be helpful..."
                                             onChange={(e) => setData('position_description', e.target.value)}
                                         />
                                         <InputError message={errors.position_description} className="mt-2" />
@@ -155,7 +153,7 @@ export default function Create() {
                                     <div className="text-sm text-gray-500 dark:text-gray-400">
                                         All fields marked with <span className="text-red-500">*</span> are required
                                     </div>
-                                    <div className="flex items-center gap-4">
+                                    <div className="flex flex-col sm:flex-row items-center gap-4">
                                         <button
                                             type="button"
                                             onClick={() => reset()}
