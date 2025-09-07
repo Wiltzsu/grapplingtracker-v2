@@ -113,11 +113,11 @@ class StatsController extends Controller
 
         // Total round duration
         switch ($request->range) {
+            case 'month':
+                $queryTotalRoundDuration->where('class_date', '>=', now()->subMonth(1));
+                break;
             case '6months':
                 $queryTotalRoundDuration->where('class_date', '>=', now()->subMonths(6));
-                break;
-            case 'year':
-                $queryTotalRoundDuration->where('class_date', '>=', now()->subYear());
                 break;
             case 'custom':
                 if ($request->startDate && $request->endDate) {
