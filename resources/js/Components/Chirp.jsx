@@ -67,10 +67,15 @@ export default function Chirp({ chirp }) {
                                 </button>
                             </Dropdown.Trigger>
                             <Dropdown.Content>
-                                <button className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-500 focus:bg-gray-100 transition duration-150 ease-in-out dark:text-white" onClick={() => setEditing(true)}>
+                                <button className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-200 focus:bg-gray-100 transition duration-150 ease-in-out dark:text-white dark:hover:bg-gray-600" onClick={() => setEditing(true)}>
                                     Edit
                                 </button>
-                                <Dropdown.Link as="button" href={route('chirps.destroy', chirp.id)} method="delete">
+                                <Dropdown.Link
+                                    as="button"
+                                    href={route('chirps.destroy', chirp.id)}
+                                    method="delete"
+                                    className="text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900 hover:text-red-700 dark:hover:text-red-300 focus:bg-red-50 dark:focus:bg-red-900 focus:text-red-700 dark:focus:text-red-300"
+                                >
                                     Delete
                                 </Dropdown.Link>
                             </Dropdown.Content>
