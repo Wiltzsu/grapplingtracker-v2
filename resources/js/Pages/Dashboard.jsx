@@ -9,26 +9,26 @@ export default function Dashboard({ recent_classes, recentActivity }) {
         {
             name: 'Add training session',
             route: 'trainingclasses.create',
-            description: 'Add a new session',
+            description: 'Log a new session with duration, rounds, and techniques practiced',
             icon: <PlusIcon className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
         },
         {
             name: 'Add technique',
             route: 'techniques.create',
-            description: 'Add a new technique',
+            description: 'Record a new grappling technique with position and detailed notes',
             icon: <PlusIcon className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
         },
         {
             name: 'Add position',
             route: 'positions.create',
             from: 'dashboard',
-            description: 'Add a new position',
+            description: 'Create a new position (e.g., mount, guard, side control)',
             icon: <PlusIcon className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
         },
         {
             name: 'Add category',
             route: 'categories.create',
-            description: 'Add a new category',
+            description: 'Create a new category (e.g., submissions, escapes)',
             icon: <PlusIcon className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
         },
     ];

@@ -8,25 +8,25 @@ export default function View({ stats }) {
         {
             name: 'View training sessions',
             route: 'trainingclasses.index',
-            description: 'View all sessions',
+            description: 'View all your logged training sessions',
             icon: <EyeIcon className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
         },
         {
             name: 'View techniques',
             route: 'techniques.index',
-            description: 'View all techniques',
+            description: 'View all your recorded techniques',
             icon: <EyeIcon className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
         },
         {
             name: 'View positions',
             route: 'positions.index',
-            description: 'View all positions',
+            description: 'View all your grappling positions',
             icon: <EyeIcon className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
         },
         {
             name: 'View categories',
             route: 'categories.index',
-            description: 'View all categories',
+            description: 'View all your technique categories',
             icon: <EyeIcon className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
         },
     ];
