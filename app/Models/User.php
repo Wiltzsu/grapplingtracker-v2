@@ -11,12 +11,14 @@ use App\Models\Position;
 use App\Models\Category;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Traits\ConditionallyVerifiesEmail;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     /**
  * @use HasFactory<\Database\Factories\UserFactory>
 */
+    use HasApiTokens;
     use HasFactory;
     use Notifiable;
     use ConditionallyVerifiesEmail;
