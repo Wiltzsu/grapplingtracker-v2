@@ -47,12 +47,12 @@ export default function GuestHeader({ auth, showExtraNav = true }) {
                                             </Link>
                                         </div>
                                         <div>
-                                            <Link
+                                            {/* <Link
                                                 href={route('register')}
                                                 className="rounded-md bg-indigo-600 dark:bg-indigo-500 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 dark:hover:bg-indigo-400 transition-all shadow-md hover:shadow-lg"
                                             >
                                                 Register
-                                            </Link>
+                                            </Link> */}
                                         </div>
                                     </>
                                 )}

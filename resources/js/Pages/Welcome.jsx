@@ -3,8 +3,6 @@ import { Head } from '@inertiajs/react';
 import Footer from '@/Components/Footer';
 import GuestHeader from '@/Components/GuestHeader';
 import { motion, useReducedMotion } from 'framer-motion';
-import logoUrlLight from '../../images/grapplingtracker-03cropped.png';
-import logoUrlDark from '../../images/grapplingtracker-02cropped.png';
 
 export default function Welcome({ auth, canLogin, canRegister }) {
     const prefersReducedMotion = useReducedMotion();
@@ -125,7 +123,7 @@ export default function Welcome({ auth, canLogin, canRegister }) {
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
                                     >
-                                        <Link
+                                        {/* <Link
                                             href={route('register')}
                                             className="group relative inline-flex items-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
                                         >
@@ -136,7 +134,7 @@ export default function Welcome({ auth, canLogin, canRegister }) {
                                                 </svg>
                                             </span>
                                             <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                        </Link>
+                                        </Link> */}
                                     </motion.div>
 
                                     <motion.div
