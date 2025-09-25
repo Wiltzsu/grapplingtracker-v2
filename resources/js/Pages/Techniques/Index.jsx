@@ -16,6 +16,7 @@ import ConfirmationPopup from '@/Components/ConfirmationPopup';
 import SuccessPopup from '@/Components/SuccessPopup';
 import ErrorPopup from '@/Components/ErrorPopup';
 import PageHeader from '@/Components/PageHeader';
+import Linkify from 'linkify-react';
 
 /**
  * Index Component - Displays and manages the techniques list
@@ -187,9 +188,16 @@ export default function Index({ techniques }) {
                                             </Dropdown.Content>
                                         </Dropdown>
                                     </div>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400 whitespace-pre-line">
-                                        {technique.technique_description || 'No description provided'}
-                                    </p>
+                                    {/* Auto-link URLs in description */}
+                                    <Linkify
+                                        options={{
+                                            attributes: { target: '_blank', rel: 'noopener noreferrer' },
+                                        }}
+                                    >
+                                        <p className="text-sm text-gray-500 dark:text-gray-400 whitespace-pre-line">
+                                            {technique.technique_description || 'No description provided'}
+                                        </p>
+                                    </Linkify>
                                     <div className="mt-4 flex flex-wrap gap-2">
                                         {technique.position_name && (
                                             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
