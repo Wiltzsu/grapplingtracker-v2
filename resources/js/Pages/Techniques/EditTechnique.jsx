@@ -201,14 +201,13 @@ export default function EditTechnique({ technique, categories, positions, traini
 
                                         {/* Session selection field */}
                                         <div>
-                                            <InputLabel htmlFor="class_id" value={<>Training session <span className="text-red-500">*</span></>} className="dark:text-white" />
+                                            <InputLabel htmlFor="class_id" value={<>Training session</>} className="dark:text-white" />
                                             <select
                                                 id="class_id"
                                                 name="class_id"
                                                 value={data.class_id}
                                                 className="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                                 onChange={(e) => setData('class_id', e.target.value)}
-                                                required
                                             >
                                                 <option value="">Select a session</option>
                                                 {training_classes && training_classes.map((training_class) => (
