@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TrainingClass;
+use App\Models\Technique;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -305,13 +306,17 @@ class StatsController extends Controller
                 break;
         }
 
-        $positionsRelative = $queryPositionsRelative
-            ->join('techniques', 'training_classes.class_id', '=', 'techniques.class_id')
-            ->join('positions', 'techniques.position_id', '=', 'positions.position_id')
-            ->where('techniques.user_id', auth()->id())
-            ->select('positions.position_name', DB::raw('COUNT(*) as count'))
-            ->groupBy('positions.position_name')
-            ->get();
+        $positionsRelative = Technique::with('position')
+        ->where('user_id', auth()->id())
+        ->get()
+        ->groupBy('position.position_name')
+        ->map(function ($techniques, $positionName) {
+            return [
+                'position_name' => $positionName,
+                'count' => $techniques->count()
+            ];
+        })
+        ->values();
 
         return Inertia::render('Stats', [
             'totalClasses' => $totalClasses,

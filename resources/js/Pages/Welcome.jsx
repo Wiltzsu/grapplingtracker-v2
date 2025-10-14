@@ -84,15 +84,6 @@ export default function Welcome({ auth, canLogin, canRegister }) {
                             animate="animate"
                             variants={staggerChildren}
                         >
-                            {/* Badge */}
-                            <motion.div
-                                variants={fadeIn}
-                                className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-300 mb-8"
-                            >
-                                <span className="w-2 h-2 bg-indigo-500 rounded-full mr-2 animate-pulse"></span>
-                                New: Enhanced Analytics Dashboard
-                            </motion.div>
-
                             <motion.h1
                                 variants={fadeIn}
                                 className="text-5xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-7xl lg:text-8xl sm:leading-tight"
@@ -292,23 +283,6 @@ export default function Welcome({ auth, canLogin, canRegister }) {
                             >
                                 Be part of a growing community of dedicated grapplers who are serious about improvement.
                             </motion.p>
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.2 }}
-                                className="mt-10"
-                            >
-                                <Link
-                                    href={route('register')}
-                                    className="inline-flex items-center px-8 py-4 text-lg font-semibold text-indigo-600 bg-white rounded-xl shadow-lg hover:shadow-xl hover:bg-gray-50 transition-all duration-300"
-                                >
-                                    Start Your Journey Today
-                                    <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                    </svg>
-                                </Link>
-                            </motion.div>
                         </div>
                     </motion.div>
                 )}

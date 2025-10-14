@@ -485,7 +485,7 @@ export default function Stats({ auth,
                                                 maintainAspectRatio: false,
                                                 plugins: {
                                                     legend: {
-                                                        position: 'right',
+                                                        position: 'bottom',
                                                         labels: {
                                                             color: chartColors.textColor,
                                                             usePointStyle: true,
@@ -538,7 +538,7 @@ export default function Stats({ auth,
                                                 maintainAspectRatio: false,
                                                 plugins: {
                                                     legend: {
-                                                        position: 'right',
+                                                        position: 'bottom',
                                                         labels: {
                                                             color: chartColors.textColor,
                                                             usePointStyle: true,
