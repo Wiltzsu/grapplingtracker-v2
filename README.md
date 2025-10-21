@@ -18,19 +18,15 @@
 
 This is a **complete refactor** of the [original Grappling Tracker](https://github.com/Wiltzsu/grapplingtracker), built with modern technologies:
 
-- **Monolithic Architecture**: Single, cohesive application - ideal for showcase projects and focused applications
+- **Monolithic Architecture**: All features in one application
 - **Modern UI/UX**: React components with smooth animations and responsive design
 - **Advanced Analytics**: Comprehensive statistics and progress tracking
 - **Search Capabilities**: Find anything quickly with powerful search functionality
 - **Mobile-First**: Optimized for mobile devices and tablets
 
----
-
 ## Project Status
 
 **This is a hobby project** developed for a closed group of users and serves as a showcase of my web development practices. The application demonstrates full-stack development capabilities with Laravel and React, featuring comprehensive grappling training tracking functionality.
-
----
 
 ## Features
 
@@ -51,8 +47,6 @@ This is a **complete refactor** of the [original Grappling Tracker](https://gith
 - **Dark Mode**: Eye-friendly interface for all lighting conditions
 - **Real-time Updates**: Instant feedback and smooth interactions
 - **Secure Authentication**: Google OAuth and email/password authentication
-
----
 
 ## Tech Stack
 
