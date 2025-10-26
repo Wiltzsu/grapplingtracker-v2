@@ -55,7 +55,7 @@ jobs:
     - name: Run server commands
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
-          cd /var/www/william
+          cd /var/www/grapplingtracker/
           composer install --no-dev --optimize-autoloader
           php artisan config:cache
           php artisan route:cache
