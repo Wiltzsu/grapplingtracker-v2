@@ -70,9 +70,14 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function trainingClasses(): HasMany
-{
-    return $this->hasMany(TrainingClass::class);
-}
+    {
+        return $this->hasMany(TrainingClass::class);
+    }
+
+    public function positions(): HasMany
+    {
+        return $this->hasMany(Position::class);
+    }
 
     /**
      * Define a has many relationship on the user.
