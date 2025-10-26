@@ -41,16 +41,16 @@ jobs:
         ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
 
         # Copy Laravel application files
-        scp -o StrictHostKeyChecking=no -r app/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/william/
-        scp -o StrictHostKeyChecking=no -r config/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/william/
-        scp -o StrictHostKeyChecking=no -r routes/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/william/
-        scp -o StrictHostKeyChecking=no -r database/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/william/
-        scp -o StrictHostKeyChecking=no -r resources/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/william/
-        scp -o StrictHostKeyChecking=no -r bootstrap/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/william/
-        scp -o StrictHostKeyChecking=no -r public/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/william/
-        scp -o StrictHostKeyChecking=no artisan ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/william/
-        scp -o StrictHostKeyChecking=no composer.json ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/william/
-        scp -o StrictHostKeyChecking=no composer.lock ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/william/
+        scp -o StrictHostKeyChecking=no -r app/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/grapplingtracker/
+        scp -o StrictHostKeyChecking=no -r config/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/grapplingtracker/
+        scp -o StrictHostKeyChecking=no -r routes/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/grapplingtracker/
+        scp -o StrictHostKeyChecking=no -r database/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/grapplingtracker/
+        scp -o StrictHostKeyChecking=no -r resources/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/grapplingtracker/
+        scp -o StrictHostKeyChecking=no -r bootstrap/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/grapplingtracker/
+        scp -o StrictHostKeyChecking=no -r public/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/grapplingtracker/
+        scp -o StrictHostKeyChecking=no artisan ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/grapplingtracker/
+        scp -o StrictHostKeyChecking=no composer.json ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/grapplingtracker/
+        scp -o StrictHostKeyChecking=no composer.lock ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/grapplingtracker/
 
     - name: Run server commands
       run: |
