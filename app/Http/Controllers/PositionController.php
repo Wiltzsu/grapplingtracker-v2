@@ -85,17 +85,6 @@ class PositionController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * - Laravel's Route Model fetches the whole Position model instance
-     * - The $position parameter contains the full model
-     */
-    public function show(Position $position)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Position $position)
