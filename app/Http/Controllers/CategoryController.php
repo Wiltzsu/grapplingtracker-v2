@@ -6,23 +6,25 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 /**
  * Handles all category-related operations.
  */
 class CategoryController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of categories.
-     *
-     * - 'categories' is a prop that is passed to the Index component
-     * - latest() orders the results by creation date
-     * - get() executes the query and retrieves all records
      */
-    public function index()
+    public function index(Request $request)
     {
+        $this->authorize('viewAny', Category::class);
+
         return Inertia::render('Categories/Index', [
-            'categories' => Category::where('user_id', auth()->id())
+            'categories' => $request->user()
+                ->categories()
                 ->latest()
                 ->get(),
                 // Page header props for breadcrumb.
@@ -40,6 +42,8 @@ class CategoryController extends Controller
      */
     public function create(): Response
     {
+        $this->authorize('create', Category::class);
+
         return Inertia::render('Categories/CreateCategory', [
             // Page header props for breadcrumb.
             'pageHeader' => [
@@ -53,14 +57,11 @@ class CategoryController extends Controller
 
     /**
      * Store a newly created category.
-     *
-     * - Occurs when a user submits the form for creating a category
-     * - Validates the data
-     * - Creates a new Category model instance
      */
     public function store(Request $request)
     {
-        // Validate the incoming request data
+        $this->authorize('create', Category::class);
+
         $validated = $request->validate([
             'category_name' => [
                 'required',
@@ -76,39 +77,20 @@ class CategoryController extends Controller
             ],
         ]);
 
-        $validated['user_id'] = auth()->id();
+        $validated['user_id'] = $request->user()->id;
 
-        /* Creates a new Category instance and saves it to the database using mass assignment
-         *
-         * - Uses Category model's $fillable array to protect against mass assignment vulnerabilities
-         * - $validated array contains 'category_name' and 'category_description' from the form
-         *
-         * - Equivalent to:
-         *   $category = new Category();
-         *   $category->category_name = $validated['category_name'];
-         *   $category->category_description = $validated['category_description'];
-         *   $category->save();
-         */
         Category::create($validated);
 
         return back()->with('success', true);
     }
 
     /**
-     * Display the specified category.
-     */
-    public function show(Category $category)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified category.
-     *
-     * 'category' is the prop passed to EditCategory.jsx.
      */
     public function edit(Category $category)
     {
+        $this->authorize('update', $category);
+
         return Inertia::render('Categories/EditCategory', [
             'category' => $category,
             // Page header props for breadcrumb.
@@ -126,6 +108,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        $this->authorize('update', $category);
+
         $validated = $request->validate([
             'category_name' => 'required|string|max:255',
             'category_description' => 'nullable|string|max:255',
@@ -141,6 +125,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        $this->authorize('delete', $category);
+
         $category->delete();
 
         return redirect(route('categories.index'));
