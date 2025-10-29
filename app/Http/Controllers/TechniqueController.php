@@ -8,53 +8,45 @@ use App\Models\Position;
 use App\Models\TrainingClass;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 /**
- * TechniqueController
- *
- * Handles all HTTP requests related to techniques, including CRUD operations
- * and search functionality. Uses Inertia.js for server-side rendering.
+ * Handles all technique-related operations
  */
 class TechniqueController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of the techniques.
      *
-     * @param Request $request The incoming HTTP request
+     * @param Request
      * @return \Inertia\Response
-     *
-     * This method:
-     * - Handles search functionality using Laravel Scout
-     * - Filters techniques by the authenticated user
-     * - Joins related tables (categories, positions, training classes)
-     * - Orders results by creation date
      */
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Technique::class);
+
         $search = $request->input('search');
         $perPage = $request->input('perPage', 15);
 
-        $query = Technique::where('techniques.user_id', auth()->id())
-            ->join('categories', 'techniques.category_id', '=', 'categories.category_id')
-            ->join('positions', 'techniques.position_id', '=', 'positions.position_id')
-            ->leftJoin('training_classes', 'techniques.class_id', '=', 'training_classes.class_id')
-            ->select(
-                'techniques.*',
-                'categories.category_name',
-                'positions.position_name',
-                'training_classes.instructor',
-                'training_classes.location'
-            )
-            ->orderBy('techniques.created_at', 'desc');
-
-        // Simple LIKE search instead of Scout
+        // Use Scout search when there's a search term
         if ($search) {
-            $query->where('techniques.technique_name', 'like', "%{$search}%");
+            $techniques = Technique::search($search)
+            ->where('user_id', auth()->id())
+            ->query(fn($query) => $query->with(['category', 'position', 'trainingclass']))
+            ->paginate($perPage);
+        } else {
+            // Regular Eloquent when no search term
+            $techniques = Technique::where('techniques.user_id', auth()->id())
+                ->with(['category', 'position', 'trainingclass'])
+                ->orderBy('created_at', 'desc')
+                ->paginate($perPage);
         }
 
         return Inertia::render('Techniques/Index', [
-            'techniques' => $query->paginate($perPage),
-            // Page header props for breadcrumb.
+            'techniques' => $techniques,
+            // Page header props for breadcrumb
             'pageHeader' => [
                 'backRoute' => route('view'),
                 'backLabel' => 'View',
@@ -94,14 +86,8 @@ class TechniqueController extends Controller
     /**
      * Store a newly created technique in storage.
      *
-     * @param Request $request The incoming HTTP request
+     * @param Request
      * @return \Illuminate\Http\RedirectResponse
-     *
-     * This method:
-     * - Validates the incoming request data
-     * - Adds the authenticated user's ID to the data
-     * - Creates a new technique record
-     * - Returns to the previous page with a success message
      */
     public function store(Request $request)
     {
@@ -140,30 +126,15 @@ class TechniqueController extends Controller
     }
 
     /**
-     * Display the specified technique.
-     *
-     * @param Technique $technique The technique to display
-     * @return void
-     */
-    public function show(Technique $technique)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing a technique.
      *
-     * @param Technique $technique The technique to edit
+     * @param Technique
      * @return \Inertia\Response
-     *
-     * This method:
-     * - Loads the technique with its related category, position, and training class
-     * - Loads all categories, positions, and training classes for the authenticated user
-     * - Passes this data to the EditTechnique React component
-     * - Includes a 'from' parameter to track navigation source
      */
     public function edit(Technique $technique)
     {
+        $this->authorize('update', $technique);
+
         return Inertia::render('Techniques/EditTechnique', [
             'technique' => $technique->load(['category', 'position', 'trainingClass']),
             'categories' => Category::where('user_id', auth()->id())->get(),
@@ -183,17 +154,14 @@ class TechniqueController extends Controller
     /**
      * Update the specified technique in storage.
      *
-     * @param Request $request The incoming HTTP request
-     * @param Technique $technique The technique to update
+     * @param Request
+     * @param Technique
      * @return \Illuminate\Http\RedirectResponse
-     *
-     * This method:
-     * - Validates the incoming request data
-     * - Updates the technique record
-     * - Returns to the previous page with a success message
      */
     public function update(Request $request, Technique $technique)
     {
+        $this->authorize('update', $technique);
+
         // Validate the request
         $validated = $request->validate([
             'technique_name' => [
@@ -232,13 +200,11 @@ class TechniqueController extends Controller
      *
      * @param Technique $technique The technique to delete
      * @return \Illuminate\Http\RedirectResponse
-     *
-     * This method:
-     * - Deletes the specified technique
-     * - Redirects to the techniques index page
      */
     public function destroy(Technique $technique)
     {
+        $this->authorize('delete', $technique);
+
         $technique->delete();
 
         return redirect(route('techniques.index'));
