@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Database\QueryException;
 
 /**
  * Handles all category-related operations.
@@ -127,8 +128,20 @@ class CategoryController extends Controller
     {
         $this->authorize('delete', $category);
 
-        $category->delete();
+        try {
+            if ($category->techniques()->exists()) {
+                return back()->withErrors([
+                   'error' => 'Cannot delete category because it is being used by one or more techniques.'
+                ]);
+            }
 
-        return redirect(route('categories.index'));
+            $category->delete();
+            return redirect(route('categories.index'));
+
+        } catch (QueryException $e) {
+            return back()->withErrors([
+                'error' => 'An unexpected error occurred while deleting the category.'
+            ]);
+        }
     }
 }
