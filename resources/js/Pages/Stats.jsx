@@ -3,9 +3,9 @@ import { Head } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 import { router } from '@inertiajs/react';
 import NoData from '@/Components/NoData';
-import InfoCircle from '@/../../resources/svg/icons8-info.svg';
 import dayjs from 'dayjs';
 import { Line, Pie } from 'react-chartjs-2';
+import { formatDuration } from '@/utils/formatters'
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -30,7 +30,8 @@ ChartJS.register(
     ArcElement
 );
 
-export default function Stats({ auth,
+export default function Stats({ stats,
+                                auth,
                                 totalClasses,
                                 totalRollingRounds,
                                 totalRoundDuration,
@@ -46,6 +47,9 @@ export default function Stats({ auth,
     const [customEndDate, setCustomEndDate] = useState('');
     const [showCustomDates, setShowCustomDates] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(false);
+
+    console.log(stats);
+    console.log(sparringRelativeToTraining);
 
     // Listen for dark mode changes
     useEffect(() => {
@@ -102,37 +106,11 @@ export default function Stats({ auth,
         }
     };
 
-    const formatDuration = (minutes) => {
-        const hours = Math.floor(minutes / 60);
-        const remainingMinutes = minutes % 60;
-
-        if (hours === 0) {
-            return `${minutes} minutes`;
-        }
-
-        if (remainingMinutes === 0) {
-            return `${hours} ${hours === 1 ? 'hour' : 'hours'}`;
-        }
-
-        return `${hours} ${hours === 1 ? 'hour' : 'hours'} ${remainingMinutes} ${remainingMinutes === 1 ? 'minute' : 'minutes'}`;
-    }
-
     const getChartColors = () => {
         return {
             textColor: isDarkMode ? 'white' : 'black',
             gridColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
         };
-    };
-
-    const generateLegend = (labels, colors) => {
-        return labels.map((label, index) => ({
-            text: label,
-            fillStyle: colors[index],
-            strokeStyle: colors[index],
-            lineWidth: 0,
-            hidden: false,
-            index: index
-        }));
     };
 
     const chartColors = getChartColors();
@@ -287,7 +265,7 @@ export default function Stats({ auth,
                                     <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                                         <div>
                                             <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Total sessions</p>
-                                            <p className="text-2xl font-bold text-gray-900 dark:text-white">{totalClasses}</p>
+                                            <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats['totalClasses']}</p>
                                         </div>
                                         <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
                                             <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -298,7 +276,7 @@ export default function Stats({ auth,
                                     <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                                         <div>
                                             <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Total training time</p>
-                                            <p className="text-2xl font-bold text-gray-900 dark:text-white">{formatDuration(totalClassDuration)}</p>
+                                            <p className="text-2xl font-bold text-gray-900 dark:text-white">{formatDuration(stats['totalClassDuration'])}</p>
                                         </div>
                                         <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
                                             <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -309,7 +287,7 @@ export default function Stats({ auth,
                                     <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                                         <div>
                                             <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Average class duration</p>
-                                            <p className="text-2xl font-bold text-gray-900 dark:text-white">{formatDuration(averageClassDuration)}</p>
+                                            <p className="text-2xl font-bold text-gray-900 dark:text-white">{formatDuration(stats['averageClassDuration'])}</p>
                                 </div>
                                         <div className="p-2 bg-purple-100 dark:bg-purple-900 rounded-lg">
                                             <svg className="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -339,7 +317,7 @@ export default function Stats({ auth,
                                     <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                                         <div>
                                             <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Total rounds</p>
-                                            <p className="text-2xl font-bold text-gray-900 dark:text-white">{totalRollingRounds}</p>
+                                            <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats['totalSparringRounds']}</p>
                                         </div>
                                         <div className="p-2 bg-orange-100 dark:bg-orange-900 rounded-lg">
                                             <svg className="w-5 h-5 text-orange-600 dark:text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -350,7 +328,7 @@ export default function Stats({ auth,
                                     <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                                         <div>
                                             <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Total sparring time</p>
-                                            <p className="text-2xl font-bold text-gray-900 dark:text-white">{formatDuration(totalRoundDuration)}</p>
+                                            <p className="text-2xl font-bold text-gray-900 dark:text-white">{formatDuration(stats['totalSparringDuration'])}</p>
                                         </div>
                                         <div className="p-2 bg-red-100 dark:bg-red-900 rounded-lg">
                                             <svg className="w-5 h-5 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -362,13 +340,13 @@ export default function Stats({ auth,
                                         <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                                             <div>
                                                 <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Avg round duration</p>
-                                                <p className="text-xl font-bold text-gray-900 dark:text-white">{formatDuration(averageRoundDuration)}</p>
+                                                <p className="text-xl font-bold text-gray-900 dark:text-white">{formatDuration(stats['averageSparringRoundDuration'])}</p>
                                             </div>
                                         </div>
                                         <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                                             <div>
                                                 <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Sparring ratio</p>
-                                                <p className="text-xl font-bold text-gray-900 dark:text-white">{sparringRelativeToTraining}%</p>
+                                                <p className="text-xl font-bold text-gray-900 dark:text-white">{stats['sparringRelativeToTraining']}%</p>
                                             </div>
                                         </div>
                                     </div>
@@ -392,14 +370,14 @@ export default function Stats({ auth,
                                 </div>
                             </div>
                             <div className="p-6">
-                                {trainingFrequency && trainingFrequency.length > 0 ? (
+                                {stats['trainingFrequency'] && stats['trainingFrequency'].length > 0 ? (
                                     <Line
                                         data={{
-                                            labels: trainingFrequency.map(item => dayjs(item.month).format('MMM YYYY')),
+                                            labels: stats['trainingFrequency'].map(item => dayjs(item.month).format('MMM YYYY')),
                                             datasets: [
                                                 {
                                                     label: 'Classes per Month',
-                                                    data: trainingFrequency.map(item => item.count),
+                                                    data: stats['trainingFrequency'].map(item => item.count),
                                                     borderColor: 'rgb(99, 102, 241)',
                                                     backgroundColor: 'rgba(99, 102, 241, 0.1)',
                                                     tension: 0.4,
@@ -423,7 +401,7 @@ export default function Stats({ auth,
                                                 tooltip: {
                                                     callbacks: {
                                                         title: (context) => {
-                                                            return dayjs(trainingFrequency[context[0].dataIndex].month).format('MMMM YYYY');
+                                                            return dayjs(stats['trainingFrequency'][context[0].dataIndex].month).format('MMMM YYYY');
                                                         }
                                                     }
                                                 }
@@ -466,13 +444,13 @@ export default function Stats({ auth,
                                     <h3 className="text-lg font-medium text-gray-900 dark:text-white">Training Distribution</h3>
                                 </div>
                                 <div className="p-6">
-                                    {sparringRelativeToTraining && sparringRelativeToTraining > 0 ? (
+                                    {stats['sparringRelativeToTraining'] && stats['sparringRelativeToTraining'] > 0 ? (
                                         <Pie
                                             data={{
                                                 labels: ['Sparring', 'Other Training'],
                                                 datasets: [
                                                     {
-                                                        data: [sparringRelativeToTraining, 100 - sparringRelativeToTraining],
+                                                        data: [stats['sparringRelativeToTraining'], 100 - stats['sparringRelativeToTraining']],
                                                         backgroundColor: [
                                                             'rgb(79, 70, 229)',
                                                             'rgb(199, 210, 254)',
@@ -511,13 +489,13 @@ export default function Stats({ auth,
                                     <h3 className="text-lg font-medium text-gray-900 dark:text-white">Positions Distribution</h3>
                                 </div>
                                 <div className="p-6">
-                                    {positionsRelative && positionsRelative.length > 0 ? (
+                                    {stats['trainedPositionsDistribution'] && stats['trainedPositionsDistribution'].length > 0 ? (
                                         <Pie
                                             data={{
-                                                labels: positionsRelative.map(item => item.position_name),
+                                                labels: stats['trainedPositionsDistribution'].map(item => item.position_name),
                                                 datasets: [
                                                     {
-                                                        data: positionsRelative.map(item => item.count),
+                                                        data: stats['trainedPositionsDistribution'].map(item => item.count),
                                                         backgroundColor: [
                                                             'rgb(79, 70, 229)',  // Indigo
                                                             'rgb(59, 130, 246)', // Blue
