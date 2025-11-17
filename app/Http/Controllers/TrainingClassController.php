@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Http\Requests\StoreTrainingClassRequest;
+use App\Http\Requests\UpdateTrainingClassRequest;
 use App\Models\TrainingClass;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -11,13 +14,10 @@ use App\Models\Technique;
 
 class TrainingClassController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of training classes.
-     *
-     * - 'training_classes' is a prop that is passed to the TrainingClass Index component
-     * - 'where' gets only the classes belonging to the currently logged in user id
-     * - latest() orders the results by creation date
-     * - get() executes the query and retrieves all records
      */
     public function index(Request $request)
     {
@@ -63,87 +63,31 @@ class TrainingClassController extends Controller
     }
 
     /**
-     * Store a newly created training class.
-     *
-     * - Occurs when a user submits the form for creating a training class
-     * - Validates the data
-     * - Creates a new TrainingClass model instance
+     * Store the training class in the database.
      */
-    public function store(Request $request)
+    public function store(StoreTrainingClassRequest $request)
     {
-        // Validate the incoming request data
-        $validated = $request->validate([
-            'instructor' => [
-                'nullable',
-                'string',
-                'max:255',
-            ],
-            'location' => [
-                'nullable',
-                'string',
-                'max:255',
-            ],
-            'class_date' => [
-                'required',
-                'date'
-            ],
-            'class_description' => [
-                'nullable',
-                'string',
-            ],
-            'class_duration' => [
-                'required',
-                'integer',
-                'min:1'
-            ],
-            'rounds' => [
-                'nullable',
-                'integer',
-                'min:1'
-            ],
-            'round_duration' => [
-                'nullable',
-                'integer',
-                'min:1'
-            ],
-            'techniques' => ['sometimes', 'array'],
-            'techniques.*.technique_name' => ['required_with:techniques', 'string', 'max:255'],
-            'techniques.*.technique_description' => ['required_with:techniques', 'string'],
-            'techniques.*.category_id' => ['required_with:techniques', 'integer'],
-            'techniques.*.position_id' => ['required_with:techniques', 'integer'],
-        ]);
-
-        // Add user_id to the validated data
-        $validated['user_id'] = auth()->id();
-
-        // Create the training class
-        $trainingClass = TrainingClass::create($validated);
+        $trainingClass = TrainingClass::create($request->validated());
 
         // Create the techniques and associate them with the training class
-        foreach ($request->techniques as $technique) {
-            $technique['user_id'] = auth()->id();
-            $technique['class_id'] = $trainingClass->class_id;
-            Technique::create($technique);
+        if (isset($request->techniques)) {
+            foreach ($request->techniques as $technique) {
+                $technique['user_id'] = auth()->id();
+                $technique['class_id'] = $trainingClass->class_id;
+                Technique::create($technique);
+            }
         }
 
         return back()->with('success', true);
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(TrainingClass $trainingClass)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
-     *
-     * 'training_class' is the prop passed to EditTrainingClass.jsx
      */
     public function edit(TrainingClass $trainingclass)
     {
+        $this->authorize('update', $trainingclass);
+
         return Inertia::render('TrainingClasses/EditTrainingClass', [
             // Eager load the related techniques for the class
             'training_class' => $trainingclass->load('techniques'),
@@ -161,59 +105,15 @@ class TrainingClassController extends Controller
     /**
      * Update the specified training class.
      */
-    public function update(Request $request, TrainingClass $trainingclass)
+    public function update(UpdateTrainingClassRequest $request, TrainingClass $trainingclass)
     {
-        // Validate the request
-        $validated = $request->validate([
-            'instructor' => [
-                'nullable',
-                'string',
-                'max:255',
-            ],
-            'location' => [
-                'nullable',
-                'string',
-                'max:255',
-            ],
-            'class_date' => [
-                'required',
-                'date'
-            ],
-            'class_description' => [
-                'nullable',
-                'string',
-            ],
-            'class_duration' => [
-                'required',
-                'integer',
-                'min:1'
-            ],
-            'rounds' => [
-                'nullable',
-                'integer',
-                'min:1'
-            ],
-            'round_duration' => [
-                'nullable',
-                'integer',
-                'min:1'
-            ],
-            'techniques' => ['sometimes', 'array'],
-            'techniques.*.technique_name' => ['required_with:techniques', 'string', 'max:255'],
-            'techniques.*.technique_description' => ['required_with:techniques', 'string'],
-            'techniques.*.category_id' => ['required_with:techniques', 'integer'],
-            'techniques.*.position_id' => ['required_with:techniques', 'integer'],
-        ]);
-
-        // Update the training class
-        $trainingclass->update($validated);
+        $trainingclass->update($request->validated());
 
         // Update techniques
         if (isset($request->techniques)) {
-            // Delete existing techniques
+            // Delete existing techniques first
             $trainingclass->techniques()->delete();
 
-            // Create new techniques
             foreach ($request->techniques as $technique) {
                 $technique['user_id'] = auth()->id();
                 $technique['class_id'] = $trainingclass->class_id;
@@ -229,8 +129,9 @@ class TrainingClassController extends Controller
      */
     public function destroy(TrainingClass $trainingclass)
     {
-        $trainingclass->delete();
+        $this->authorize('delete', $trainingclass);
 
+        $trainingclass->delete();
         return redirect(route('trainingclasses.index'));
     }
 }
