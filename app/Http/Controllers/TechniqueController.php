@@ -9,6 +9,8 @@ use App\Models\TrainingClass;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Http\Requests\StoreTechniqueRequest;
+use App\Http\Requests\UpdateTechniqueRequest;
 
 /**
  * Handles all technique-related operations
@@ -89,39 +91,9 @@ class TechniqueController extends Controller
      * @param Request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreTechniqueRequest $request)
     {
-        // Validate incoming request data
-        $validated = $request->validate([
-            'technique_name' => [
-                'required',
-                'string',
-                'max:255',
-            ],
-            'technique_description' => [
-                'nullable',
-                'string',
-            ],
-            'category_id' => [
-                'required',
-                'integer'
-            ],
-            'class_id' => [
-                'nullable',
-                'integer'
-            ],
-            'position_id' => [
-                'required',
-                'integer'
-            ],
-        ]);
-
-        // Add user_id to the validated data
-        $validated['user_id'] = auth()->id();
-
-        // Create the technique
-        Technique::create($validated);
-
+        Technique::create($request->validated());
         return back()->with('success', true);
     }
 
@@ -158,40 +130,9 @@ class TechniqueController extends Controller
      * @param Technique
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Technique $technique)
+    public function update(UpdateTechniqueRequest $request, Technique $technique)
     {
-        $this->authorize('update', $technique);
-
-        // Validate the request
-        $validated = $request->validate([
-            'technique_name' => [
-                'required',
-                'string',
-                'max:255',
-            ],
-            'technique_description' => [
-                'nullable',
-                'string',
-            ],
-            'category_id' => [
-                'required',
-                'integer',
-                'exists:categories,category_id'
-            ],
-            'position_id' => [
-                'required',
-                'integer',
-                'exists:positions,position_id'
-            ],
-            'class_id' => [
-                'nullable',
-                'integer',
-                'exists:training_classes,class_id'
-            ],
-        ]);
-
-        $technique->update($validated);
-
+        $technique->update($request->validated());
         return back()->with('success', true);
     }
 
