@@ -62,14 +62,10 @@ class TechniqueController extends Controller
      * Show the form for creating a new technique.
      *
      * @return \Inertia\Response
-     *
-     * This method:
-     * - Loads all categories, positions, and training classes for the authenticated user
-     * - Passes this data to the CreateTechnique React component
-     * - Training classes are ordered by date in descending order
      */
     public function create()
     {
+        $this->authorize('create', Technique::class);
         return Inertia::render('Techniques/CreateTechnique', [
             'categories'       => Category::where('user_id', auth()->id())->get(),
             'positions'        => Position::where('user_id', auth()->id())->get(),

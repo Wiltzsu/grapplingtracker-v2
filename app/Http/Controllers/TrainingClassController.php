@@ -21,6 +21,8 @@ class TrainingClassController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('viewAny', TrainingClass::class);
+
         $search = $request->input('search');
         $perPage = $request->input('perPage', 15);
 
@@ -47,6 +49,8 @@ class TrainingClassController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', TrainingClass::class);
+
         return Inertia::render('TrainingClasses/CreateTrainingClass', [
             'categories' => Category::where('user_id', auth()->id())->get(),
             'positions' => Position::where('user_id', auth()->id())->get(),
