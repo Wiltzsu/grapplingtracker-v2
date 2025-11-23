@@ -40,7 +40,7 @@ class StoreTrainingClassRequest extends FormRequest
     }
 
     /**
-     * Prepare the data for validation.
+     * Inject the authenticated user's ID into the request data.
      */
     protected function prepareForValidation(): void
     {
@@ -58,7 +58,7 @@ class StoreTrainingClassRequest extends FormRequest
     {
         return [
             'class_date.required' => 'Please provide a session date.',
-            'class_duration_required' => 'Session duration is required.',
+            'class_duration.required' => 'Session duration is required.',
             'class_duration.min' => 'Session duration must be at least 1 minute.',
         ];
     }

@@ -119,7 +119,6 @@ export default function Create() {
                                             className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
                                             isFocused={true}
                                             onChange={(e) => setData('category_name', e.target.value)}
-                                            required
                                         />
                                         <InputError message={errors.category_name} className="mt-2" />
                                         <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">

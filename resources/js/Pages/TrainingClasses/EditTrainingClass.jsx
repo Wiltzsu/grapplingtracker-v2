@@ -142,7 +142,6 @@ export default function EditTrainingClass({ training_class, categories, position
                                                 value={data.class_date}
                                                 className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
                                                 onChange={(e) => setData('class_date', e.target.value)}
-                                                required
                                             />
                                             <InputError message={errors.class_date} className="mt-2" />
                                         </div>
@@ -164,7 +163,6 @@ export default function EditTrainingClass({ training_class, categories, position
                                                     className="block w-full dark:bg-gray-700 dark:border-gray-600 pr-12"
                                                     placeholder="90"
                                                     onChange={(e) => setData('class_duration', e.target.value)}
-                                                    required
                                                 />
                                                 <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                                                     <span className="text-gray-500 dark:text-gray-400 text-sm">min</span>

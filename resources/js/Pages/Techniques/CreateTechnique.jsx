@@ -5,7 +5,6 @@ import { useState } from 'react';
 import dayjs from 'dayjs';
 
 // UI components
-import CancelIcon from '@/../../resources/svg/cancel.svg';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
@@ -129,7 +128,6 @@ export default function Create({ categories, training_classes, positions }) {
                                                 className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600"
                                                 isFocused={true}
                                                 onChange={(e) => setData('technique_name', e.target.value)}
-                                                required
                                             />
                                             <InputError message={errors.technique_name} className="mt-2" />
                                             <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
@@ -169,7 +167,6 @@ export default function Create({ categories, training_classes, positions }) {
                                                     value={data.category_id}
                                                     className="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                                     onChange={(e) => setData('category_id', e.target.value)}
-                                                    required
                                                 >
                                                     <option value="">Select a category</option>
                                                     {categories && categories.length > 0 ? (
@@ -197,7 +194,6 @@ export default function Create({ categories, training_classes, positions }) {
                                                     value={data.position_id}
                                                     className="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                                     onChange={(e) => setData('position_id', e.target.value)}
-                                                    required
                                                 >
                                                     <option value="">Select a position</option>
                                                     {positions && positions.length > 0 ? (

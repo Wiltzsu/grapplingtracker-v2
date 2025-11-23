@@ -3,16 +3,16 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Technique;
+use App\Models\Category;
 
-class StoreTechniqueRequest extends FormRequest
+class StoreCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return $this->user()->can('create', Technique::class);
+        return $this->user()->can('create', Category::class);
     }
 
     /**
@@ -24,11 +24,8 @@ class StoreTechniqueRequest extends FormRequest
     {
         return [
             'user_id' => ['required', 'integer', 'exists:users,id'],
-            'technique_name' => ['required', 'string', 'max:255'],
-            'technique_description' => ['nullable', 'string'],
-            'category_id' => ['required', 'integer', 'exists:categories,category_id'],
-            'position_id' => ['required', 'integer', 'exists:positions,position_id'],
-            'class_id' => ['nullable', 'integer', 'exists:training_classes,class_id'],
+            'category_name' => ['required', 'string', 'max:255', 'regex:/^[\p{L}\p{N}\s\-_]+$/u'],
+            'category_description' => ['nullable', 'string', 'max:255', 'regex:/^[\p{L}\p{N}\s\-_.,!?]+$/u'],
         ];
     }
 
@@ -50,9 +47,7 @@ class StoreTechniqueRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'technique_name.required' => 'Please provide a technique name.',
-            'category_id.required' => 'Please select a category.',
-            'position_id.required' => 'Please select a position.',
+            'category_name.required' => 'Please provide a category name.',
         ];
     }
 }

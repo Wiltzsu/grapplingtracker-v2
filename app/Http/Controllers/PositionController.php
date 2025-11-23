@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePositionRequest;
+use App\Http\Requests\UpdatePositionRequest;
 use App\Models\Position;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -58,29 +60,9 @@ class PositionController extends Controller
     /**
      * Store a newly created position.
      */
-    public function store(Request $request)
+    public function store(StorePositionRequest $request)
     {
-        $this->authorize('create', Position::class);
-
-        $validated = $request->validate([
-            'position_name' => [
-                'required',
-                'string',
-                'max:255',
-                'regex:/^[\p{L}\p{N}\s\-_]+$/u'  // Letters, numbers, spaces, hyphens, underscores
-            ],
-            'position_description' => [
-                'nullable',
-                'string',
-                'max:255',
-                'regex:/^[\p{L}\p{N}\s\-_.,!?]+$/u'  // More permissive for descriptions
-            ],
-        ]);
-
-        $validated['user_id'] = $request->user()->id;
-
-        Position::create($validated);
-
+        Position::create($request->validated());
         return back()->with('success', true);
     }
 
@@ -106,28 +88,10 @@ class PositionController extends Controller
     /**
      * Update the specified position.
      */
-    public function update(Request $request, Position $position)
+    public function update(UpdatePositionRequest $request, Position $position)
     {
-        $this->authorize('update', $position);
-
-        $validated = $request->validate([
-            'position_name' => [
-                'required',
-                'string',
-                'max:255',
-                'regex:/^[\p{L}\p{N}\s\-_]+$/u'  // Same rules as in create
-            ],
-            'position_description' => [
-                'nullable',
-                'string',
-                'max:255',
-                'regex:/^[\p{L}\p{N}\s\-_.,!?]+$/u'  // Same rules as in create
-            ],
-        ]);
-
         // Update database record
-        $position->update($validated);
-
+        $position->update($request->validated());
         return back()->with('success', true);
     }
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -59,29 +61,9 @@ class CategoryController extends Controller
     /**
      * Store a newly created category.
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        $this->authorize('create', Category::class);
-
-        $validated = $request->validate([
-            'category_name' => [
-                'required',
-                'string',
-                'max:255',
-                'regex:/^[\p{L}\p{N}\s\-_]+$/u'  // Letters, numbers, spaces, hyphens, underscores
-            ],
-            'category_description' => [
-                'nullable',
-                'string',
-                'max:255',
-                'regex:/^[\p{L}\p{N}\s\-_.,!?]+$/u'  // More permissive for descriptions
-            ],
-        ]);
-
-        $validated['user_id'] = $request->user()->id;
-
-        Category::create($validated);
-
+        Category::create($request->validated());
         return back()->with('success', true);
     }
 
@@ -107,17 +89,9 @@ class CategoryController extends Controller
     /**
      * Update the specified category.
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
-        $this->authorize('update', $category);
-
-        $validated = $request->validate([
-            'category_name' => 'required|string|max:255',
-            'category_description' => 'nullable|string|max:255',
-        ]);
-
-        $category->update($validated);
-
+        $category->update($request->validated());
         return back()->with('success', true);
     }
 
