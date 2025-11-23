@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Technique Model
@@ -39,41 +40,32 @@ class Technique extends Model
 
     /**
      * Get the category that owns the technique.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'category_id');
     }
 
     /**
      * Get the position that owns the technique.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function position()
+    public function position(): BelongsTo
     {
         return $this->belongsTo(Position::class, 'position_id', 'position_id');
     }
 
     /**
      * Get the training class that owns the technique.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function trainingClass()
+    public function trainingClass(): BelongsTo
     {
         return $this->belongsTo(TrainingClass::class, 'class_id', 'class_id');
     }
 
     /**
      * Get the indexable data array for the model.
-     * This method is used by Laravel Scout to determine what data should be indexed.
-     *
-     * @return array<string, mixed>
      */
-    public function toSearchableArray()
+    public function toSearchableArray(): array
     {
         return [
             'user_id' => (int) $this->user_id,
@@ -87,11 +79,8 @@ class Technique extends Model
 
     /**
      * Get the searchable options for the model.
-     * This method is used by Laravel Scout to configure search settings.
-     *
-     * @return array<string, array<string>>
      */
-    public function searchableOptions()
+    public function searchableOptions(): array
     {
         return [
             'filterableAttributes' => ['user_id'],

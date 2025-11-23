@@ -25,13 +25,13 @@ class StatsService
         ];
     }
 
-    private function applyDateRange($query, string $range, ?string $startDate, ?string $endDate)
+    private function applyDateRange($query, string $range, ?string $startDate, ?string $endDate): mixed
     {
         switch ($range) {
             case 'month':
-                return $query->where('class_date', '>=', now()->subMonth(1));
+                return $query->where('class_date', '>=', now()->subMonth());
             case '6months':
-                return $query->where('class_date', '>=', now()->subMonth(6));
+                return $query->where('class_date', '>=', now()->subMonths(6));
             case 'custom':
                 if ($startDate && $endDate) {
                     return $query->whereBetween('class_date', [
@@ -125,7 +125,7 @@ class StatsService
         ->values();
     }
 
-    private function getTrainingFrequency(int $userId, string $range, ?string $startDate, ?string $endDate)
+    private function getTrainingFrequency(int $userId, string $range, ?string $startDate, ?string $endDate): Collection
     {
         $query = TrainingClass::where('user_id', $userId);
         $query = $this->applyDateRange($query, $range, $startDate, $endDate);

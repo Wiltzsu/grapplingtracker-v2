@@ -8,9 +8,11 @@ use App\Models\Position;
 use App\Models\TrainingClass;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Http\Requests\StoreTechniqueRequest;
 use App\Http\Requests\UpdateTechniqueRequest;
+use Illuminate\Http\RedirectResponse;
 
 /**
  * Handles all technique-related operations
@@ -21,11 +23,8 @@ class TechniqueController extends Controller
 
     /**
      * Display a listing of the techniques.
-     *
-     * @param Request
-     * @return \Inertia\Response
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $this->authorize('viewAny', Technique::class);
 
@@ -60,10 +59,8 @@ class TechniqueController extends Controller
 
     /**
      * Show the form for creating a new technique.
-     *
-     * @return \Inertia\Response
      */
-    public function create()
+    public function create(): Response
     {
         $this->authorize('create', Technique::class);
         return Inertia::render('Techniques/CreateTechnique', [
@@ -83,11 +80,8 @@ class TechniqueController extends Controller
 
     /**
      * Store a newly created technique in storage.
-     *
-     * @param Request
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(StoreTechniqueRequest $request)
+    public function store(StoreTechniqueRequest $request): RedirectResponse
     {
         Technique::create($request->validated());
         return back()->with('success', true);
@@ -95,11 +89,8 @@ class TechniqueController extends Controller
 
     /**
      * Show the form for editing a technique.
-     *
-     * @param Technique
-     * @return \Inertia\Response
      */
-    public function edit(Technique $technique)
+    public function edit(Technique $technique): Response
     {
         $this->authorize('update', $technique);
 
@@ -121,12 +112,8 @@ class TechniqueController extends Controller
 
     /**
      * Update the specified technique in storage.
-     *
-     * @param Request
-     * @param Technique
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateTechniqueRequest $request, Technique $technique)
+    public function update(UpdateTechniqueRequest $request, Technique $technique): RedirectResponse
     {
         $technique->update($request->validated());
         return back()->with('success', true);
@@ -134,11 +121,8 @@ class TechniqueController extends Controller
 
     /**
      * Remove the specified technique from storage.
-     *
-     * @param Technique $technique The technique to delete
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Technique $technique)
+    public function destroy(Technique $technique): RedirectResponse
     {
         $this->authorize('delete', $technique);
 

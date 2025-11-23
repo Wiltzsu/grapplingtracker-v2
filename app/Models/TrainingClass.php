@@ -30,13 +30,12 @@ class TrainingClass extends Model
         return $this->belongsTo(User::class);
     }
 
-    // Relationship that tells a Position can have many Techniques.
     public function techniques(): HasMany
     {
         return $this->hasMany(Technique::class, 'class_id');
     }
 
-    public function toSearchableArray()
+    public function toSearchableArray(): array
     {
         return [
             'user_id' => (int) $this->user_id,
@@ -53,7 +52,7 @@ class TrainingClass extends Model
         ];
     }
 
-    public function searchableOptions()
+    public function searchableOptions(): array
     {
         return [
             'filterableAttributes' => ['user_id'],

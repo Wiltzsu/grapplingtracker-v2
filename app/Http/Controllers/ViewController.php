@@ -9,7 +9,6 @@ use App\Models\Category;
 use App\Models\TrainingClass;
 use App\Models\Technique;
 use App\Models\Position;
-use Illuminate\Support\Carbon;
 
 class ViewController extends Controller
 {
@@ -50,16 +49,5 @@ class ViewController extends Controller
             'stats' => $stats,
             'recentActivity' => $recentActivity
         ]);
-    }
-
-    /**
-     * Store a newly created entry in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(Request $request)
-    {
     }
 }

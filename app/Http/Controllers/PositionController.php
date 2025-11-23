@@ -7,8 +7,10 @@ use App\Http\Requests\UpdatePositionRequest;
 use App\Models\Position;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\RedirectResponse;
 
 /**
  * Handles all position-related operations.
@@ -20,7 +22,7 @@ class PositionController extends Controller
     /**
      * Display a listing of positions.
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $this->authorize('viewAny', Position::class);
 
@@ -42,7 +44,7 @@ class PositionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
         $this->authorize('create', Position::class);
 
@@ -60,7 +62,7 @@ class PositionController extends Controller
     /**
      * Store a newly created position.
      */
-    public function store(StorePositionRequest $request)
+    public function store(StorePositionRequest $request): RedirectResponse
     {
         Position::create($request->validated());
         return back()->with('success', true);
@@ -69,7 +71,7 @@ class PositionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Position $position)
+    public function edit(Position $position): Response
     {
         $this->authorize('update', $position);
 
@@ -88,7 +90,7 @@ class PositionController extends Controller
     /**
      * Update the specified position.
      */
-    public function update(UpdatePositionRequest $request, Position $position)
+    public function update(UpdatePositionRequest $request, Position $position): RedirectResponse
     {
         // Update database record
         $position->update($request->validated());
@@ -98,7 +100,7 @@ class PositionController extends Controller
     /**
      * Remove the specified position.
      */
-    public function destroy(Position $position)
+    public function destroy(Position $position): RedirectResponse
     {
         $this->authorize('delete', $position);
 

@@ -28,14 +28,6 @@ class ChirpController extends Controller
     }
 
     /**
-     * Show the form for creating a new chirp.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created chirp.
      */
     public function store(Request $request): RedirectResponse
@@ -47,22 +39,6 @@ class ChirpController extends Controller
         $request->user()->chirps()->create($validated);
 
         return redirect(route('chirps.index'));
-    }
-
-    /**
-     * Display the specified chirp.
-     */
-    public function show(Chirp $chirp)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified chirp.
-     */
-    public function edit(Chirp $chirp)
-    {
-        //
     }
 
     /**

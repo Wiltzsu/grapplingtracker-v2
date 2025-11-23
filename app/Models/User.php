@@ -58,13 +58,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Get all notes associated with the user.
-     *
-     * This relationship indicates that a user can have multiple notes,
-     * establishing a one-to-many relationship between users and notes.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function notes()
+    public function notes(): HasMany
     {
         return $this->hasMany(Chirp::class);
     }
@@ -94,7 +89,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Chirp::class);
     }
 
-    public function createDefaultData()
+    public function createDefaultData(): void
     {
         // Default positions
         $defaultPositions = [

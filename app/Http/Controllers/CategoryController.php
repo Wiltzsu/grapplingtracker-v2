@@ -10,6 +10,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\RedirectResponse;
 
 /**
  * Handles all category-related operations.
@@ -21,7 +22,7 @@ class CategoryController extends Controller
     /**
      * Display a listing of categories.
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $this->authorize('viewAny', Category::class);
 
@@ -61,7 +62,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created category.
      */
-    public function store(StoreCategoryRequest $request)
+    public function store(StoreCategoryRequest $request): RedirectResponse
     {
         Category::create($request->validated());
         return back()->with('success', true);
@@ -70,7 +71,7 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified category.
      */
-    public function edit(Category $category)
+    public function edit(Category $category): Response
     {
         $this->authorize('update', $category);
 
@@ -89,7 +90,7 @@ class CategoryController extends Controller
     /**
      * Update the specified category.
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category): RedirectResponse
     {
         $category->update($request->validated());
         return back()->with('success', true);
@@ -98,7 +99,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified category.
      */
-    public function destroy(Category $category)
+    public function destroy(Category $category): RedirectResponse
     {
         $this->authorize('delete', $category);
 

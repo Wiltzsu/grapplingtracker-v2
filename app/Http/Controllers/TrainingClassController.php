@@ -8,9 +8,11 @@ use App\Http\Requests\UpdateTrainingClassRequest;
 use App\Models\TrainingClass;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 use App\Models\Category;
 use App\Models\Position;
 use App\Models\Technique;
+use Illuminate\Http\RedirectResponse;
 
 class TrainingClassController extends Controller
 {
@@ -19,7 +21,7 @@ class TrainingClassController extends Controller
     /**
      * Display a listing of training classes.
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $this->authorize('viewAny', TrainingClass::class);
 
@@ -47,7 +49,7 @@ class TrainingClassController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
         $this->authorize('create', TrainingClass::class);
 
@@ -69,7 +71,7 @@ class TrainingClassController extends Controller
     /**
      * Store the training class in the database.
      */
-    public function store(StoreTrainingClassRequest $request)
+    public function store(StoreTrainingClassRequest $request): RedirectResponse
     {
         $trainingClass = TrainingClass::create($request->validated());
 
@@ -88,7 +90,7 @@ class TrainingClassController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(TrainingClass $trainingclass)
+    public function edit(TrainingClass $trainingclass): Response
     {
         $this->authorize('update', $trainingclass);
 
@@ -109,7 +111,7 @@ class TrainingClassController extends Controller
     /**
      * Update the specified training class.
      */
-    public function update(UpdateTrainingClassRequest $request, TrainingClass $trainingclass)
+    public function update(UpdateTrainingClassRequest $request, TrainingClass $trainingclass): RedirectResponse
     {
         $trainingclass->update($request->validated());
 
@@ -131,7 +133,7 @@ class TrainingClassController extends Controller
     /**
      * Remove the specified training class.
      */
-    public function destroy(TrainingClass $trainingclass)
+    public function destroy(TrainingClass $trainingclass): RedirectResponse
     {
         $this->authorize('delete', $trainingclass);
 

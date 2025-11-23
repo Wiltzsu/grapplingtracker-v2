@@ -42,15 +42,4 @@ class DashboardController extends Controller
             'recentActivity' => $recentActivity
         ]);
     }
-
-    /**
-     * Store a newly created entry in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(Request $request)
-    {
-    }
 }
