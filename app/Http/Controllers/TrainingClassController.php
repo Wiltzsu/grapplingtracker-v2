@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\SyncTechniquesAction;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Http\Requests\StoreTrainingClassRequest;
 use App\Http\Requests\UpdateTrainingClassRequest;
@@ -71,17 +72,13 @@ class TrainingClassController extends Controller
     /**
      * Store the training class in the database.
      */
-    public function store(StoreTrainingClassRequest $request): RedirectResponse
+    public function store(StoreTrainingClassRequest $request, SyncTechniquesAction $syncTechniques): RedirectResponse
     {
         $trainingClass = TrainingClass::create($request->validated());
 
         // Create the techniques and associate them with the training class
         if (isset($request->techniques)) {
-            foreach ($request->techniques as $technique) {
-                $technique['user_id'] = auth()->id();
-                $technique['class_id'] = $trainingClass->class_id;
-                Technique::create($technique);
-            }
+            $syncTechniques->execute($trainingClass, $request->techniques, auth()->id());
         }
 
         return back()->with('success', true);
@@ -111,7 +108,7 @@ class TrainingClassController extends Controller
     /**
      * Update the specified training class.
      */
-    public function update(UpdateTrainingClassRequest $request, TrainingClass $trainingclass): RedirectResponse
+    public function update(UpdateTrainingClassRequest $request, TrainingClass $trainingclass, SyncTechniquesAction $syncTechniques): RedirectResponse
     {
         $trainingclass->update($request->validated());
 
@@ -119,12 +116,7 @@ class TrainingClassController extends Controller
         if (isset($request->techniques)) {
             // Delete existing techniques first
             $trainingclass->techniques()->delete();
-
-            foreach ($request->techniques as $technique) {
-                $technique['user_id'] = auth()->id();
-                $technique['class_id'] = $trainingclass->class_id;
-                Technique::create($technique);
-            }
+            $syncTechniques->execute($trainingclass, $request->techniques, auth()->id());
         }
 
         return back()->with('success', true);
