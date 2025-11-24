@@ -3,8 +3,9 @@ import { Head } from '@inertiajs/react';
 import { Link } from '@inertiajs/react';
 import { formatDistanceToNow } from 'date-fns';
 import { PlusIcon } from '@heroicons/react/24/outline';
+import { formatActivityMessage } from '@/utils/formatters'
 
-export default function Dashboard({ recent_classes, recentActivity }) {
+export default function Dashboard({ recentActivity }) {
     const options = [
         {
             name: 'Add training session',
@@ -32,39 +33,6 @@ export default function Dashboard({ recent_classes, recentActivity }) {
             icon: <PlusIcon className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
         },
     ];
-
-
-    // Function to format the activity message
-    const formatActivityMessage = (item, type) => {
-        switch(type) {
-            case 'categories':
-                return (
-                    <>
-                        <span className="font-bold">Added new category:</span> {item.category_name}
-                    </>
-                );
-            case 'training_classes':
-                return (
-                    <>
-                        <span className="font-bold">Created new session:</span> {item.instructor ? `${item.instructor}'s session` : 'No instructor'}
-                    </>
-                );
-            case 'techniques':
-                return (
-                    <>
-                        <span className="font-bold">Added new technique:</span> {item.technique_name}
-                    </>
-                );
-            case 'positions':
-                return (
-                    <>
-                        <span className="font-bold">Added new position:</span> {item.position_name}
-                    </>
-                );
-            default:
-                return '';
-        }
-    };
 
     // Combine and sort all activities
     const allActivities = Object.entries(recentActivity).flatMap(([type, items]) =>

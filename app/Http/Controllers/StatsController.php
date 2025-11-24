@@ -11,8 +11,6 @@ class StatsController extends Controller
 {
     /**
      * Display the statspage.
-     *
-     * @return \Inertia\Response Returns Inertia response with Stats component
      */
     public function index(Request $request, StatsService $statsService): Response
     {

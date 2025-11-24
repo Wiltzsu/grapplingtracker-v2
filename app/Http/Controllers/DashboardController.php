@@ -2,44 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Models\TrainingClass;
-use App\Models\Category;
-use App\Models\Technique;
-use App\Models\Position;
+use App\Services\DashboardService;
 
 class DashboardController extends Controller
 {
     /**
      * Display the dashboard page.
-     *
-     * @return \Inertia\Response Returns Inertia response with Stats component
      */
-    public function index(): Response
+    public function index(DashboardService $dashboardService): Response
     {
-        $recentActivity = [
-            'categories' => Category::where('user_id', auth()->id())
-                ->latest()
-                ->take(3)
-                ->get(['category_name', 'created_at']),
-            'training_classes' => TrainingClass::where('user_id', auth()->id())
-                ->latest()
-                ->take(3)
-                ->get(['instructor', 'created_at']),
-            'techniques' => Technique::where('user_id', auth()->id())
-                ->latest()
-                ->take(3)
-                ->get(['technique_name', 'created_at']),
-            'positions' => Position::where('user_id', auth()->id())
-                ->latest()
-                ->take(3)
-                ->get(['position_name', 'created_at']),
-        ];
+        $dashboardData = $dashboardService->getDashboardData(
+            auth()->id()
+        );
 
-        return Inertia::render('Dashboard', [
-            'recentActivity' => $recentActivity
-        ]);
+        return Inertia::render('Dashboard', $dashboardData);
     }
 }
